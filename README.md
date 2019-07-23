@@ -9,7 +9,7 @@ by leveraging the modern web.
 
 ---
 
-[![Build Status](https://travis-ci.org/andela/mazus-ah-backend.svg?branch=develop)](https://travis-ci.org/andela/mazus-ah-backend)
+[![Build Status](https://travis-ci.org/andela/mazus-ah-backend.svg?branch=develop)](https://travis-ci.org/andela/mazus-ah-backend) [![Coverage Status](https://coveralls.io/repos/github/andela/mazus-ah-backend/badge.svg)](https://coveralls.io/github/andela/mazus-ah-backend)
 
 ## API Spec
 
