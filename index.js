@@ -2,12 +2,9 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import errorhandler from "errorhandler";
-import mongoose from "mongoose";
 import logger from "morgan";
 import methodOverride from "method-override";
-
 import routes from "./routes";
-import User from "./models/User";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -37,14 +34,7 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-if (isProduction) {
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect("mongodb://localhost/conduit");
-  mongoose.set("debug", true);
-}
-
-app.use(routes);
+app.use(require("./routes"));
 
 /// catch 404 and forward to error handler
 app.use((req, res, next) => {
