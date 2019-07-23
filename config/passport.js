@@ -1,5 +1,4 @@
 import passport from "passport";
-const passport = require("passport");
 import { Strategy } from "passport-local";
 import mongoose from "mongoose";
 
