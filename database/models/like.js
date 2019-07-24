@@ -14,11 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     commentId: {
       type: DataTypes.INTEGER
     },
-    likedOn: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
-    }
   }, {});
   Like.associate = function(models) {
     // associations can be defined here

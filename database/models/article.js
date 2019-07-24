@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
-    Article.hasMany(models.Bookmarks, {
+    Article.hasMany(models.Bookmark, {
       foreignKey: 'articleId',
       as: 'bookmark',
       onDelete: 'CASCADE',
