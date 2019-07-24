@@ -4,6 +4,11 @@ import cors from "cors";
 import errorhandler from "errorhandler";
 import logger from "morgan";
 import methodOverride from "method-override";
+import swaggerUi from 'swagger-ui-express';
+
+import routes from "./routes";
+import User from "./models/User";
+import docs from './docs/swagger.json';
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -16,6 +21,7 @@ app.use(cors());
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 app.use(methodOverride());
 app.use(express.static(__dirname + "/public"));
