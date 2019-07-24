@@ -1,14 +1,39 @@
-'use strict';
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-unused-vars */
+/* eslint-disable func-names */
 module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define('Article', {
-    title: DataTypes.STRING,
-    slug: DataTypes.STRING,
-    body: DataTypes.STRING,
-    description: DataTypes.STRING,
-    isPaid: DataTypes.BOOLEAN,
-    ratings: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    readTime: DataTypes.INTEGER
+    title: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    slug: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    body: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    isPaid: {
+      defaultValue: false,
+      type: DataTypes.BOOLEAN
+    },
+    ratings: {
+      type: DataTypes.INTEGER
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    readTime: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
   }, {});
   Article.associate = function(models) {
     Article.hasMany(models.ArticleImage, {

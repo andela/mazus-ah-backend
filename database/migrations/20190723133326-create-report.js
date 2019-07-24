@@ -1,35 +1,48 @@
-'use strict';
+/* eslint-disable no-unused-vars */
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('reports', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Reports', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    reportTitle: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    reportBody: {
+      allowNull: false,
+      type: Sequelize.TEXT
+    },
+    reportedBy: {
+      allowNull: false,
+      type: Sequelize.INTEGER
+    },
+    articleId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Articles',
+        key: 'id',
       },
-      reportTitle: {
-        type: Sequelize.STRING
+    },
+    commentId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Comments',
+        key: 'id',
       },
-      reportBody: {
-        type: Sequelize.STRING
-      },
-      reportedBy:{
-        type: Sequelize.INTEGER
-      },
-      articleId:{
-        type: Sequelize.INTEGER
-      },
-      commentId:{
-        type: Sequelize.INTEGER
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('reports');
-  }
+    },
+    createdAt: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }
+  }),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Reports')
 };

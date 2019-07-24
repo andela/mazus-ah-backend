@@ -1,7 +1,13 @@
-'use strict';
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-unused-vars */
+/* eslint-disable func-names */
+
 module.exports = (sequelize, DataTypes) => {
   const Profile = sequelize.define('Profile', {
-    userId: DataTypes.INTEGER,
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
     bio: DataTypes.STRING,
     avatar: DataTypes.STRING
   }, {});

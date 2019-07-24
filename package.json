@@ -8,7 +8,8 @@
     "test": "nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "migrate": "sequelize db:migrate",
-    "migrate:undo": "sequelize db:migrate:undo"
+    "migrate:undo": "sequelize db:migrate:undo:all",
+    "seedall": "npx sequelize-cli db:seed:all"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
+    "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",

@@ -1,29 +1,46 @@
-'use strict';
+
+/* eslint-disable no-unused-vars */
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('likes', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Likes', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    userId: {
+      allowNull: false,
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
       },
-      userId: {
-        type: Sequelize.INTEGER
+    },
+    articleId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Articles',
+        key: 'id',
       },
-      articleId: {
-        type: Sequelize.INTEGER 
+    },
+    commentId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Comments',
+        key: 'id',
       },
-      commentId: {
-        type: Sequelize.INTEGER
-      },
-      likedOn: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('likes');
-  }
+    },
+    likedOn: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }
+  }),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Likes')
 };

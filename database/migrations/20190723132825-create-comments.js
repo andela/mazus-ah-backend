@@ -1,15 +1,16 @@
+
 /* eslint-disable no-unused-vars */
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Ratings', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Comments', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    rate: {
+    body: {
       allowNull: false,
-      type: Sequelize.INTEGER
+      type: Sequelize.TEXT
     },
     userId: {
       allowNull: false,
@@ -42,5 +43,5 @@ module.exports = {
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     }
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Ratings')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Comments')
 };

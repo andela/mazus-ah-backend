@@ -1,9 +1,21 @@
-'use strict';
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-unused-vars */
+/* eslint-disable func-names */
+
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
-    body: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
-    articleId: DataTypes.INTEGER
+    body: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
+    articleId: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    },
   }, {});
   Comment.associate = function(models) {
     Comment.hasMany(models.Like, {
@@ -17,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'commentreport',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
-    })
+    });
   };
   return Comment;
 };

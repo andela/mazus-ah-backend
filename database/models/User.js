@@ -1,13 +1,37 @@
-'use strict';
+/* eslint-disable space-before-function-paren */
+/* eslint-disable no-unused-vars */
+/* eslint-disable func-names */
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      required: true,
+      unique: true,
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    firstName: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    lastName: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     verificationToken: DataTypes.STRING,
-    isVerified: DataTypes.BOOLEAN,
-    type: DataTypes.STRING
+
+    isVerified: {
+      defaultValue: false,
+      type: DataTypes.BOOLEAN
+    },
+    type: {
+      type: DataTypes.ENUM('admin', 'user'),
+      defaultValue: 'user',
+    },
+
   }, {});
   User.associate = function(models) {
     User.hasOne(models.Profile, {

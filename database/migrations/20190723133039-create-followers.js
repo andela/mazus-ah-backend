@@ -1,26 +1,38 @@
-'use strict';
+/* eslint-disable no-unused-vars */
+
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('followers', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER 
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Followers', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    followerId: {
+      allowNull: false,
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
       },
-      followerId: {
-        type: Sequelize.INTEGER
+    },
+    userId: {
+      allowNull: false,
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
       },
-      userId: {
-        type: Sequelize.INTEGER
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
-  },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('followers');
-  }
+    },
+    createdAt: {
+      allowNull: false,
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    }
+  }),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Followers')
 };
