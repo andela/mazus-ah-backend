@@ -1,6 +1,7 @@
 # Authors Haven - A Social platform for the creative at heart.
 
 # Team Mazus
+[![Build Status](https://travis-ci.org/andela/mazus-ah-backend.svg?branch=develop)](https://travis-ci.org/andela/mazus-ah-backend) [![Coverage Status](https://coveralls.io/repos/github/andela/mazus-ah-backend/badge.svg)](https://coveralls.io/github/andela/mazus-ah-backend) [![](https://img.shields.io/badge/Protected_by-Hound-a873d1.svg)](https://houndci.com)
 
 ## Vision
 
@@ -8,8 +9,6 @@ Create a community of like minded authors to foster inspiration and innovation
 by leveraging the modern web.
 
 ---
-
-[![Build Status](https://travis-ci.org/andela/mazus-ah-backend.svg?branch=develop)](https://travis-ci.org/andela/mazus-ah-backend) [![Coverage Status](https://coveralls.io/repos/github/andela/mazus-ah-backend/badge.svg)](https://coveralls.io/github/andela/mazus-ah-backend)
 
 ## API Spec
 
