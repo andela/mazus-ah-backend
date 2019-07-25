@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import docs from './docs/swagger.json';
 
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
@@ -37,7 +38,11 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-// catch 404 and forward to error handler
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to Author\'s Haven' });
+});
+
+/// catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;

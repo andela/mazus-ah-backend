@@ -8,6 +8,12 @@
   "env": {
     "SECRET_KEY": {
       "required": true
+<<<<<<< HEAD
+=======
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+>>>>>>> chore(heroku): deploy base app
     }
   },
   "formation": {
@@ -17,6 +23,13 @@
   },
   "name": "mazus-ah-backend",
   "scripts": {
+<<<<<<< HEAD
   },
   "stack": "heroku-18"
 }
+=======
+    "postdeploy": "npx sequelize-cli db:seed:all"
+  },
+  "stack": "heroku-18"
+}
+>>>>>>> chore(heroku): deploy base app
