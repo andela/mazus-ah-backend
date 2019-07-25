@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.9.0"
+  },
   "scripts": {
     "start": "node build/index.js",
     "server": "nodemon --exec babel-node .",
