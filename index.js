@@ -24,7 +24,6 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 app.use(express.static(`${__dirname}/public`));
 app.use(API_PREFIX, routes);
@@ -40,7 +39,7 @@ if (!isProduction) {
 // catch 404 and forward to error handler
 app.use(notFoundError);
 
-// error handlers
+// / error handlers
 
 // development error handler
 // will print stacktrace
