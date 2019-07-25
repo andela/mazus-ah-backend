@@ -38,7 +38,6 @@ if (!isProduction) {
 }
 
 // catch 404 and forward to error handler
-// catch 404 and forward to error handler
 app.use(notFoundError);
 
 // error handlers
