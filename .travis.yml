@@ -1,11 +1,11 @@
 language: node_js
 node_js:
   - '10'
-  services:
-  - postgresql
 install: npm install
+services:
+  - postgresql
 script: npm test
 before_script:
   - psql -c 'create database mazus_ah_backend_test;' -U postgres
-after_success: 
-  - "npm run coveralls"
+after_success:
+  - 'npm run coveralls'

@@ -13,7 +13,7 @@
     "pretest": "cross-env NODE_ENV=test npm run migrate:undo && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seedall",
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "migrate": "cross-env NODE_ENV=test && sequelize db:migrate",
+    "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seedall": "npx sequelize-cli db:seed:all",
     "heroku-postbuild": "npm run migrate"

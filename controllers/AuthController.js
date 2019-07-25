@@ -15,9 +15,12 @@ export default class AuthController {
   /**
    *
    * @static
+   *
    * @param {object} req express request object
    * @param {object} res express response object
+   *
    * @returns {object} returns user data
+   *
    * @memberof AuthController
    */
   static async signUp(req, res) {
