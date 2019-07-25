@@ -14,7 +14,7 @@ class Helper {
    * @return {string} access token
    */
   static createToken(payload) {
-    return jwt.sign({ payload }, process.env.SECRET_KEY, { expiresIn: '24d' });
+    return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24d' });
   }
 
   /**

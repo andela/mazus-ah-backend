@@ -42,18 +42,16 @@ export default class AuthController {
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email
+      email,
+      firstName,
+      lastName
     });
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
       user: {
         token,
-        id: registeredUser.id,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
         email: registeredUser.email,
-        isVerified: registeredUser.isVerified,
-        verificationToken
+        isVerified: registeredUser.isVerified
       }
     });
   }
