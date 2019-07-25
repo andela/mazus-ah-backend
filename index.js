@@ -1,15 +1,19 @@
+import '@babel/polyfill';
 import express from 'express';
-import session from 'express-session';
 import cors from 'cors';
 import errorhandler from 'errorhandler';
 import logger from 'morgan';
-import methodOverride from 'method-override';
+import Debug from 'debug';
 import swaggerUi from 'swagger-ui-express';
 
-import docs from './docs/swagger.json';
+import docs from './docs';
+import routes from './routes';
+import ServerResponse from './modules';
 
-
+const debug = Debug('dev');
 const isProduction = process.env.NODE_ENV === 'production';
+const { notFoundError, developmentServerErrorResponse, serverErrorResponse } = ServerResponse;
+const API_PREFIX = '/api/v1';
 
 // Create global app object
 const app = express();
@@ -22,67 +26,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
-app.use(methodOverride());
 app.use(express.static(`${__dirname}/public`));
-
-app.use(
-  session({
-    secret: 'authorshaven',
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false
-  })
-);
-
-if (!isProduction) {
-  app.use(errorhandler());
-}
+app.use(API_PREFIX, routes);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Author\'s Haven' });
 });
 
+if (!isProduction) {
+  app.use(errorhandler());
+}
+
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// catch 404 and forward to error handler
+app.use(notFoundError);
 
 // error handlers
 
 // development error handler
 // will print stacktrace
 if (!isProduction) {
-  app.use((err, req, res, next) => {
-    console.log(err.stack);
-
-    res.status(err.status || 500);
-
-    res.json({
-      errors: {
-        message: err.message,
-        error: err
-      }
-    });
-  });
+  app.use(developmentServerErrorResponse);
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({
-    errors: {
-      message: err.message,
-      error: {}
-    }
-  });
-});
+app.use(serverErrorResponse);
 
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on port ${server.address().port}`);
+  debug(`Listening on port ${server.address().port}`);
 });
 
 export default app;

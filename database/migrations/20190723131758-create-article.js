@@ -6,30 +6,30 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     title: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     slug: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     body: {
       allowNull: false,
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT,
     },
     description: {
       allowNull: false,
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT,
     },
     isPaid: {
       defaultValue: false,
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
     },
     ratings: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     userId: {
       allowNull: false,
@@ -43,7 +43,7 @@ module.exports = {
     },
     readTime: {
       allowNull: false,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     createdAt: {
       allowNull: false,
@@ -54,7 +54,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Articles')
 };
