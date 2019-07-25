@@ -1,14 +1,14 @@
-import express from "express";
-import session from "express-session";
-import cors from "cors";
-import errorhandler from "errorhandler";
-import logger from "morgan";
-import methodOverride from "method-override";
+import express from 'express';
+import session from 'express-session';
+import cors from 'cors';
+import errorhandler from 'errorhandler';
+import logger from 'morgan';
+import methodOverride from 'method-override';
 import swaggerUi from 'swagger-ui-express';
 
 import docs from './docs/swagger.json';
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Create global app object
 const app = express();
@@ -16,17 +16,17 @@ const app = express();
 app.use(cors());
 
 // Normal express config defaults
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 app.use(methodOverride());
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(`${__dirname}/public`));
 
 app.use(
   session({
-    secret: "authorshaven",
+    secret: 'authorshaven',
     cookie: { maxAge: 60000 },
     resave: false,
     saveUninitialized: false
@@ -37,14 +37,14 @@ if (!isProduction) {
   app.use(errorhandler());
 }
 
-/// catch 404 and forward to error handler
+// catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error("Not Found");
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-/// error handlers
+// error handlers
 
 // development error handler
 // will print stacktrace
@@ -77,7 +77,7 @@ app.use((err, req, res, next) => {
 
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || 3000, () => {
-  console.log("Listening on port " + server.address().port);
+  console.log(`Listening on port ${server.address().port}`);
 });
 
 export default app;
