@@ -16,7 +16,7 @@
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seedall": "npx sequelize-cli db:seed:all",
     "clean": "rm -rf build && mkdir build",
-    "build-server": "babel -d ./build ./ --ignore node_modules,coverage,__tests__",
+    "build-server": "babel -d ./build ./ --ignore node_modules",
     "copy-swagger": "cp -r docs/swagger.json build/docs",
     "build": "npm run clean && npm run build-server && npm run copy-swagger",
     "heroku-postbuild": "npm run build && npm run migrate "
