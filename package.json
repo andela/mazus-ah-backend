@@ -15,7 +15,7 @@
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seedall": "npx sequelize-cli db:seed:all",
-    "heroku-postbuild": "run migrate "
+    "heroku-postbuild": "npm run migrate"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
