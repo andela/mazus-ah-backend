@@ -6,8 +6,6 @@ import logger from "morgan";
 import methodOverride from "method-override";
 import swaggerUi from 'swagger-ui-express';
 
-import routes from "./routes";
-import User from "./models/User";
 import docs from './docs/swagger.json';
 
 const isProduction = process.env.NODE_ENV === "production";
