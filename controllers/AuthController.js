@@ -55,9 +55,6 @@ export default class AuthController {
       message: 'Your Account has been created successfully!',
       user: {
         token,
-        id: registeredUser.id,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
         email: registeredUser.email,
         isVerified: registeredUser.isVerified,
         verificationToken,
