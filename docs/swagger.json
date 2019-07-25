@@ -1,0 +1,24 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Authors Haven",
+      "description": "Welcome to Authors Haven api docs\n "    
+    },
+    "servers": ["localhost:3000"],
+    "schemes": ["http", "https"],
+    "securityDefinitions": {
+      "Bearer": {
+         "type": "apiKey",
+         "name": "Authorization",
+         "in": "header"
+      }
+    },
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        
+    },"definitions": {
+
+   }
+  }
