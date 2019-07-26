@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   const ArticleImage = sequelize.define('ArticleImage', {
     imageLink: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   ArticleImage.associate = function(models) {

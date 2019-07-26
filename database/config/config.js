@@ -7,9 +7,9 @@ export const development = {
 };
 
 export const test = {
-  use_env_variable: 'TEST_DATABASE_URL'
+  use_env_variable: 'TEST_DATABASE_URL',
 };
 
 export const production = {
-  use_env_variable: 'DATABASE_URL'
+  use_env_variable: 'DATABASE_URL',
 };
