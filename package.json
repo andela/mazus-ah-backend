@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon --exec babel-node .",
-    "test": "nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
+    "pretest": " NODE_ENV=test npm run migrate:undo && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seedall",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "migrate": "sequelize db:migrate",
+    "migrate": "cross-env NODE_ENV=test && sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seedall": "npx sequelize-cli db:seed:all"
   },
@@ -18,6 +19,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "errorhandler": "^1.5.0",
