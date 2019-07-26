@@ -7,11 +7,11 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     token: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.TEXT,
     },
     userId: {
       allowNull: false,
@@ -32,7 +32,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('BlacklistedTokens')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('BlacklistedTokens'),
 };

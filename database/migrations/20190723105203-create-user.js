@@ -6,7 +6,7 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     email: {
       allowNull: false,
@@ -19,18 +19,18 @@ module.exports = {
     },
     firstName: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     lastName: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     verificationToken: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     isVerified: {
       defaultValue: false,
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
     },
     type: {
       type: Sequelize.ENUM('admin', 'user'),
@@ -45,7 +45,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };

@@ -2,39 +2,43 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable func-names */
 module.exports = (sequelize, DataTypes) => {
-  const Article = sequelize.define('Article', {
-    title: {
-      allowNull: false,
-      type: DataTypes.STRING
+  const Article = sequelize.define(
+    'Article',
+    {
+      title: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      slug: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      body: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      description: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      isPaid: {
+        defaultValue: false,
+        type: DataTypes.BOOLEAN,
+      },
+      ratings: {
+        type: DataTypes.INTEGER,
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      readTime: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
     },
-    slug: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    body: {
-      allowNull: false,
-      type: DataTypes.TEXT
-    },
-    description: {
-      allowNull: false,
-      type: DataTypes.TEXT
-    },
-    isPaid: {
-      defaultValue: false,
-      type: DataTypes.BOOLEAN
-    },
-    ratings: {
-      type: DataTypes.INTEGER
-    },
-    userId: {
-      allowNull: false,
-      type: DataTypes.INTEGER
-    },
-    readTime: {
-      allowNull: false,
-      type: DataTypes.INTEGER
-    },
-  }, {});
+    {},
+  );
   Article.associate = function(models) {
     Article.hasMany(models.ArticleImage, {
       foreignKey: 'articleId',

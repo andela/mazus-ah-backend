@@ -6,13 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('Like', {
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     articleId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     commentId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   Like.associate = function(models) {

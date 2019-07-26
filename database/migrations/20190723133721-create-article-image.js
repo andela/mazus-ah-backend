@@ -6,11 +6,11 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     imageLink: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     articleId: {
       allowNull: false,
@@ -31,7 +31,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('ArticleImages')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('ArticleImages'),
 };

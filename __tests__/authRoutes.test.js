@@ -19,7 +19,7 @@ describe('Auth Routes Test', () => {
       firstName: 'Darth',
       lastName: 'Vader',
       email: 'darthsss@vader.com',
-      password: 'password12'
+      password: 'password12',
     };
     chai
       .request(app)
@@ -32,17 +32,19 @@ describe('Auth Routes Test', () => {
       });
   });
 
-  it('Should throw 401 status code accessing the logout route without a token', (done) => {
+  it('should throw 401 status code accessing the logout route without a token', (done) => {
     chai
       .request(app)
       .post(`${API_PREFIX}/logout`)
       .end((err, res) => {
         expect(res.status).to.eql(401);
+        expect(res.body.errors.message)
+          .to.eql('No token provided');
         done();
       });
   });
 
-  it('Should not let a logged out user make a request', (done) => {
+  it('should not let a logged out user make a request', (done) => {
     chai
       .request(app)
       .post(`${API_PREFIX}/logout`)
@@ -52,11 +54,13 @@ describe('Auth Routes Test', () => {
         expect(res.body)
           .to.have.property('errors')
           .to.be.a('object');
+        expect(res.body.errors.message)
+          .to.eql('Invalid token provided, please sign in');
         done();
       });
   });
 
-  it('Should not let a user with an invalid token make a request', (done) => {
+  it('should not let a user with an invalid token make a request', (done) => {
     chai
       .request(app)
       .post(`${API_PREFIX}/logout`)
@@ -67,11 +71,12 @@ describe('Auth Routes Test', () => {
           .to.have.property('errors')
           .to.be.a('object');
         expect(res.body).to.have.nested.property('errors.message');
+        expect(res.body.errors.message).to.eql('No token provided');
         done();
       });
   });
 
-  it('Should log out a user', (done) => {
+  it('should log out a user', (done) => {
     chai
       .request(app)
       .post(`${API_PREFIX}/logout`)
@@ -81,11 +86,14 @@ describe('Auth Routes Test', () => {
         expect(res.body)
           .to.have.property('data')
           .to.be.a('object');
+        expect(res.body.data)
+          .to.have.property('message')
+          .to.be.a('string').to.be.eql('Successfully logged out');
         done();
       });
   });
 
-  it('Should throw a 500 status code when an error occurs on the server', (done) => {
+  it('should throw a 500 status code when an error occurs on the server', (done) => {
     const stub = sinon.stub(BlacklistedToken, 'create').rejects(new Error('Foreign Key constraint'));
     chai
       .request(app)

@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     body: {
       allowNull: false,
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   Comment.associate = function(models) {

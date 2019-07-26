@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   const Follower = sequelize.define('Follower', {
     followerId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   Follower.associate = function(models) {

@@ -6,19 +6,19 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     reportTitle: {
       allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     reportBody: {
       allowNull: false,
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT,
     },
     reportedBy: {
       allowNull: false,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     articleId: {
       type: Sequelize.INTEGER,
@@ -42,7 +42,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Reports')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Reports'),
 };

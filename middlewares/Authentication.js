@@ -40,19 +40,19 @@ export default class Authentication {
 
       const token = bearer.split(' ')[1];
       const blacklistedToken = await BlacklistedToken.findOne({
-        where: { token }
+        where: { token },
       });
 
       if (blacklistedToken) {
         return errorResponse(res, 403, {
-          message: 'Invalid token provided, please sign in'
+          message: 'Invalid token provided, please sign in',
         });
       }
 
       jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
           return errorResponse(res, 403, {
-            message: 'Invalid token provided'
+            message: 'Invalid token provided',
           });
         }
 

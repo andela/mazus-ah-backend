@@ -6,7 +6,7 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     userId: {
       allowNull: false,
@@ -19,10 +19,10 @@ module.exports = {
       },
     },
     bio: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     avatar: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     createdAt: {
       allowNull: false,
@@ -33,7 +33,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    }
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Profiles')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Profiles'),
 };
