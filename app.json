@@ -8,15 +8,16 @@
   "env": {
     "SECRET_KEY": {
       "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
     }
   },
   "formation": {
-    "web": {
-      "quantity": 1
-    }
   },
   "name": "mazus-ah-backend",
   "scripts": {
+    "postdeploy": "npx sequelize-cli db:seed:all"
   },
   "stack": "heroku-18"
 }
