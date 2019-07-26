@@ -3,16 +3,20 @@
 /* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
-  const BlacklistedToken = sequelize.define('BlacklistedToken', {
-    token: {
-      allowNull: false,
-      type: DataTypes.STRING
+  const BlacklistedToken = sequelize.define(
+    'BlacklistedToken',
+    {
+      token: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
     },
-    userId: {
-      allowNull: false,
-      type: DataTypes.INTEGER
-    },
-  }, {});
+    {},
+  );
   BlacklistedToken.associate = function(models) {
     // associations can be defined here
   };

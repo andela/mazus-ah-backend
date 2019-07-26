@@ -3,36 +3,39 @@
 /* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    email: {
-      type: DataTypes.STRING,
-      required: true,
-      unique: true,
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    firstName: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    lastName: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    verificationToken: DataTypes.STRING,
+  const User = sequelize.define(
+    'User',
+    {
+      email: {
+        type: DataTypes.STRING,
+        required: true,
+        unique: true,
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      firstName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      lastName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      verificationToken: DataTypes.STRING,
 
-    isVerified: {
-      defaultValue: false,
-      type: DataTypes.BOOLEAN
+      isVerified: {
+        defaultValue: false,
+        type: DataTypes.BOOLEAN,
+      },
+      type: {
+        type: DataTypes.ENUM('admin', 'user'),
+        defaultValue: 'user',
+      },
     },
-    type: {
-      type: DataTypes.ENUM('admin', 'user'),
-      defaultValue: 'user',
-    },
-
-  }, {});
+    {},
+  );
   User.associate = function(models) {
     User.hasOne(models.Profile, {
       foreignKey: 'userId',
