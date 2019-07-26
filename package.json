@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.9.0"
+  },
   "scripts": {
+    "start": "babel-node ./index.js",
     "server": "nodemon --exec babel-node .",
     "test": "nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
-    "seedall": "npx sequelize-cli db:seed:all"
+    "seedall": "npx sequelize-cli db:seed:all",
+    "heroku-postbuild": "npm run migrate"
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
