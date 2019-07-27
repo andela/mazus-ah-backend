@@ -1,5 +1,5 @@
 import { check, validationResult, param } from 'express-validator';
-import models from '../database/models'
+import models from '../database/models';
 
 const validate = {
   signup: [
@@ -45,7 +45,7 @@ const validate = {
         });
       }
       return next();
-    }
+    },
   ],
   createProfileValidate: [
     check('avatar')
@@ -61,19 +61,19 @@ const validate = {
       .not()
       .isInt()
       .withMessage('Bio is not a valid string, please input a valid string'),
-      (req, res, next) => {
-        const errors = validationResult(req);
-        const errorMessage = [];
-        if (!errors.isEmpty()) {
-          errors.array({ onlyFirstError: true }).forEach((err) => {
-            errorMessage.push(err.msg);
-          });
-          return res.status(400).json({
-            errors: errorMessage,
-          });
-        }
-        return next();
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = [];
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((err) => {
+          errorMessage.push(err.msg);
+        });
+        return res.status(400).json({
+          errors: errorMessage,
+        });
       }
+      return next();
+    },
   ],
   editProfileValidate: [
     check('avatar')
@@ -88,7 +88,7 @@ const validate = {
       .withMessage('Bio is required')
       .not()
       .isInt()
-      .withMessage('Bio is not a valid string, please input a valid string'),  
+      .withMessage('Bio is not a valid string, please input a valid string'),
     check('firstName')
       .isAlpha()
       .trim()
@@ -96,36 +96,36 @@ const validate = {
     check('lastName')
       .isAlpha()
       .trim()
-      .withMessage('LastName is not a valid string, please input a valid string'),  
-      (req, res, next) => {
-        const errors = validationResult(req);
-        const errorMessage = [];
-        if (!errors.isEmpty()) {
-          errors.array({ onlyFirstError: true }).forEach((err) => {
-            errorMessage.push(err.msg);
-          });
-          return res.status(400).json({
-            errors: errorMessage,
-          });
-        }
-        return next();
+      .withMessage('LastName is not a valid string, please input a valid string'),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = [];
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((err) => {
+          errorMessage.push(err.msg);
+        });
+        return res.status(400).json({
+          errors: errorMessage,
+        });
       }
-    ],
+      return next();
+    },
+  ],
 
-    validateId: [
-      param('id')
-      .custom(async id => {
+  validateId: [
+    param('id')
+      .custom(async (id) => {
         const isExist = await models.User.findOne({ where: { id } });
         if (!isExist) {
           throw new Error('No User with the specified ID was found');
         }
         return true;
       }),
-      (req, res, next) => {
-        const errors = validationResult(req);
-        const errorMessage = [];
-        if (!errors.isEmpty()) {
-          errors.array({ onlyFirstError: true }).forEach((err) => {
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = [];
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((err) => {
           errorMessage.push(err.msg);
         });
         return res.status(200).json({
@@ -133,8 +133,8 @@ const validate = {
         });
       }
       return next();
-    }
-  ]
+    },
+  ],
 };
 
 export default validate;
