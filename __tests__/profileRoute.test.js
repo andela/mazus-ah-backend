@@ -96,7 +96,7 @@ describe('Profile test', () => {
           expect(res.body).to.have.property('errors');
           expect(res.body.errors[0]).to.eql('Avatar is not a valid URL, please input a valid URL');
           expect(res.body.errors[1]).to.eql('Bio is not a valid string, please input a valid string');
-          expect(res.body.errors[2]).to.eql('FirstName is not a valid URL, please input a valid URL');
+          expect(res.body.errors[2]).to.eql('FirstName is not a valid String, please input a valid string');
           expect(res.body.errors[3]).to.eql('LastName is not a valid string, please input a valid string');
           done();
         })

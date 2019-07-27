@@ -60,7 +60,6 @@ export default class ProfileController {
   static async editProfile(req, res) {
     const { avatar, bio, firstName, lastName } = req.body;
     const id = 1 // req.user
-    console.log('here',firstName);
     await models.Profile.update(
       { bio, avatar }, 
       { where: { userId: id }}
@@ -71,7 +70,6 @@ export default class ProfileController {
       { where: { id }}
     );
     const userData = await models.User.findOne({ where: { id }});
-    console.log(userData.dataValues);
 
     return res.status(200).json({
         message: 'Your profile has been updated successfully',
