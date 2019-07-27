@@ -27,11 +27,6 @@ export default class Postals {
       subject: emailSubject,
       html: content,
     };
-    try {
-      await sendGridMail.send(message);
-      return true;
-    } catch (error) {
-      return false;
-    }
+    sendGridMail.send(message);
   }
 }

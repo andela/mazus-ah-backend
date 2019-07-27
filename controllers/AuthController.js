@@ -43,9 +43,7 @@ export default class AuthController {
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email,
-      firstName,
-      lastName
+      email
     });
 
     // This line sends the registered user an email
@@ -56,6 +54,9 @@ export default class AuthController {
       message: 'Your Account has been created successfully!',
       user: {
         token,
+        id: registeredUser.id,
+        firstName: registeredUser.firstName,
+        lastName: registeredUser.lastName,
         email: registeredUser.email,
         isVerified: registeredUser.isVerified,
         verificationToken
@@ -72,33 +73,17 @@ export default class AuthController {
    * @memberof AuthController
    */
   static async verifyEmail(req, res) {
-    const { email, token } = req.params;
     try {
+      const { email, token } = req.query;
       const foundUser = await models.User.findOne({ where: { email } });
-      if (!foundUser) {
-        return res.status(404).send(
-          { message: 'User not found' }
-        );
+      if (foundUser.verificationToken === token) {
+        const verifiedUser = await models.User.update({ isVerified: true }, { where: { email } });
+        res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser, });
+      } else {
+        res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
       }
-      if (foundUser.verificationToken !== token) {
-        return res.status(400).send(
-          {
-            message: 'Incorrect Credentials',
-            isVerified: foundUser.isVerified,
-          }
-        );
-      }
-      await models.User.update({ isVerified: true }, { where: { email } });
-      return res.status(200).send(
-        {
-          message: 'Email verified',
-          isVerified: foundUser.isVerified,
-        }
-      );
     } catch (error) {
-      return res.status(500).send(
-        { message: error }
-      );
+      res.status(500).send({ status: 500, mesaage: error });
     }
   }
 }
