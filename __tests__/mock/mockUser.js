@@ -2,7 +2,7 @@ const correctUser = {
   firstName: 'James',
   lastName: 'Done',
   email: 'jamesdoe29@gmail.com',
-  password: 'jamesdoe'
+  password: 'jamesdoe',
 };
 
 
