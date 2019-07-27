@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Server Error Test', () => {
-  it('Should return a welcome message', done => {
+  it('Should return a welcome message', (done) => {
     chai
       .request(app)
       .get('/')

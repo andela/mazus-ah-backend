@@ -1,25 +1,56 @@
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-
 import app from '..';
 import models from '../database/models';
+import mockUsers from './mockData/mockUsers';
 
 chai.use(chaiHttp);
 
 const API_PREFIX = '/api/v1/auth';
+const url = '/api/v1';
 const { expect } = chai;
 const { BlacklistedToken } = models;
 let validUserToken;
 const blacklistedToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9obiIsImlhdCI6MTU2NDAwOTA5NCwiZXhwIjoxNTY0MDEyNjk0fQ.J5ktoXlmLxOtV8R16sNPMXXeydwRdCA8h6Cep-AzZnc';
 
+describe('User signup tests', () => {
+  describe('test for user signup', () => {
+    it('should register a user successfully when all fields are inputed correctly', (done) => {
+      chai
+        .request(app)
+        .post(`${url}/auth/signup`)
+        .send(mockUsers[5])
+        .end((err, res) => {
+          expect(res.status).to.eql(201);
+          expect(res.body.message).to.eql('Your Account has been created successfully!');
+          expect(res.body.user).to.have.property('token');
+          expect(res.body.user).to.have.property('isVerified');
+          expect(res.body.user).to.have.property('email');
+          expect(res.body.user.email).to.eql(mockUsers[5].email);
+          done();
+        });
+    });
+    it('should return an error when an email already exist', (done) => {
+      chai
+        .request(app)
+        .post(`${url}/auth/signup`)
+        .send(mockUsers[5])
+        .end((err, res) => {
+          expect(res.status).to.eql(409);
+          expect(res.body.message).to.eql('This User already exist');
+          done();
+        });
+    });
+  });
+});
 describe('Auth Routes Test', () => {
   before((done) => {
     const user = {
       firstName: 'Darth',
       lastName: 'Vader',
       email: 'darthsss@vader.com',
-      password: 'Password12',
+      password: 'Password12'
     };
     chai
       .request(app)
@@ -38,8 +69,7 @@ describe('Auth Routes Test', () => {
       .post(`${API_PREFIX}/logout`)
       .end((err, res) => {
         expect(res.status).to.eql(401);
-        expect(res.body.errors.message)
-          .to.eql('No token provided');
+        expect(res.body.errors.message).to.eql('No token provided');
         done();
       });
   });
@@ -54,8 +84,7 @@ describe('Auth Routes Test', () => {
         expect(res.body)
           .to.have.property('errors')
           .to.be.a('object');
-        expect(res.body.errors.message)
-          .to.eql('Invalid token provided, please sign in');
+        expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });
   });
@@ -88,13 +117,16 @@ describe('Auth Routes Test', () => {
           .to.be.a('object');
         expect(res.body.data)
           .to.have.property('message')
-          .to.be.a('string').to.be.eql('Successfully logged out');
+          .to.be.a('string')
+          .to.be.eql('Successfully logged out');
         done();
       });
   });
 
   it('should throw a 500 status code when an error occurs on the server', (done) => {
-    const stub = sinon.stub(BlacklistedToken, 'create').rejects(new Error('Foreign Key constraint'));
+    const stub = sinon
+      .stub(BlacklistedToken, 'create')
+      .rejects(new Error('Foreign Key constraint'));
     chai
       .request(app)
       .post(`${API_PREFIX}/logout`)
