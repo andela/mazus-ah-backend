@@ -5,4 +5,5 @@ const correctUser = {
   password: 'jamesdoe'
 };
 
+
 export default correctUser;

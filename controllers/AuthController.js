@@ -51,7 +51,8 @@ export default class AuthController {
       user: {
         token,
         email: registeredUser.email,
-        isVerified: registeredUser.isVerified
+        isVerified: registeredUser.isVerified,
+        verificationToken
       }
     });
   }

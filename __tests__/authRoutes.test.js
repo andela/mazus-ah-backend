@@ -10,7 +10,7 @@ const url = '/api/v1';
 
 describe('User signup tests', () => {
   describe('test for user signup', () => {
-    it('Should register a user successfully when all fields are inputed correctly', (done) => {
+    it('should register a user successfully when all fields are inputed correctly', (done) => {
       chai
         .request(app)
         .post(`${url}/auth/signup`)
@@ -21,10 +21,11 @@ describe('User signup tests', () => {
           expect(res.body.user).to.have.property('token');
           expect(res.body.user).to.have.property('isVerified');
           expect(res.body.user).to.have.property('email');
+          expect(res.body.user.email).to.eql(correctUser.email);
           done();
         });
     });
-    it('Should return an error when an email already exist', (done) => {
+    it('should return an error when an email already exist', (done) => {
       chai
         .request(app)
         .post(`${url}/auth/signup`)
