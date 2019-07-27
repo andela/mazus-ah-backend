@@ -126,15 +126,15 @@ const validate = {
         const errorMessage = [];
         if (!errors.isEmpty()) {
           errors.array({ onlyFirstError: true }).forEach((err) => {
-            errorMessage.push(err.msg);
-          });
-          return res.status(200).json({
-            errors: errorMessage,
-          });
-        }
-        return next();
+          errorMessage.push(err.msg);
+        });
+        return res.status(200).json({
+          errors: errorMessage,
+        });
       }
-    ]
-}
-  
+      return next();
+    }
+  ]
+};
+
 export default validate;
