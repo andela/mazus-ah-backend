@@ -1,6 +1,8 @@
 import '@babel/polyfill';
 import express from 'express';
 import cors from 'cors';
+import '@babel/polyfill';
+
 import errorhandler from 'errorhandler';
 import logger from 'morgan';
 import Debug from 'debug';

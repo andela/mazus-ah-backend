@@ -1,4 +1,5 @@
-import { check, validationResult } from 'express-validator/check';
+import { check, validationResult, param } from 'express-validator';
+import models from '../database/models'
 
 const validate = {
   signup: [
@@ -45,6 +46,102 @@ const validate = {
       }
       return next();
     }
-  ]
-};
+  ],
+  createProfileValidate: [
+    check('avatar')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Avatar is required')
+      .isURL()
+      .withMessage('Avatar is not a valid URL, please input a valid URL'),
+    check('bio')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Bio is required')
+      .not()
+      .isInt()
+      .withMessage('Bio is not a valid string, please input a valid string'),
+      (req, res, next) => {
+        const errors = validationResult(req);
+        const errorMessage = [];
+        if (!errors.isEmpty()) {
+          errors.array({ onlyFirstError: true }).forEach((err) => {
+            errorMessage.push(err.msg);
+          });
+          return res.status(400).json({
+            errors: errorMessage,
+          });
+        }
+        return next();
+      }
+  ],
+  editProfileValidate: [
+    check('avatar')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Avatar is required')
+      .isURL()
+      .withMessage('Avatar is not a valid URL, please input a valid URL'),
+    check('bio')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Bio is required')
+      .not()
+      .isInt()
+      .withMessage('Bio is not a valid string, please input a valid string'),  
+    check('firstName')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('First name is required')
+      .isAlpha()
+      .trim()
+      .withMessage('FirstName is not a valid URL, please input a valid URL'),
+    check('lastName')
+      .not()
+      .isEmpty({ ignore_whitespace: true })
+      .withMessage('Last name is required')
+      .isAlpha()
+      .trim()
+      .withMessage('LastName is not a valid string, please input a valid string'),  
+      (req, res, next) => {
+        const errors = validationResult(req);
+        const errorMessage = [];
+        if (!errors.isEmpty()) {
+          errors.array({ onlyFirstError: true }).forEach((err) => {
+            errorMessage.push(err.msg);
+          });
+          return res.status(400).json({
+            errors: errorMessage,
+          });
+        }
+        return next();
+      }
+    ],
+
+    validateId: [
+      param('id')
+      .custom(async id => {
+        const isExist = await models.User.findOne({ where: { id } });
+        if (!isExist) {
+          throw new Error('No User with the specified ID was found');
+        }
+        return true;
+      }),
+
+      (req, res, next) => {
+        const errors = validationResult(req);
+        const errorMessage = [];
+        if (!errors.isEmpty()) {
+          errors.array({ onlyFirstError: true }).forEach((err) => {
+            errorMessage.push(err.msg);
+          });
+          return res.status(200).json({
+            errors: errorMessage,
+          });
+        }
+        return next();
+      }
+    ]
+}
+  
 export default validate;

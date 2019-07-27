@@ -45,7 +45,7 @@ export default class AuthController {
       password: hashedPassword,
       type: 'user'
     };
-
+    
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
