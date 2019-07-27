@@ -6,6 +6,6 @@ const { signUp, verifyEmail } = AuthController;
 const router = Router();
 
 router.post('/signup', signUp);
-router.patch('/:email/:token', verifyEmail);
+router.patch('/verify', verifyEmail);
 
 export default router;
