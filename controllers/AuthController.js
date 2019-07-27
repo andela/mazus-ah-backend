@@ -47,8 +47,10 @@ export default class AuthController {
     });
 
     // This line sends the registered user an email
-    EmailVerification.sendVerificationEmail(registeredUser.email, registeredUser.firstName,
-      registeredUser.verificationToken);
+    EmailVerification.sendVerificationEmail(
+      req, registeredUser.email, registeredUser.firstName,
+      verificationToken
+    );
 
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
