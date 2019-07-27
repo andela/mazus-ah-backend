@@ -1,0 +1,46 @@
+{
+    "get": {
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "tags": ["Auth"],
+      "summary": "google login",
+      "description": "This endpoint won't work with swagger-docs use your browser's address bar \n",
+      "parameters": [],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "Login with a google account",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "David"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Mark"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "david.mark@test.com"
+                  },
+                  "isVerified": {
+                    "type": "boolean",
+                    "example": "True"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
