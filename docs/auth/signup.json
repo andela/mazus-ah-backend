@@ -1,0 +1,39 @@
+{
+  "post": {
+    "tags": [
+        "Auth"
+    ],
+    "summary": "signup user",
+    "description": "Signup user. \n",
+    "parameters": [],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "400": {
+        "description": "Email is required",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "POST"
+            },
+            "message": {
+              "type": "string",
+              "example": "Please input a valid email address"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }
+    }
+  }
+}
