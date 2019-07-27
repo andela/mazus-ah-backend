@@ -90,16 +90,10 @@ const validate = {
       .isInt()
       .withMessage('Bio is not a valid string, please input a valid string'),  
     check('firstName')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('First name is required')
       .isAlpha()
       .trim()
-      .withMessage('FirstName is not a valid URL, please input a valid URL'),
+      .withMessage('FirstName is not a valid String, please input a valid string'),
     check('lastName')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Last name is required')
       .isAlpha()
       .trim()
       .withMessage('LastName is not a valid string, please input a valid string'),  
@@ -127,7 +121,6 @@ const validate = {
         }
         return true;
       }),
-
       (req, res, next) => {
         const errors = validationResult(req);
         const errorMessage = [];

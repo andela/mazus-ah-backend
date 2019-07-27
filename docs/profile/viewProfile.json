@@ -1,22 +1,30 @@
 {
-  "post": {
+  "get": {
     "security": [
       {
          "Bearer": []
       }
    ],
     "tags": [
-        "Auth"
+      "Profile"
     ],
-    "summary": "signup user",
-    "description": "Signup user. \n",
-    "parameters": [],
+    "summary": "view profile",
+    "description": "View a Profile \n",
+    "parameters": [{
+      "in": "path",
+      "name": "id",
+      "schema": {
+        "type": "integer"
+      },
+      "description": "The Profile ID you want to check"
+    }
+      ],
     "produces": [
       "application/json"
     ],
     "responses": {
-      "400": {
-        "description": "Email is required",
+      "200": {
+        "description": "Profile fetched successfully",
         "schema": {
           "type": "object",
           "properties": {
@@ -30,7 +38,7 @@
             },
             "message": {
               "type": "string",
-              "example": "Please input a valid email address"
+              "example": "No User with the specified ID was found"
             },
             "data": {
               "type": "string",
@@ -38,7 +46,7 @@
             }
           }
         }
-      }
+      }     
     }
   }
 }

@@ -17,7 +17,7 @@ export default class ProfileController {
    */
   static async createProfile(req, res) {
     const {avatar, bio} = req.body;  
-    const id = 1//req.user
+    const {id} = req.user
     const profileExist = await models.Profile.findOne({ where: { userId : id }})
     if (profileExist) {
       return res.status(409).json({
@@ -60,7 +60,7 @@ export default class ProfileController {
   static async editProfile(req, res) {
     const { avatar, bio, firstName, lastName } = req.body;
     const id = 1 // req.user
-    
+    console.log('here',firstName);
     await models.Profile.update(
       { bio, avatar }, 
       { where: { userId: id }}
@@ -70,15 +70,16 @@ export default class ProfileController {
       { firstName, lastName },
       { where: { id }}
     );
-
     const userData = await models.User.findOne({ where: { id }});
+    console.log(userData.dataValues);
+
     return res.status(200).json({
         message: 'Your profile has been updated successfully',
         profile: {
           avatar,
           bio,
-          firstName: firstName || userData.dataValues.firstName,
-          lastName: lastName || userData.dataValues.lastName
+          firstName: userData.dataValues.firstName,
+          lastName: userData.dataValues.lastName
         }
       })
   }

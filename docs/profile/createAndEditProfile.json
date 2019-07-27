@@ -1,0 +1,136 @@
+{
+  "post": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Profile"],
+    "summary": "Create profile",
+    "description": "Create a profile",
+    "parameters": [{
+      "name": "Create a profile",
+      "in": "body",
+      "description": "request payload",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+          },
+          "bio": {
+            "type": "string",
+            "example": "I love dik"
+          }
+         }
+      }
+    }],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Your profile has been created successfully"
+            },
+            "profile": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pelumi Alesh"
+                },
+                "bio": {
+                  "type": "string",
+                  "example": "I love eating beans"              
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "patch": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Profile"],
+    "summary": "edit profile",
+    "description": "Edit a Profile \n",
+    "parameters": [{
+      "name": "Edit Profile",
+      "in": "body",
+      "description": "request payload",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+          },
+          "bio": {
+            "type": "string",
+            "example": "I love eating beans"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Pelumi"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Aleshinloye"
+          }
+         }
+      }
+    }],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "Your profile has been updated successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": "Your profile has been created successfully",
+            "profile": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pelumi Alesh"
+                },
+                "bio": {
+                  "type": "string",
+                  "example": "I love eating beans"              
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "Pelumi"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Aleshinloye"
+                }
+              }
+            }
+          }
+        }
+      }     
+    }
+  }
+}
