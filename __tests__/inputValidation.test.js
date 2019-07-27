@@ -9,7 +9,8 @@ const { expect } = chai;
 const url = '/api/v1';
 describe('User tests', () => {
   it('should return status 400 when all required fields are missing', (done) => {
-    chai.request(app)
+    chai
+      .request(app)
       .post(`${url}/auth/signup`)
       .send(mockUsers[0])
       .end((err, res) => {
@@ -23,7 +24,8 @@ describe('User tests', () => {
       });
   });
   it('should return status 400 if the email input is invalid', (done) => {
-    chai.request(app)
+    chai
+      .request(app)
       .post(`${url}/auth/signup`)
       .send(mockUsers[1])
       .end((err, res) => {
@@ -34,19 +36,20 @@ describe('User tests', () => {
       });
   });
   it('should return status 400 if the password input does not match required expectation', (done) => {
-    chai.request(app)
+    chai
+      .request(app)
       .post(`${url}/auth/signup`)
       .send(mockUsers[2])
       .end((err, res) => {
         expect(res.status).eql(400);
         expect(res.body).to.have.property('errors');
-        expect(res.body.errors.password)
-          .eql('Password must contain at least one uppercase letter, one lowercase letter and one numeric digit');
+        expect(res.body.errors.password).eql('Password must contain at least one uppercase letter, one lowercase letter and one numeric digit');
         done();
       });
   });
   it('should return status 400 if the password length is less than 8 characters', (done) => {
-    chai.request(app)
+    chai
+      .request(app)
       .post(`${url}/auth/signup`)
       .send(mockUsers[3])
       .end((err, res) => {
@@ -57,7 +60,8 @@ describe('User tests', () => {
       });
   });
   it('should successfully signup a user if the parameters are valid', (done) => {
-    chai.request(app)
+    chai
+      .request(app)
       .post(`${url}/auth/signup`)
       .send(mockUsers[4])
       .end((err, res) => {
