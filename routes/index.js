@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import authRoutes from './authRoutes';
 import ProfileRoute from './profileRoutes';
 
