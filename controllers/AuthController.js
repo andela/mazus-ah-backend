@@ -84,15 +84,16 @@ export default class AuthController {
       const foundUser = await models.User.findOne({ where: { email } });
       if (foundUser.verificationToken === token) {
         const verifiedUser = await models.User.update({ isVerified: true }, { where: { email } });
-        res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser, });
+        res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser });
       } else {
         res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
       }
     } catch (error) {
       res.status(500).send({ mesaage: error });
     }
-  }   
-   /** 
+  }
+
+  /**
    * Method to log a user out
    *
    * @static
@@ -105,7 +106,7 @@ export default class AuthController {
    *
    * @memberof AuthController
    */
-   static async logout(req, res, next) {
+  static async logout(req, res, next) {
     try {
       const { authorization } = req.headers;
       const { id } = req.user;
