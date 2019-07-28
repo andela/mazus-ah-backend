@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { hashSync } from 'bcryptjs';
+import { hashSync, compareSync } from 'bcryptjs';
 import { config } from 'dotenv';
 
 config();
@@ -25,6 +25,17 @@ class Helper {
    */
   static hashPassword(password) {
     return hashSync(password, 10);
+  }
+
+  /**
+   * @method comparePassword
+   * @description compares the user inputed password with hashPassword
+   * @param {string} password - The user password to be compared
+   * @param {string} hashPassword - The hashed password in the database
+   * @returns {string} A hashed password
+   */
+  static comparePassword(password, hashPassword) {
+    return compareSync(password, hashPassword);
   }
 
   /**
