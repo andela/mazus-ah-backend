@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define('Tag', {
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   Tag.associate = function(models) {

@@ -1,0 +1,64 @@
+{
+  "post": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Auth"],
+    "summary": "Log out user",
+    "description": "Logout user \n",
+    "parameters": [],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "User Logged out successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successfully logged out"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "User already logged out",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid token provided, please sign in"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed with an invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "No token provided" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,10 @@
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import EmailVerification from '../helpers/EmailVerification';
+import ServerResponse from '../modules';
+
+const { successResponse } = ServerResponse;
+const { BlacklistedToken, User } = models;
 
 /**
  *
@@ -19,13 +23,13 @@ export default class AuthController {
    */
   static async signUp(req, res) {
     const {
-      firstName, lastName, email, password
+      firstName, lastName, email, password,
     } = req.body;
 
-    const foundUser = await models.User.findOne({ where: { email } });
+    const foundUser = await User.findOne({ where: { email } });
     if (foundUser) {
       return res.status(409).send({
-        message: 'This User already exist'
+        message: 'This User already exist',
       });
     }
     const hashedPassword = Helper.hashPassword(password);
@@ -61,8 +65,8 @@ export default class AuthController {
         lastName: registeredUser.lastName,
         email: registeredUser.email,
         isVerified: registeredUser.isVerified,
-        verificationToken
-      }
+        verificationToken,
+      },
     });
   }
 
@@ -85,7 +89,31 @@ export default class AuthController {
         res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
       }
     } catch (error) {
-      res.status(500).send({ status: 500, mesaage: error });
+      res.status(500).send({ mesaage: error });
+    }
+  }   
+   /** 
+   * Method to log a user out
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} response object with message
+   *
+   * @memberof AuthController
+   */
+   static async logout(req, res, next) {
+    try {
+      const { authorization } = req.headers;
+      const { id } = req.user;
+      const token = authorization.split(' ')[1];
+      await BlacklistedToken.create({ token, userId: id });
+      return successResponse(res, 200, { message: 'Successfully logged out' });
+    } catch (err) {
+      return next(err);
     }
   }
 }

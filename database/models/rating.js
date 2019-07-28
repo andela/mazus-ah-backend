@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
   const Rating = sequelize.define('Rating', {
     rate: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
   }, {});
   Rating.associate = function(models) {
