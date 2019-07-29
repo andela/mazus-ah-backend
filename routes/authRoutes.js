@@ -5,12 +5,15 @@ import Validate from '../middlewares/inputValidation';
 
 const router = Router();
 
-const { signUp, verifyEmail, logout } = AuthController;
+const {
+  signUp, verifyEmail, userSignin, logout
+} = AuthController;
 const { verifyToken } = AuthMiddleware;
 
 
 router.post('/signup', Validate.signup, signUp);
 router.patch('/verify', verifyEmail);
+router.post('/signin', userSignin);
 router.post('/logout', verifyToken, logout);
 
 

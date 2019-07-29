@@ -18,5 +18,35 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {},
-  "definitions": {}
+  "definitions": {
+    "Users": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isVerified": {
+          "type": "boolean"
+        },
+        "createdOn": {
+          "type": "date"
+        }
+      }
+    }
+  }
 }

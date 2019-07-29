@@ -23,7 +23,7 @@ export default class AuthController {
    */
   static async signUp(req, res) {
     const {
-      firstName, lastName, email, password,
+      firstName, lastName, email, password
     } = req.body;
 
     const foundUser = await User.findOne({ where: { email } });
@@ -47,7 +47,7 @@ export default class AuthController {
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email,
+      email
     });
 
     // This line sends the registered user an email
@@ -66,7 +66,56 @@ export default class AuthController {
         email: registeredUser.email,
         isVerified: registeredUser.isVerified,
         verificationToken,
-      },
+      }
+    });
+  }
+
+  /**
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @returns {object} returns user data
+   * @memberof AuthController
+   */
+  static async userSignin(req, res) {
+    const { email, password } = req.body;
+
+    const user = await models.User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(401).send({
+        message: 'You Entered an incorrect Email or Password'
+      });
+    }
+    const {
+      id, firstName, lastName, email: emailAddress, isVerified, type
+    } = user.dataValues;
+
+    const token = Helper.createToken({
+      id,
+      firstName,
+      lastName,
+      emailAddress,
+      isVerified,
+      type,
+    });
+
+    const comparePassword = await Helper.comparePassword(password, user.dataValues.password);
+    if (!comparePassword) {
+      return res.status(401).send({
+        message: 'You Entered an incorrect Email or Password'
+      });
+    }
+    return res.status(200).send({
+      message: 'You have successfully logged in',
+      user: {
+        token,
+        email,
+        firstName,
+        lastName,
+        isVerified,
+      }
     });
   }
 

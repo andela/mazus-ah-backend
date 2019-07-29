@@ -110,6 +110,49 @@ describe('verifying an email', () => {
       });
   });
 });
+describe('test for user login', () => {
+  it('should login a user account successfully', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(mockUsers[6])
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body.message).to.eql('You have successfully logged in');
+        expect(res.body.user).to.have.property('token');
+        expect(res.body.user).to.have.property('isVerified');
+        expect(res.body.user).to.have.property('email');
+        expect(res.body.user.email).to.eql(mockUsers[6].email);
+        done();
+      });
+  });
+  it('should return an error when an email is wrong', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(mockUsers[7])
+      .end((err, res) => {
+        expect(res.status).to.eql(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql('You Entered an incorrect Email or Password');
+        done();
+      });
+  });
+  it('should return an error when password is wrong', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(mockUsers[8])
+      .end((err, res) => {
+        expect(res.status).to.eql(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql('You Entered an incorrect Email or Password');
+        done();
+      });
+  });
+});
+
+
 describe('Auth Routes Test', () => {
   before((done) => {
     const user = {
