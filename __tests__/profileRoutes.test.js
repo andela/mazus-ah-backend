@@ -24,6 +24,7 @@ describe('Profile test', () => {
       lastName: 'Gucci',
       email: 'luicGucci@outfit.com',
       password: 'passWORD122',
+      confirmPassword: 'Password12',
     };
     chai
       .request(app)
