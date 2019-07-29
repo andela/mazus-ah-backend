@@ -14,6 +14,24 @@
     },
     "NPM_CONFIG_PRODUCTION": {
       "required": true
+    },
+    "GOOGLE_CLIENT_ID": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "required": true
+    },
+    "GOOGLE_CALLBACK_URL": {
+      "required": true
+    },
+    "FACEBOOK_CLIENT_ID": {
+      "required": true
+    },
+    "FACEBOOK_CLIENT_SECRET": {
+      "required": true
+    },
+    "FACEBOOK_CALLBACK_URL": {
+      "required": true
     }
   },
   "formation": {
