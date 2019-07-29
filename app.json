@@ -9,6 +9,9 @@
     "SECRET_KEY": {
       "required": true
     },
+    "SENDGRID_API_KEY":{
+      "required": true
+    },
     "NPM_CONFIG_PRODUCTION": {
       "required": true
     }
