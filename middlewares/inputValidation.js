@@ -40,7 +40,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: `${errorMessage} from here`,
         });
       }
       return next();
