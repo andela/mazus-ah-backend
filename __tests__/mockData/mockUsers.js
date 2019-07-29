@@ -29,6 +29,18 @@ const users = [
     lastName: 'Potter',
     email: 'harrypott@mail.com',
     password: 'Password1',
+  },
+  {
+    email: 'harrypott@mail.com',
+    password: 'Password1',
+  },
+  {
+    email: 'harrypot@mail.com',
+    password: 'Password1',
+  },
+  {
+    email: 'harrypot@mail.com',
+    password: 'Password',
   }
 ];
 
