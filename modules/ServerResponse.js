@@ -71,6 +71,9 @@ export default class ServerResponse {
    * @memberof ServerResponse
    */
   static serverErrorResponse(err, req, res, next) {
+    if (res.headersSent) {
+      return next(err);
+    }
     return res.status(err.status || 500).json({
       errors: {
         message:
@@ -94,7 +97,9 @@ export default class ServerResponse {
    * @memberof ServerResponse
    */
   static developmentServerErrorResponse(err, req, res, next) {
-    debug(err.stack);
+    if (res.headersSent) {
+      return next(err);
+    }
     return res.status(err.status || 500).json({
       errors: {
         message: err.message,
