@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { verify } from 'jsonwebtoken';
 import { hashSync } from 'bcryptjs';
 import { config } from 'dotenv';
 
@@ -15,6 +15,15 @@ class Helper {
    */
   static createToken(payload) {
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '24d' });
+  }
+
+  /**
+   * @description Handles access token verification
+   * @param {string} token - The user credential {id, isAdmin}
+   * @return {object} access token values
+   */
+  static verifyToken(token) {
+    return verify(token, process.env.SECRET_KEY);
   }
 
   /**
