@@ -41,13 +41,13 @@ export default class AuthController {
       isVerified: false,
       verificationToken,
       password: hashedPassword,
-      type: 'user'
+      type: 'user',
     };
 
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email
+      email,
     });
 
     // This line sends the registered user an email
