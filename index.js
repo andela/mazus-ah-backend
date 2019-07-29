@@ -38,9 +38,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: "Welcome to Author's Haven" });
-});
 
 // catch 404 and forward to error handler
 app.use(notFoundError);
