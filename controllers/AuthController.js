@@ -47,7 +47,7 @@ export default class AuthController {
     const registeredUser = await models.User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email
+      email,
     });
 
     // This line sends the registered user an email
@@ -75,10 +75,11 @@ export default class AuthController {
    * @static
    * @param {object} req express request object
    * @param {object} res express response object
-   * @returns {object} returns an object depending on the outcome
+   * @param {fucntion} next
+   * @returns {function} returns an object depending on the outcome
    * @memberof AuthController
    */
-  static async verifyEmail(req, res) {
+  static async verifyEmail(req, res, next) {
     try {
       const { email, token } = req.query;
       const foundUser = await models.User.findOne({ where: { email } });
@@ -89,7 +90,7 @@ export default class AuthController {
         res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
       }
     } catch (error) {
-      res.status(500).send({ mesaage: error });
+      next(error);
     }
   }
 

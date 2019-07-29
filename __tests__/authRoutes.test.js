@@ -4,13 +4,15 @@ import chaiHttp from 'chai-http';
 import app from '..';
 import models from '../database/models';
 import mockUsers from './mockData/mockUsers';
+import mockUsersToVerify from './mockData/mockUsersToVerify';
 
 chai.use(chaiHttp);
 
 const API_PREFIX = '/api/v1/auth';
 const url = '/api/v1';
 const { expect } = chai;
-const { BlacklistedToken } = models;
+const { userToVerify, secondUserToVerify, thirdUserToVerify } = mockUsersToVerify;
+const { BlacklistedToken, User } = models;
 let validUserToken;
 const blacklistedToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9obiIsImlhdCI6MTU2NDAwOTA5NCwiZXhwIjoxNTY0MDEyNjk0fQ.J5ktoXlmLxOtV8R16sNPMXXeydwRdCA8h6Cep-AzZnc';
 
@@ -46,12 +48,6 @@ describe('User signup tests', () => {
 });
 
 describe('verifying an email', () => {
-  const userToVerify = {
-    firstName: 'Victor',
-    lastName: 'Ajayi',
-    email: 'saintyommex@gmail.com',
-    password: 'P455w0rd',
-  };
   let verificationCode;
   before((done) => {
     chai.request(app)
@@ -72,12 +68,6 @@ describe('verifying an email', () => {
         done();
       });
   });
-  const secondUserToVerify = {
-    firstName: 'Victor',
-    lastName: 'Ajayi',
-    email: 'seconduser@outlook.com',
-    password: 'P455w0rd'
-  };
   let secondVerificationCode;
   before((done) => {
     chai.request(app)
@@ -95,6 +85,27 @@ describe('verifying an email', () => {
         expect(res.status).to.eql(400);
         expect(res.body.message).to.eql('Incorrect Credentials');
         expect(res.body.isVerified).to.eql(false);
+        done();
+      });
+  });
+  let thirdVerificationCode;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signup')
+      .send(thirdUserToVerify)
+      .end((err, res) => {
+        thirdVerificationCode = res.body.user.verificationToken;
+        done();
+      });
+  });
+  it('it should throw an internal server error upon email verification', (done) => {
+    const stub = sinon.stub(User, 'update');
+    const error = new Error('Something went wrong');
+    stub.yields(error);
+    chai.request(app)
+      .patch(`${url}/auth/verify?email=${thirdUserToVerify.email}&token=${thirdVerificationCode}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(500);
         done();
       });
   });

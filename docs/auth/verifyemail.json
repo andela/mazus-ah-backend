@@ -1,0 +1,63 @@
+{
+    "patch": {
+      "tags": ["Auth"],
+      "summary": "Verify Email",
+      "description": "Verify User Email",
+      "parameters": [{
+        "name": "email",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "example": "nthusertoverify@outlook.com"
+        },
+        "required": true,
+        "description": "Unique email"
+      },
+      {
+        "name": "token",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsImVtYWlsIjoiZGFuaWVsYWJpb3llMTdAZ21haWwuY29tIiwiaWF0IjoxNTY0Mzk1MDI1LCJleHAiOjE1NjY0Njg2MjV9.YeLuSGes4xVoK18P7kK-bdw8eMPKT4SnH_D84KkSJbU"
+        },
+        "required": true,
+        "description": "Unique token"
+      }
+    ],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "Email verified!",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Email verified"
+              },
+              "isVerified": {
+                "type": "boolean",
+                "example": "true"
+              }
+            }
+          }
+        },
+        "400": {
+            "description": "User sends incorrect token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Incorrect Credentials"
+                },
+                "isVerified": {
+                    "type": "boolean",
+                    "example": "false"
+                  }
+              }
+            }
+          }
+      }
+    }
+  }
