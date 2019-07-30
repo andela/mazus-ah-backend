@@ -159,8 +159,7 @@ describe('Auth Routes Test', () => {
       firstName: 'Darth',
       lastName: 'Vader',
       email: 'darthsss@vader.com',
-      password: 'Password12',
-      confirmPassword: 'Password12',
+      password: 'Password12'
     };
     chai
       .request(app)
