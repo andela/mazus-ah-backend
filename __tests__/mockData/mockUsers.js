@@ -49,6 +49,14 @@ const users = [
     email: 'harrypot@mail.com',
     password: 'Password',
     confirmPassword: 'Password',
+  },
+  {
+    email: 'harrypottermail.com',
+    password: 'Password1',
+  },
+  {
+    email: 'harrypotter@mail.com',
+    password: '',
   }
 ];
 
