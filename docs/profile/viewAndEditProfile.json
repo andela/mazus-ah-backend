@@ -1,0 +1,137 @@
+{
+  "get": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": [
+      "Profile"
+    ],
+    "summary": "view profile",
+    "description": "View a Profile \n",
+    "parameters": [{
+      "in": "path",
+      "name": "id",
+      "schema": {
+        "type": "integer"
+      },
+      "description": "The Profile ID you want to check"
+    }
+      ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "Profile fetched successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "POST"
+            },
+            "message": {
+              "type": "string",
+              "example": "No User with the specified ID was found"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }     
+    }
+  },
+  "patch": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Profile"],
+    "summary": "edit profile",
+    "description": "Edit a Profile \n",
+    "parameters": [{
+      "name": "Edit Profile",
+      "in": "body",
+      "description": "request payload",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+          },
+          "bio": {
+            "type": "string",
+            "example": "I love eating beans"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Pelumi"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Aleshinloye"
+          }
+         }
+      }
+    },
+    {
+      "name": "id",
+      "in": "path",
+      "description": "Profile's ID",
+      "schema": {
+        "id": {
+          "type": "integer",
+          "example": 10
+        }
+      }
+    }
+  ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "Your profile has been updated successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": "Your profile has been created successfully",
+            "profile": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pelumi Alesh"
+                },
+                "bio": {
+                  "type": "string",
+                  "example": "I love eating beans"              
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "https://res.cloudinary.com/mazus/image/upload/v1564080294/blog/2019-07-25T18:44:50.301Z.jpg"
+                },
+                "firstName": {
+                  "type": "string",
+                  "example": "Pelumi"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Aleshinloye"
+                }
+              }
+            }
+          }
+        }
+      }     
+    }
+  }
+}
