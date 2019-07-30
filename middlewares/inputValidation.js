@@ -189,9 +189,11 @@ const validate = {
       const errors = validationResult(req);
       const errorMessage = {};
       if (!errors.isEmpty()) {
+        /* istanbul ignore next-line */
         errors.array({ onlyFirstError: true }).forEach((error) => {
           errorMessage[error.param] = error.msg;
         });
+        /* istanbul ignore next-line */
         return res.status(400).json({
           errors: errorMessage,
         });
