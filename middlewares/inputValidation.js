@@ -15,19 +15,19 @@ const validate = {
       .isEmpty({ ignore_whitespace: true })
       .withMessage('First name is required')
       .trim()
-      .matches((/^[a-z]{1,}[\s]{0,1}[-']{0,1}[a-z]+$/i))
-      .withMessage('First name can only contain letters')
       .isLength({ min: 3, max: 15 })
-      .withMessage('First name must be between 3 to 15 characters'),
+      .withMessage('First name must be between 3 to 15 characters')
+      .matches((/^[a-z]{1,}[\s]{0,1}[-']{0,1}[a-z]+$/i))
+      .withMessage('First name can only contain letters'),
     check('lastName')
       .not()
       .isEmpty({ ignore_whitespace: true })
       .withMessage('Last name is required')
       .trim()
-      .matches((/^[a-z]{1,}[\s]{0,1}[-']{0,1}[a-z]+$/i))
-      .withMessage('Last name can only contain letters')
       .isLength({ min: 3, max: 15 })
-      .withMessage('Last name must be between 3 to 15 characters'),
+      .withMessage('Last name must be between 3 to 15 characters')
+      .matches((/^[a-z]{1,}[\s]{0,1}[-']{0,1}[a-z]+$/i))
+      .withMessage('Last name can only contain letters'),
     check('password')
       .not()
       .isEmpty({ ignore_whitespace: true })

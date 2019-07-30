@@ -27,7 +27,7 @@ export default class AuthController {
     const {
       firstName, lastName, email, password, confirmPassword
     } = req.body;
-    const genericWordsArray = [firstName, lastName, 'password', 123];
+    const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
     const genericWord = genericWordsArray.find(word => password.includes(word));
     if (genericWord) {
       return res.status(400).send({
