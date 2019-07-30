@@ -25,6 +25,15 @@ export default class AuthController {
     const {
       firstName, lastName, email, password
     } = req.body;
+    const genericWordsArray = [firstName, lastName, 'password', 123];
+    const genericWord = genericWordsArray.find(word => password.includes(word));
+    if (genericWord) {
+      return res.status(400).send({
+        errors: {
+          password: 'Do not use a common word as the password',
+        }
+      });
+    }
 
     const foundUser = await User.findOne({ where: { email } });
     if (foundUser) {
