@@ -5,7 +5,6 @@ import app from '..';
 import models from '../database/models';
 import mockUsers from './mockData/mockUsers';
 
-
 chai.use(chaiHttp);
 
 const API_PREFIX = '/api/v1/auth';
