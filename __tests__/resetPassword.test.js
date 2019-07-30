@@ -57,6 +57,22 @@ describe('Reset Password Test', () => {
       });
   });
 
+  it('should return an error if password is not validated', (done) => {
+    const userPassword = {
+      password: '',
+      confirmPassword: '',
+    };
+    chai
+      .request(app)
+      .patch(`${url}/auth/resetpassword/${jwToken}`)
+      .send(userPassword)
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.errors.password).to.eql('Password is required');
+        done();
+      });
+  });
+
   it('should return an error when password and confirmPassword does not match', (done) => {
     const userPassword = {
       password: 'allMyGuysAreBallers1$$',
