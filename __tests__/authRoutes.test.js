@@ -14,6 +14,7 @@ const { BlacklistedToken } = models;
 let validUserToken;
 const blacklistedToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9obiIsImlhdCI6MTU2NDAwOTA5NCwiZXhwIjoxNTY0MDEyNjk0fQ.J5ktoXlmLxOtV8R16sNPMXXeydwRdCA8h6Cep-AzZnc';
 
+
 describe('User signup tests', () => {
   describe('test for user signup', () => {
     it('should register a user successfully when all fields are inputed correctly', (done) => {
