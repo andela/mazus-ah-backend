@@ -27,7 +27,7 @@ export default class AuthController {
     const {
       firstName, lastName, email, password
     } = req.body;
-    const genericWordsArray = [firstName, lastName, 'password', 123];
+    const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
     const genericWord = genericWordsArray.find(word => password.includes(word));
     if (genericWord) {
       return res.status(400).send({
@@ -145,6 +145,59 @@ export default class AuthController {
       return successResponse(res, 200, { message: 'Successfully logged out' });
     } catch (err) {
       return next(err);
+    }
+  }
+
+  /**
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   * @returns {object} returns user data
+   */
+  static async socialLogin(req, res, next) {
+    try {
+      if (!req.user) {
+        return ServerResponse.notFoundError(req, res);
+      }
+
+      // eslint-disable-next-line no-underscore-dangle
+      const userData = req.user._json;
+
+      const firstName = userData.name.split(' ')[0];
+      const lastName = userData.name.split(' ')[1];
+      const { email } = userData;
+
+      const createdUser = await User.findOrCreate({
+        where: { email },
+        defaults: {
+          firstName,
+          lastName,
+          email,
+          isVerified: true,
+          password: 'NULL',
+        }
+      });
+      const token = Helper.createToken({
+        id: createdUser.id,
+        email: userData.email
+      });
+
+      const { id, isVerified } = createdUser[0];
+
+      return res.status(201).json({
+        user: {
+          token,
+          id,
+          firstName,
+          lastName,
+          email,
+          isVerified,
+        },
+      });
+    } catch (error) {
+      next(error);
     }
   }
 }

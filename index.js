@@ -1,10 +1,10 @@
 import '@babel/polyfill';
 import express from 'express';
 import cors from 'cors';
-import errorhandler from 'errorhandler';
 import logger from 'morgan';
 import Debug from 'debug';
 import swaggerUi from 'swagger-ui-express';
+import passport from 'passport';
 
 import docs from './docs';
 import routes from './routes';
@@ -26,22 +26,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(express.static(`${__dirname}/public`));
+
+app.use(passport.initialize());
+
 app.use(API_PREFIX, routes);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: "Welcome to Author's Haven" });
 });
-app.use('/api/v1', routes);
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
-if (!isProduction) {
-  app.use(errorhandler());
-}
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(docs));
 
 // catch 404 and forward to error handler
 app.use(notFoundError);
-
-// / error handlers
 
 // development error handler
 // will print stacktrace
