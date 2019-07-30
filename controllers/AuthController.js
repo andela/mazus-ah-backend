@@ -213,6 +213,7 @@ export default class AuthController {
         },
       });
     } catch (error) {
+      /* istanbul ignore next-line */
       next(error);
     }
   }
