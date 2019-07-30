@@ -43,6 +43,17 @@ describe('User signup tests', () => {
         });
     });
   });
+  it('should return an error when password and confirmPassword does not match', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signup`)
+      .send(mockUsers[9])
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.errors.password).to.eql('Passwords don\'t match.');
+        done();
+      });
+  });
 });
 
 describe('test for user login', () => {

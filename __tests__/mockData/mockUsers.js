@@ -57,8 +57,14 @@ const users = [
   {
     email: 'harrypotter@mail.com',
     password: '',
-  }
+  },
+  {
+    firstName: 'Harry',
+    lastName: 'Potter',
+    email: 'harrypott@mail.com',
+    password: 'Password1',
+    confirmPassword: 'Password',
+  },
 ];
-
 
 export default users;

@@ -25,7 +25,7 @@ export default class AuthController {
    */
   static async signUp(req, res) {
     const {
-      firstName, lastName, email, password
+      firstName, lastName, email, password, confirmPassword
     } = req.body;
     const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
     const genericWord = genericWordsArray.find(word => password.includes(word));
@@ -43,6 +43,12 @@ export default class AuthController {
         message: 'This User already exist',
       });
     }
+
+    if (password !== confirmPassword) {
+      return res.status(400).send({
+        message: "Password doesn't match, Please check you are entering the right thing!",
+      });
+    }
     const hashedPassword = Helper.hashPassword(password);
     const verificationToken = Helper.hashUserData(email);
     const user = {
@@ -58,7 +64,8 @@ export default class AuthController {
     const registeredUser = await User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
-      email
+      email,
+      type: registeredUser.type,
     });
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
@@ -89,7 +96,7 @@ export default class AuthController {
 
     if (!user) {
       return res.status(401).send({
-        message: 'You Entered an incorrect Email or Password'
+        message: 'You Entered an incorrect Email or Password',
       });
     }
     const {
@@ -108,7 +115,7 @@ export default class AuthController {
     const comparePassword = await Helper.comparePassword(password, user.dataValues.password);
     if (!comparePassword) {
       return res.status(401).send({
-        message: 'You Entered an incorrect Email or Password'
+        message: 'You Entered an incorrect Email or Password',
       });
     }
     return res.status(200).send({
