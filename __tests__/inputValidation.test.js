@@ -7,6 +7,8 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 const url = '/api/v1';
+
+
 describe('User tests', () => {
   it('should return status 400 when all required fields are missing', (done) => {
     chai
@@ -72,6 +74,33 @@ describe('User tests', () => {
         expect(res.body.user.email).eql(mockUsers[4].email);
         expect(res.body.user.firstName).eql(mockUsers[4].firstName);
         expect(res.body.user.lastName).eql(mockUsers[4].lastName);
+        done();
+      });
+  });
+});
+
+describe('User signin validation test', () => {
+  it('should return status 400 if the email input is invalid', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(mockUsers[9])
+      .end((err, res) => {
+        expect(res.status).eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors.email).eql('Please input a valid email address');
+        done();
+      });
+  });
+  it('should return status 400 if the password input is invalid', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(mockUsers[10])
+      .end((err, res) => {
+        expect(res.status).eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors.password).eql('Password is required');
         done();
       });
   });

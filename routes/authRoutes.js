@@ -20,7 +20,7 @@ const { verifyToken } = AuthMiddleware;
 
 router.post('/signup', Validate.signup, signUp);
 router.patch('/verify', verifyEmail);
-router.post('/signin', userSignin);
+router.post('/signin', Validate.signin, userSignin);
 router.post('/logout', verifyToken, logout);
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));

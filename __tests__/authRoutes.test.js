@@ -47,7 +47,7 @@ describe('User signup tests', () => {
   });
 });
 
-describe('verifying an email', () => {
+describe('verifying a user email', () => {
   let verificationCode;
   before((done) => {
     chai.request(app)
@@ -58,7 +58,7 @@ describe('verifying an email', () => {
         done();
       });
   });
-  it('a successful email verification should return a success response object', (done) => {
+  it('should return a success response object when a user successfully verifies an email', (done) => {
     chai.request(app)
       .patch(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
       .end((err, res) => {
@@ -78,7 +78,7 @@ describe('verifying an email', () => {
         done();
       });
   });
-  it('attempting to verify an email with invalid details should throw an error', (done) => {
+  it('should throw an error when user attempts to verify an email with the wrong information', (done) => {
     chai.request(app)
       .patch(`${url}/auth/verify?email=${secondUserToVerify.email}&token=${secondVerificationCode.slice(0, 34)}`)
       .end((err, res) => {
@@ -98,7 +98,7 @@ describe('verifying an email', () => {
         done();
       });
   });
-  it('it should throw an internal server error upon email verification', (done) => {
+  it('should throw a server error when user attempts to verify an email', (done) => {
     const stub = sinon.stub(User, 'update');
     const error = new Error('Something went wrong');
     stub.yields(error);
