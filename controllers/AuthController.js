@@ -168,7 +168,7 @@ export default class AuthController {
       const { id } = req.user;
       const token = authorization.split(' ')[1];
       await BlacklistedToken.create({ token, userId: id });
-      return successResponse(res, 200, { message: 'Successfully logged out' });
+      return successResponse(res, 200, 'data', { message: 'Successfully logged out' });
     } catch (err) {
       return next(err);
     }

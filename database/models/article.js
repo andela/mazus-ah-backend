@@ -28,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       ratings: {
         type: DataTypes.INTEGER,
       },
+      status: {
+        allowNull: false,
+        type: DataTypes.ENUM('draft', 'published'),
+        defaultValue: 'draft',
+      },
+      tagsList: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        defaultValue: [],
+      },
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,

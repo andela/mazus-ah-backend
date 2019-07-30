@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "babel-node ./index.js",
-    "server": "nodemon --exec babel-node .",
+    "server": "DEBUG=dev nodemon --exec babel-node .",
     "pretest": "NODE_ENV=test npm run migrate:undo && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seedall",
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout 10000  --require @babel/register ./__tests__/*.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",

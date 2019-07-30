@@ -32,6 +32,15 @@ module.exports = {
       ratings: {
         type: Sequelize.INTEGER,
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.ENUM('draft', 'published'),
+        defaultValue: 'draft',
+      },
+      tagsList: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        defaultValue: [],
+      },
       userId: {
         allowNull: false,
         type: Sequelize.DataTypes.UUID,
