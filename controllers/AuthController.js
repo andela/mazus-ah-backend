@@ -1,6 +1,7 @@
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
+import EmailVerification from '../helpers/EmailVerification';
 
 const { successResponse } = ServerResponse;
 const { BlacklistedToken, User } = models;
@@ -67,6 +68,12 @@ export default class AuthController {
       email,
       type: registeredUser.type,
     });
+
+    // This line sends the registered user an email
+    EmailVerification.sendVerificationEmail(
+      req, registeredUser.email, registeredUser.firstName,
+      verificationToken
+    );
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
       user: {
@@ -203,6 +210,30 @@ export default class AuthController {
           isVerified,
         },
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   *
+   * @static
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {fucntion} next
+   * @returns {function} returns an object depending on the outcome
+   * @memberof AuthController
+   */
+  static async verifyEmail(req, res, next) {
+    try {
+      const { email, token } = req.query;
+      const foundUser = await models.User.findOne({ where: { email } });
+      if (foundUser.verificationToken === token) {
+        const verifiedUser = await models.User.update({ isVerified: true }, { where: { email } });
+        res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser });
+      } else {
+        res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
+      }
     } catch (error) {
       next(error);
     }
