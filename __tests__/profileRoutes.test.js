@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import models from '../database/models';
-import ProfileController from '../controllers/ProfileController';
+
 import app from '../index';
 import mockProfile from './mockData/mockProfile';
 
@@ -163,6 +163,20 @@ describe('Profile test', () => {
   });
 
   describe('View profile', () => {
+    it('should throw a 500 when an error occurs on the server', (done) => {
+      const stub = sinon
+        .stub(Profile, 'findOne')
+        .rejects(new Error('Foreign Key constraint'));
+      chai
+        .request(app)
+        .get(`${url}/${userId}`)
+        .set('Authorization', `Bearer ${validToken}`)
+        .end((err, res) => {
+          expect(res.status).to.eql(500);
+          stub.restore();
+          done();
+        });
+    });
     it('should return error if id does not exist in database', (done) => {
       chai
         .request(app)
