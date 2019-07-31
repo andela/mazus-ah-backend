@@ -152,8 +152,8 @@ const validate = {
   ],
   validateId: [
     param('id')
-      .isInt({ min: 1 })
-      .withMessage('The Id is not a valid integer')
+      .matches((/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))
+      .withMessage('id is not valid')
       .custom(async (id) => {
         const isExist = await models.Profile.findOne({ where: { userId: id } });
         if (!isExist) {

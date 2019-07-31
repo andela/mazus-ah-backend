@@ -30,6 +30,7 @@ export default class ProfileController {
     });
     const { firstName, lastName } = req.user;
     const resData = {
+      id,
       message: 'Your profile has been created successfully',
       profile: {
         name: `${firstName} ${lastName}`,
@@ -51,8 +52,7 @@ export default class ProfileController {
     const {
       avatar, bio, firstName, lastName,
     } = req.body;
-    let { id } = req.params;
-    id = parseInt(id, 10);
+    const { id } = req.params;
     if (id !== req.user.id) {
       return errorResponse(res, 403, 'You are not allowed to edit this profile');
     }
