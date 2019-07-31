@@ -17,7 +17,7 @@ export default class EmailVerification {
   * @memberof EmailVerification
   * @returns {function} - returns a function call
   */
-  static async sendVerificationEmail({ protocol, hostname }, recipient, name, token) {
+  static sendVerificationEmail({ protocol, hostname }, recipient, name, token) {
     const { PORT } = process.env;
     const email = recipient;
     const content = `<img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564047885/assets/logo_hjqgbb.png'>

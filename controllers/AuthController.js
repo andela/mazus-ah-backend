@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
 import EmailVerification from '../helpers/EmailVerification';
 import ForgotPasswordEmail from '../helpers/ForgotPasswordEmail';
 
+
+dotenv.config();
 const { successResponse } = ServerResponse;
 const { BlacklistedToken, User } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
@@ -72,10 +75,12 @@ export default class AuthController {
     });
 
     // This line sends the registered user an email
-    EmailVerification.sendVerificationEmail(
-      req, registeredUser.email, registeredUser.firstName,
-      verificationToken
-    );
+    if (process.env.NODE_ENV !== 'test') {
+      EmailVerification.sendVerificationEmail(
+        req, registeredUser.email, registeredUser.firstName,
+        verificationToken
+      );
+    }
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
       user: {
@@ -231,10 +236,12 @@ export default class AuthController {
     try {
       const { email, token } = req.query;
       const foundUser = await models.User.findOne({ where: { email } });
-      if (foundUser.verificationToken === token) {
+      if (foundUser.isVerified === true) {
+        res.status(200).send({ message: 'Your Email has already been verified', isVerified: foundUser.isVerified });
+      } else if (foundUser.verificationToken === token) {
         const verifiedUser = await models.User.update({ isVerified: true }, { where: { email } });
         res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser });
-      } else {
+      } else if (foundUser.verificationToken !== token) {
         res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
       }
     } catch (error) {
@@ -265,7 +272,9 @@ export default class AuthController {
       id,
       email
     });
-    sendResetEmail(req, email, token);
+    if (process.env.NODE_ENV !== 'test') {
+      sendResetEmail(req, email, token);
+    }
     return res.status(200).send({
       email,
       token,
