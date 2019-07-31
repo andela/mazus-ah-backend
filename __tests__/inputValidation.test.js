@@ -105,3 +105,21 @@ describe('User signin validation test', () => {
       });
   });
 });
+
+describe('User reset password validation test', () => {
+  const wrongUserEmail = {
+    email: 'johnoluwa@test',
+  };
+  it('should return status 400 if the email input is invalid', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/forgotpassword`)
+      .send(wrongUserEmail)
+      .end((err, res) => {
+        expect(res.status).eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors.email).eql('Please input a valid email address');
+        done();
+      });
+  });
+});

@@ -2,9 +2,11 @@ import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
 import EmailVerification from '../helpers/EmailVerification';
+import ForgotPasswordEmail from '../helpers/ForgotPasswordEmail';
 
 const { successResponse } = ServerResponse;
 const { BlacklistedToken, User } = models;
+const { sendResetEmail } = ForgotPasswordEmail;
 
 /**
  *
@@ -211,6 +213,7 @@ export default class AuthController {
         },
       });
     } catch (error) {
+      /* istanbul ignore next-line */
       next(error);
     }
   }
@@ -237,5 +240,91 @@ export default class AuthController {
     } catch (error) {
       next(error);
     }
+  }
+
+  /**
+   *
+   * @param {*} req express request object
+   * @param {*} res express response object
+   * @returns {object} returns an object depending on the outcome
+   * @memberof AuthController
+   */
+  static async forgotPassword(req, res) {
+    const { email } = req.body;
+    const foundUser = await User.findOne({ where: { email } });
+    if (!foundUser) {
+      return res.status(404).send({
+        errors: {
+          message: 'You are not an existing user, please sign up',
+        }
+      });
+    }
+    const { id } = foundUser.dataValues;
+
+    const token = Helper.createToken({
+      id,
+      email
+    });
+    sendResetEmail(req, email, token);
+    return res.status(200).send({
+      email,
+      token,
+      message: 'Your reset link has been sent to your email'
+    });
+  }
+
+  /**
+   *
+   * @param {*} req express request object
+   * @param {*} res express response object
+   * @returns {object} returns an object depending on the outcome
+   * @memberof AuthController
+   */
+  static async resetPassword(req, res) {
+    const
+      {
+        password,
+        confirmPassword
+      } = req.body;
+    const genericWordsArray = ['Password123', 'Qwerty123', 'Password', 123];
+    const genericWord = genericWordsArray.find(word => password.includes(word));
+    if (genericWord) {
+      return res.status(400).send({
+        errors: {
+          message: 'Do not use a common word as the password',
+        }
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).send({
+        errors: {
+          message: 'Password doesn\'t match, Please check you are entering the right thing!',
+        }
+      });
+    }
+    const { token } = req.params;
+    const { id, email } = await Helper.verifyToken(token);
+    const foundUser = await User.findOne({ where: { email } });
+    if (!foundUser) {
+      return res.status(404).send({
+        errors: {
+          message: 'You are not an existing user, please sign up',
+        }
+      });
+    }
+    const doubleReset = await BlacklistedToken.findOne({ where: { token } });
+    if (doubleReset) {
+      return res.status(409).send({
+        errors: {
+          message: 'This link has already been used once, please request another link.',
+        }
+      });
+    }
+    const hashedPassword = Helper.hashPassword(password);
+    await models.User.update({ password: hashedPassword }, { where: { email } });
+    await BlacklistedToken.create({ token, userId: id });
+    return res.status(200).send({
+      message: 'Your Password has been reset successfully'
+    });
   }
 }

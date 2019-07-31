@@ -21,10 +21,12 @@ const googleConfig = {
 
 passport.use(new facebook.Strategy(
   fbConfig,
+  /* istanbul ignore next-line */
   (accessToken, refreshToken, profile, done) => done(null, profile)
 ));
 
 passport.use(new google.OAuth2Strategy(
+  /* istanbul ignore next-line */
   googleConfig,
   (accessToken, refreshToken, profile, done) => done(null, profile)
 ));
