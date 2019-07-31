@@ -17,16 +17,16 @@ export default class Postals {
   * @param {string} sender - sender of the email
   * @param {string} emailSubject
   * @param {string} content - content of the email
-  * @returns {boolean} returns true or false
+  * @returns {function} returns a function
   * @memberof Postals
   */
-  static async sendEmail(recipient, sender, emailSubject, content) {
+  static sendEmail(recipient, sender, emailSubject, content) {
     const message = {
       to: recipient,
       from: sender,
       subject: emailSubject,
       html: content,
     };
-    await sendGridMail.send(message);
+    return sendGridMail.send(message);
   }
 }
