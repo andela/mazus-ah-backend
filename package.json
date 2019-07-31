@@ -13,6 +13,7 @@
       "helpers/ForgotPasswordEmail.js",
       "helpers/Postals.js",
       "helpers/passportStrategies.js",
+      "helpers/Pagination.js",
       "__tests__/*"
     ]
   },
@@ -44,6 +45,7 @@
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
     "express-validator": "^6.1.1",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
@@ -58,7 +60,8 @@
     "sequelize": "^5.10.2",
     "sequelize-cli": "^5.5.0",
     "swagger-ui-express": "^4.0.7",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
