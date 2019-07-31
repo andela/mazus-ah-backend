@@ -17,7 +17,7 @@ const articles = [
     title: 'Getting Started With Express in Node',
     description: 'Learn how to use squelize with DBs',
     body: 'This is no Jedi mind trick, it can be learned, with pactice',
-    tags: ['fiction', 'action', 'more-tags', 'unnecessary-tags'],
+    tags: ['fiction', 'action', 'more-tags', 'unnecessary-tags', 'unnecessary-tags', 'unnecessary-tags', 't', 'a', 'g', 's', 'test', 'siily tag'],
     status: 'published'
   },
   {
@@ -32,6 +32,13 @@ const articles = [
     description: 'TL:DR; Saves you headaches',
     body: 'You should test because you want to be sure of values ......',
     status: 'draft'
+  },
+  {
+    title: 'Manchester United is The Best Football Club',
+    description: 'This is something you already know',
+    body: 'Despite the bad times, we move.......',
+    tags: ['sports', 'football', 'soccer'],
+    status: 'published'
   },
 ];
 

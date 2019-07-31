@@ -17,7 +17,7 @@ export default class ArticleHelper {
   static generateSlug(title) {
     const formattedTitle = title.split(' ').join('-');
     const randomNumber = Math.floor(Math.random() * 100000);
-    const slug = `${formattedTitle.toLowerCase()}-${randomNumber}`;
+    const slug = `${formattedTitle.toLowerCase()}-${Date.now()}-${randomNumber}`;
     return slug;
   }
 

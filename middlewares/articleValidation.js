@@ -22,12 +22,12 @@ export default {
       })
       .withMessage('Tags must be grouped in an array')
       .custom((value) => {
-        if (value.length > 3) {
+        if (value.length > 10) {
           return false;
         }
         return value;
       })
-      .withMessage('Only a maximum of 3 tags are allowed'),
+      .withMessage('Only a maximum of 10 tags are allowed'),
     (req, res, next) => {
       const errors = validationResult(req);
       const errorMessage = {};

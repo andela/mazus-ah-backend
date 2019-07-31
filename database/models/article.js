@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       ratings: {
         type: DataTypes.INTEGER,
+        defaultValue: 0
       },
       status: {
         allowNull: false,
@@ -88,6 +89,13 @@ module.exports = (sequelize, DataTypes) => {
     Article.hasMany(models.Report, {
       foreignKey: 'articleId',
       as: 'articlereport',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+
+    Article.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'author',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });

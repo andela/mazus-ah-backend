@@ -63,4 +63,29 @@ export default class Authentication {
       return next(err);
     }
   }
+
+
+  /**
+   *
+   * Method to ensure that only verified users access a route
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {(object|function)} error response || next function
+   *
+   * @memberof Authentication
+   */
+  static verifiedUserOnly(req, res, next) {
+    const { isVerified } = req.user;
+
+    if (!isVerified) {
+      return errorResponse(res, 401, { message: 'Your account has not been verified, please verify to continue' });
+    }
+
+    return next();
+  }
 }

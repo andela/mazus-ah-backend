@@ -7,6 +7,12 @@
     "node": "10.16.0",
     "npm": "6.9.0"
   },
+  "nyc": {
+    "exclude": [
+      "helpers/passportStrategies.js",
+      "__tests__/*"
+    ]
+  },
   "scripts": {
     "start": "babel-node ./index.js",
     "server": "DEBUG=dev nodemon --exec babel-node .",
