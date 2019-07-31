@@ -67,6 +67,9 @@ export default class AuthController {
     const registeredUser = await User.create(user);
     const token = Helper.createToken({
       id: registeredUser.id,
+      firstName: registeredUser.firstName,
+      lastName: registeredUser.lastName,
+      isVerified: registeredUser.isVerified,
       email,
       type: registeredUser.type,
     });
@@ -130,6 +133,7 @@ export default class AuthController {
     return res.status(200).send({
       message: 'You have successfully logged in',
       user: {
+        id,
         token,
         email,
         firstName,

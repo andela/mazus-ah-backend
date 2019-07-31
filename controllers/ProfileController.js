@@ -13,32 +13,40 @@ export default class ProfileController {
    * @description Create a profile for registered user
    * @param {object} req express request object
    * @param {object} res express response object
+   * @param {function} next
    * @returns {object} returns profile info
    * @memberof ProfileController
    */
-  static async createProfile(req, res) {
-    const { avatar, bio } = req.body;
-    const { id } = req.user;
-    const profileExist = await models.Profile.findOne({ where: { userId: id } });
-    if (profileExist) {
-      return errorResponse(res, 409, 'Profile already exists');
-    }
-    await models.Profile.create({
-      userId: id,
-      avatar,
-      bio,
-    });
-    const { firstName, lastName } = req.user;
-    const resData = {
-      id,
-      message: 'Your profile has been created successfully',
-      profile: {
-        name: `${firstName} ${lastName}`,
-        bio,
+  static async createProfile(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { dataValues } = await models.User.findOne({ where: { id } });
+      if (!dataValues.isVerified) {
+        return errorResponse(res, 401, 'You need to verify your account first');
+      }
+      const { avatar, bio } = req.body;
+      const profileExist = await models.Profile.findOne({ where: { userId: id } });
+      if (profileExist) {
+        return errorResponse(res, 409, 'Profile already exists');
+      }
+      await models.Profile.create({
+        userId: id,
         avatar,
-      },
-    };
-    return successResponse(res, 201, resData);
+        bio,
+      });
+      const { firstName, lastName } = req.user;
+      const resData = {
+        message: 'Your profile has been created successfully',
+        profile: {
+          name: `${firstName} ${lastName}`,
+          bio,
+          avatar,
+        },
+      };
+      return successResponse(res, 201, resData);
+    } catch (error) {
+      next(error);
+    }
   }
 
   /**
@@ -46,36 +54,56 @@ export default class ProfileController {
    * @method editProfile
    * @param {object} req express request object
    * @param {object} res express response object
+   * @param {function} next
    * @returns {object} returns profile info
    */
-  static async editProfile(req, res) {
-    const {
-      avatar, bio, firstName, lastName,
-    } = req.body;
-    const { id } = req.params;
-    if (id !== req.user.id) {
-      return errorResponse(res, 403, 'You are not allowed to edit this profile');
-    }
-    await models.Profile.update(
-      { bio, avatar },
-      { where: { userId: id } },
-    );
+  static async editProfile(req, res, next) {
+    try {
+      let { id } = req.params;
+      const hasProfile = await models.Profile.findOne({ where: { userId: id } });
 
-    await models.User.update(
-      { firstName, lastName },
-      { where: { id } },
-    );
-    const { dataValues } = await models.User.findOne({ where: { id } });
-    const resData = {
-      message: 'Your profile has been updated successfully',
-      profile: {
+      id = parseInt(id, 10);
+      if (id !== req.user.id) {
+        return errorResponse(res, 403, 'You are not allowed to edit this profile');
+      }
+
+      if (!hasProfile) {
+        return errorResponse(res, 404, 'You don\'t have a profile, please create a profile');
+      }
+
+      const {
         avatar,
         bio,
-        firstName: dataValues.firstName,
-        lastName: dataValues.lastName,
-      },
-    };
-    return successResponse(res, 200, resData);
+        firstName,
+        lastName,
+      } = req.body;
+
+      await models.Profile.update(
+        { bio, avatar },
+        { where: { userId: id } },
+      );
+
+      await models.User.update(
+        { firstName, lastName },
+        { where: { id } },
+      );
+      const { dataValues: userData } = await models.User.findOne({ where: { id } });
+      const { dataValues: profileData } = await models.Profile.findOne({ where: { userId: id } });
+      const { firstName: firstNamedb, lastName: lastNamedb } = userData;
+      const { avatar: avatardb, bio: biodb } = profileData;
+      const resData = {
+        message: 'Your profile has been updated successfully',
+        profile: {
+          avatar: avatardb,
+          bio: biodb,
+          firstName: firstNamedb,
+          lastName: lastNamedb,
+        },
+      };
+      return successResponse(res, 200, resData);
+    } catch (error) {
+      next(error);
+    }
   }
 
 
@@ -84,16 +112,21 @@ export default class ProfileController {
    * @method viewProfile
    * @param {object} req express request object
    * @param {object} res express response object
+   * @param {function} next
    * @returns {object} returns profile info
    */
-  static async viewProfile(req, res) {
-    const { id } = req.params;
-    const profileData = await models.Profile.findOne({ where: { userId: id } });
-    return res.status(200).json({
-      message: 'Profile fetched successfully',
-      profile: {
-        ...profileData.dataValues,
-      },
-    });
+  static async viewProfile(req, res, next) {
+    try {
+      const { id } = req.params;
+      const profileData = await models.Profile.findOne({ where: { userId: id } });
+      return res.status(200).json({
+        message: 'Profile fetched successfully',
+        profile: {
+          ...profileData.dataValues,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 }

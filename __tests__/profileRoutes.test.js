@@ -20,15 +20,12 @@ let userId;
 describe('Profile test', () => {
   before((done) => {
     const user = {
-      firstName: 'Luis',
-      lastName: 'Gucci',
-      email: 'luicGucci@outfit.com',
-      password: 'passWORD122',
-      confirmPassword: 'passWORD122',
+      email: 'pelumi@test.com',
+      password: 'PasswoRD123__',
     };
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/auth/signin')
       .send(user)
       .end((err, res) => {
         const { token } = res.body.user;

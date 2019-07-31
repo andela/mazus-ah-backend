@@ -1,5 +1,6 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable no-unused-vars */
+import Helper from '../../helpers/Auth';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -33,6 +34,13 @@ module.exports = {
           lastName: 'Noah',
           email: 'davidnoah@test.com',
           password: 'passwordHash',
+        },
+        {
+          firstName: 'Pelumi',
+          lastName: 'Noah',
+          email: 'pelumi@test.com',
+          password: Helper.hashPassword('PasswoRD123__'),
+          isVerified: true,
         },
       ],
       {},
