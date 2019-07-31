@@ -1,5 +1,7 @@
+import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import models from '../database/models';
 
 import app from '../index';
 import mockProfile from './mockData/mockProfile';
@@ -8,6 +10,7 @@ chai.use(chaiHttp);
 
 const url = '/api/v1/profiles';
 const { expect } = chai;
+const { Profile } = models;
 const {
   correctProfilEdit,
   correctProfile,
@@ -36,6 +39,22 @@ describe('Profile test', () => {
       });
   });
   describe('Create profile', () => {
+    it('should throw a 500 when an error occurs on the server', (done) => {
+      const stub = sinon
+        .stub(Profile, 'create')
+        .rejects(new Error('Foreign Key constraint'));
+      chai
+        .request(app)
+        .post(url)
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ avatar: 'jhdfbj.com', bio: 'test bio' })
+        .end((err, res) => {
+          expect(res.status).to.eql(500);
+          stub.restore();
+          done();
+        });
+    });
+
     it('should not create a profile if unsupported input format is provided', (done) => {
       chai
         .request(app)
@@ -87,6 +106,22 @@ describe('Profile test', () => {
   });
 
   describe('Edit profile', () => {
+    it('should throw a 500 when an error occurs on the server', (done) => {
+      const stub = sinon
+        .stub(Profile, 'update')
+        .rejects(new Error('Foreign Key constraint'));
+      chai
+        .request(app)
+        .patch(`${url}/${userId}`)
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ avatar: 'jhdfbj.com', bio: 'test bio' })
+        .end((err, res) => {
+          expect(res.status).to.eql(500);
+          stub.restore();
+          done();
+        });
+    });
+
     it('should throw error if input is unsupported', (done) => {
       chai
         .request(app)

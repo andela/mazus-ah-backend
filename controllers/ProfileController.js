@@ -115,18 +115,14 @@ export default class ProfileController {
    * @param {function} next
    * @returns {object} returns profile info
    */
-  static async viewProfile(req, res, next) {
-    try {
-      const { id } = req.params;
-      const profileData = await models.Profile.findOne({ where: { userId: id } });
-      return res.status(200).json({
-        message: 'Profile fetched successfully',
-        profile: {
-          ...profileData.dataValues,
-        },
-      });
-    } catch (error) {
-      next(error);
-    }
+  static async viewProfile(req, res) {
+    const { id } = req.params;
+    const profileData = await models.Profile.findOne({ where: { userId: id } });
+    return res.status(200).json({
+      message: 'Profile fetched successfully',
+      profile: {
+        ...profileData.dataValues,
+      },
+    });
   }
 }
