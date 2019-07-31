@@ -33,6 +33,16 @@ describe('verifying a user email', () => {
         done();
       });
   });
+  it('should tell user email has already been verified if so', (done) => {
+    chai.request(app)
+      .patch(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body.message).to.eql('Your Email has already been verified');
+        expect(res.body.isVerified).to.eql(true);
+        done();
+      });
+  });
   let secondVerificationCode;
   before((done) => {
     chai.request(app)
