@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import models from '../database/models';
-
+import ProfileController from '../controllers/ProfileController';
 import app from '../index';
 import mockProfile from './mockData/mockProfile';
 
