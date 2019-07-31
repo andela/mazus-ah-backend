@@ -134,7 +134,7 @@ describe('Profile test', () => {
     it('should return error if id does not exist in database', (done) => {
       chai
         .request(app)
-        .get(`${url}/300`)
+        .get(`${url}/200d9f5f-0e15-4d52-9490-bf509f2f01db`)
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(400);
@@ -147,12 +147,12 @@ describe('Profile test', () => {
     it('should return error if id is not a valid integer', (done) => {
       chai
         .request(app)
-        .get(`${url}/'333'`)
+        .get(`${url}/333`)
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(400);
           expect(res.body).to.have.property('errors');
-          expect(res.body.errors.id).to.eql('The Id is not a valid integer');
+          expect(res.body.errors.id).to.eql('id is not valid');
           done();
         });
     });
