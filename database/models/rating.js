@@ -17,8 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
   }, {});
-  Rating.associate = function(models) {
+  Rating.associate = function (models) {
     // associations can be defined here
+    Rating.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'userdetails',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Rating;
 };
