@@ -12,7 +12,7 @@ const url = '/api/v1';
 const { expect } = chai;
 const { User } = models;
 const { userToVerify, secondUserToVerify, thirdUserToVerify } = mockUsersToVerify;
-const { verified, alreadyVerifed, incorrectCredentials } = MarUps;
+const { verified, alreadyVerified, incorrectCredentials } = MarUps;
 
 describe('verifying a user email', () => {
   let verificationCode;
@@ -29,7 +29,7 @@ describe('verifying a user email', () => {
     chai.request(app)
       .get(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
       .end((err, res) => {
-        expect(verified).to.eql(verified);
+        expect(res.text).to.eql(verified);
         done();
       });
   });
@@ -37,7 +37,7 @@ describe('verifying a user email', () => {
     chai.request(app)
       .get(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
       .end((err, res) => {
-        expect(alreadyVerifed).to.eql(alreadyVerifed);
+        expect(res.text).to.eql(alreadyVerified);
         done();
       });
   });
@@ -55,7 +55,7 @@ describe('verifying a user email', () => {
     chai.request(app)
       .get(`${url}/auth/verify?email=${secondUserToVerify.email}&token=${secondVerificationCode.slice(0, 34)}`)
       .end((err, res) => {
-        expect(incorrectCredentials).to.eql(incorrectCredentials);
+        expect(res.text).to.eql(incorrectCredentials);
         done();
       });
   });
