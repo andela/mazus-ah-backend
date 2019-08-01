@@ -4,12 +4,14 @@ import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
 import EmailVerification from '../helpers/EmailVerification';
 import ForgotPasswordEmail from '../helpers/ForgotPasswordEmail';
+import MarkUps from '../helpers/MarkUps';
 
 
 dotenv.config();
 const { successResponse } = ServerResponse;
 const { BlacklistedToken, User } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
+const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
 
 /**
  *
@@ -241,12 +243,15 @@ export default class AuthController {
       const { email, token } = req.query;
       const foundUser = await models.User.findOne({ where: { email } });
       if (foundUser.isVerified === true) {
-        res.status(200).send({ message: 'Your Email has already been verified', isVerified: foundUser.isVerified });
+        res.setHeader('Content-Type', 'text/html');
+        res.send(alreadyVerified);
       } else if (foundUser.verificationToken === token) {
-        const verifiedUser = await models.User.update({ isVerified: true }, { where: { email } });
-        res.status(200).send({ message: 'Email Verified', isVerified: !!verifiedUser });
+        await models.User.update({ isVerified: true }, { where: { email } });
+        res.setHeader('Content-Type', 'text/html');
+        res.send(verified);
       } else if (foundUser.verificationToken !== token) {
-        res.status(400).send({ message: 'Incorrect Credentials', isVerified: foundUser.isVerified });
+        res.setHeader('Content-Type', 'text/html');
+        res.send(incorrectCredentials);
       }
     } catch (error) {
       next(error);
