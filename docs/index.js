@@ -58,5 +58,4 @@ swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/articles/trends'] = trendingArticles;
 
-
 export default swagger;
