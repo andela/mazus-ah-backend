@@ -45,7 +45,7 @@ export default class ProfileController {
       };
       return successResponse(res, 201, resData);
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -101,7 +101,7 @@ export default class ProfileController {
       };
       return successResponse(res, 200, resData);
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -125,7 +125,7 @@ export default class ProfileController {
         },
       });
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 }
