@@ -17,6 +17,7 @@ const {
   unsupportedProfilEdit,
   unsupportedProfile
 } = mockProfile;
+
 let validToken;
 let userId;
 
@@ -163,20 +164,6 @@ describe('Profile test', () => {
   });
 
   describe('View profile', () => {
-    it('should throw a 500 when an error occurs on the server', (done) => {
-      const stub = sinon
-        .stub(Profile, 'findOne')
-        .rejects(new Error('Foreign Key constraint'));
-      chai
-        .request(app)
-        .get(`${url}/${userId}`)
-        .set('Authorization', `Bearer ${validToken}`)
-        .end((err, res) => {
-          expect(res.status).to.eql(500);
-          stub.restore();
-          done();
-        });
-    });
     it('should return error if id does not exist in database', (done) => {
       chai
         .request(app)
@@ -189,7 +176,6 @@ describe('Profile test', () => {
           done();
         });
     });
-
     it('should return error if id is not a valid integer', (done) => {
       chai
         .request(app)

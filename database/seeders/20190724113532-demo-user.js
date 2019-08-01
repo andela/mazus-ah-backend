@@ -36,6 +36,7 @@ module.exports = {
           password: 'passwordHash',
         },
         {
+          id: '32fd7e50-b687-447f-af7c-c209b8f90041',
           firstName: 'Pelumi',
           lastName: 'Noah',
           email: 'pelumi@test.com',

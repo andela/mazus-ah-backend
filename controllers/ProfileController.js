@@ -59,10 +59,9 @@ export default class ProfileController {
    */
   static async editProfile(req, res, next) {
     try {
-      let { id } = req.params;
+      const { id } = req.params;
       const hasProfile = await models.Profile.findOne({ where: { userId: id } });
 
-      id = parseInt(id, 10);
       if (id !== req.user.id) {
         return errorResponse(res, 403, 'You are not allowed to edit this profile');
       }
