@@ -9,6 +9,7 @@ import viewAndEditProfile from './profile/viewAndEditProfile.json';
 import verifyemail from './auth/verifyemail';
 import forgotpassword from './auth/forgotpassword.json';
 import resetpassword from './auth/resetpassword.json';
+import viewArticleRating from './rating/rating.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -20,6 +21,6 @@ swagger.paths['/profiles/{id}'] = viewAndEditProfile;
 swagger.paths['/verify'] = verifyemail;
 swagger.paths['/auth/forgotpassword'] = forgotpassword;
 swagger.paths['/auth/resetpassword/{token}'] = resetpassword;
-
+swagger.paths['/articles/{id}/ratings'] = viewArticleRating;
 
 export default swagger;
