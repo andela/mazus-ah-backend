@@ -15,6 +15,8 @@ import articlesBySlug from './articles/articlesBySlug.json';
 import articlesByAuthor from './articles/articlesByAuthor.json';
 import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
+import postComment from './articles/postComment.json';
+
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -32,5 +34,8 @@ swagger.paths['/articles/{id}/{slug}'] = articlesBySlug;
 swagger.paths['/articles/{id}'] = articlesByAuthor;
 swagger.paths['/articles/{slug}'] = updateAndDeleteArticles;
 swagger.paths['/users/articles'] = userArticles;
+
+swagger.paths['/articles/{slug}/comments'] = postComment;
+
 
 export default swagger;

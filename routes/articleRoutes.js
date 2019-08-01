@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import ArticleController from '../controllers/ArticleController';
+import CommentController from '../controllers/CommentController';
 import AuthMiddleware from '../middlewares/Authentication';
 import articleValidationSchema from '../middlewares/articleValidation';
+import validate from '../middlewares/commentValidations';
 
 const {
   createArticle, getArticlesArticleBySlug, getAllArticles, getArticlesByAuthor,
   editArticle, deleteArticle
 } = ArticleController;
+const { postComment } = CommentController;
 const { verifyToken, verifiedUserOnly } = AuthMiddleware;
 const { articleValidation, validateId } = articleValidationSchema;
 
@@ -18,5 +21,7 @@ router.get('/:id', validateId, getArticlesByAuthor);
 router.get('/', getAllArticles);
 router.patch('/:slug', verifyToken, verifiedUserOnly, articleValidation, editArticle);
 router.delete('/:slug', verifyToken, verifiedUserOnly, deleteArticle);
+
+router.post('/:slug/comments', verifyToken, verifiedUserOnly, validate.comment, postComment);
 
 export default router;
