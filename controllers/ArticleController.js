@@ -71,8 +71,8 @@ export default class ArticleController {
    */
   static async getArticlesArticleBySlug(req, res, next) {
     try {
-      const { slug, email } = req.params;
-      const findUser = await User.findOne({ where: { email } });
+      const { slug, id } = req.params;
+      const findUser = await User.findOne({ where: { id } });
 
       if (!findUser) {
         return errorResponse(res, 404, { article: 'Author not found' });
@@ -178,8 +178,8 @@ export default class ArticleController {
    */
   static async getArticlesByAuthor(req, res, next) {
     try {
-      const { email } = req.params;
-      const author = await User.findOne({ where: { email } });
+      const { id } = req.params;
+      const author = await User.findOne({ where: { id } });
 
       if (!author) {
         return errorResponse(res, 404, { article: 'Author not found' });
@@ -242,6 +242,119 @@ export default class ArticleController {
       });
 
       return successResponse(res, 200, 'articles', articles);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+
+  /**
+   * Edit an article
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} details of newly edited article
+   *
+   * @memberof ArticleController
+   */
+  static async editArticle(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const { id } = req.user;
+      const {
+        title, body, description, status
+      } = req.body;
+
+      const foundArticle = await Article.findOne({
+        where: {
+          slug,
+          userId: id
+        }
+      });
+
+      if (!foundArticle) {
+        return errorResponse(res, 404, { article: 'Article not found' });
+      }
+
+      const updatedArticle = await Article.update(
+        {
+          title, body, description, status
+        },
+        {
+          where: {
+            slug,
+            userId: id
+          },
+          returning: true
+        }
+      );
+      return successResponse(res, 200, 'article', updatedArticle[1][0]);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+
+  /**
+   * Delete an article
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} object with message converning deleted article
+   *
+   * @memberof ArticleController
+   */
+  static async deleteArticle(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const { id } = req.user;
+
+      const foundArticle = await Article.findOne({
+        where: {
+          slug,
+          userId: id
+        }
+      });
+
+      if (!foundArticle) {
+        return errorResponse(res, 404, { article: 'Article not found' });
+      }
+
+      const { status } = foundArticle;
+
+      if (status === 'published' || status === 'draft') {
+        await Article.update(
+          {
+            status: 'trash'
+          },
+          {
+            where: {
+              slug,
+              userId: id
+            },
+            returning: true
+          }
+        );
+
+        return successResponse(res, 200, 'article', { message: 'Article has been moved to your trash' });
+      }
+
+      await Article.destroy({
+        where: {
+          slug,
+          userId: id
+        }
+      });
+
+      return successResponse(res, 200, 'article', { message: 'Article has been deleted' });
     } catch (err) {
       return next(err);
     }

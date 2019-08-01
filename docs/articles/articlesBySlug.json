@@ -6,13 +6,13 @@
     "description": "Return one article byt the slug \n",
     "parameters": [
       {
-        "name": "email",
+        "name": "id",
         "in": "path",
         "required": true,
         "description": "The email of the author",
         "schema": {
           "type": "string",
-          "example": "darthssvader@gmail.com"
+          "example": "f6b3facb-eb83-47f8-8c1c-05207e62ed30"
         }
       },
       {

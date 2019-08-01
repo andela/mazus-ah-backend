@@ -78,8 +78,8 @@ export default class AuthController {
     });
 
     // This line sends the registered user an email
+    /* istanbul ignore next-line */
     if (process.env.NODE_ENV !== 'test') {
-      /* istanbul ignore next-line */
       EmailVerification.sendVerificationEmail(
         req, registeredUser.email, registeredUser.firstName,
         verificationToken
@@ -277,8 +277,8 @@ export default class AuthController {
       id,
       email
     });
+    /* istanbul ignore next-line */
     if (process.env.NODE_ENV !== 'test') {
-      /* istanbul ignore next-line */
       sendResetEmail(req, email, token);
     }
     return res.status(200).send({

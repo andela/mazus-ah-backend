@@ -9,6 +9,9 @@
   },
   "nyc": {
     "exclude": [
+      "helpers/EmailVerification.js",
+      "helpers/ForgotPasswordEmail.js",
+      "helpers/Postals.js",
       "helpers/passportStrategies.js",
       "__tests__/*"
     ]

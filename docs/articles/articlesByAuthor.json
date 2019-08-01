@@ -6,13 +6,13 @@
     "description": "Return all articles available written by one author \n",
     "parameters": [
       {
-        "name": "email",
+        "name": "id",
         "in": "path",
         "required": true,
-        "description": "The email of the author",
+        "description": "The id of the author",
         "schema": {
           "type": "string",
-          "example": "darthssvader@gmail.com"
+          "example": "f6b3facb-eb83-47f8-8c1c-05207e62ed30"
         }
       }
     ],
