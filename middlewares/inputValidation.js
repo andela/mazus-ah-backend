@@ -52,7 +52,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -80,7 +80,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -108,7 +108,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -142,7 +142,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -167,7 +167,25 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
+        });
+      }
+      return next();
+    }
+  ],
+  validateRate: [
+    check('rate')
+      .isInt({ min: 1, max: 5 })
+      .withMessage('The rate value you entered is not valid, rate should be between 1 and 5'),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = {};
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((error) => {
+          errorMessage[error.param] = error.msg;
+        });
+        return res.status(400).json({
+          errors: errorMessage
         });
       }
       return next();
