@@ -6,12 +6,14 @@ const MarkUps = {
     </center>
     `,
   alreadyVerified: `
-    <center><img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564669965/authors_haven_e1havh.png' style='height:270px; width:270px';'>
+    <center>
+    <img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564669965/authors_haven_e1havh.png' style='height:270px; width:270px';'>
     <h1 style='font-family:helvetica;'>Your email has already been verified</h1>
     </center>
     `,
   incorrectCredentials: `
-    <center><img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564669965/authors_haven_e1havh.png style='height:270px; width:270px';'>
+    <center>
+    <img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564669965/authors_haven_e1havh.png style='height:270px; width:270px';'>
     <h1 style='font-family:helvetica;'>Your credentials are incorrect</h1>
     </center>
     `,
