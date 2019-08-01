@@ -76,7 +76,6 @@ export default class AuthController {
       email,
       type: registeredUser.type,
     });
-
     // This line sends the registered user an email
     /* istanbul ignore next-line */
     if (process.env.NODE_ENV !== 'test') {

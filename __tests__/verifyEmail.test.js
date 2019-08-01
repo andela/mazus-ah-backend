@@ -25,7 +25,7 @@ describe('verifying a user email', () => {
   });
   it('should return a success response object when a user successfully verifies an email', (done) => {
     chai.request(app)
-      .patch(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
+      .get(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
         expect(res.body.message).to.eql('Email Verified');
@@ -35,7 +35,7 @@ describe('verifying a user email', () => {
   });
   it('should tell user email has already been verified if so', (done) => {
     chai.request(app)
-      .patch(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
+      .get(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
         expect(res.body.message).to.eql('Your Email has already been verified');
@@ -55,7 +55,7 @@ describe('verifying a user email', () => {
   });
   it('should throw an error when user attempts to verify an email with the wrong information', (done) => {
     chai.request(app)
-      .patch(`${url}/auth/verify?email=${secondUserToVerify.email}&token=${secondVerificationCode.slice(0, 34)}`)
+      .get(`${url}/auth/verify?email=${secondUserToVerify.email}&token=${secondVerificationCode.slice(0, 34)}`)
       .end((err, res) => {
         expect(res.status).to.eql(400);
         expect(res.body.message).to.eql('Incorrect Credentials');
@@ -78,7 +78,7 @@ describe('verifying a user email', () => {
     const error = new Error('Something went wrong');
     stub.yields(error);
     chai.request(app)
-      .patch(`${url}/auth/verify?email=${thirdUserToVerify.email}&token=${thirdVerificationCode}`)
+      .get(`${url}/auth/verify?email=${thirdUserToVerify.email}&token=${thirdVerificationCode}`)
       .end((err, res) => {
         expect(res.status).to.eql(500);
         done();
