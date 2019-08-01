@@ -116,23 +116,21 @@ const validate = {
   ],
   editProfileValidate: [
     check('avatar')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Avatar is required')
+      .optional()
       .isURL()
       .withMessage('Avatar is not a valid URL, please input a valid URL'),
     check('bio')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Bio is required')
+      .optional()
       .not()
       .isInt()
       .withMessage('Bio is not a valid string, please input a valid string'),
     check('firstName')
+      .optional()
       .isAlpha()
       .trim()
       .withMessage('FirstName is not a valid String, please input a valid string'),
     check('lastName')
+      .optional()
       .isAlpha()
       .trim()
       .withMessage('LastName is not a valid string, please input a valid string'),
