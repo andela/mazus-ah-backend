@@ -1,0 +1,161 @@
+{
+  "get": {
+    "security": [],
+    "tags": ["Articles"],
+    "summary": "Get an Article by the Slug",
+    "description": "Return one article byt the slug \n",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The email of the author",
+        "schema": {
+          "type": "string",
+          "example": "f6b3facb-eb83-47f8-8c1c-05207e62ed30"
+        }
+      },
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the article",
+        "schema": {
+          "type": "string",
+          "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "All articles returned successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "article": {
+              "type": "object",
+              "properties": {
+                "isPaid": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "ratings": {
+                  "type": "number",
+                  "example": 5
+                },
+                "id": {
+                  "type": "string",
+                  "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "The Curious Case of Benjamin Buttons"
+                },
+                "slug": {
+                  "type": "string",
+                  "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+                },
+                "body": {
+                  "type": "string",
+                  "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor leo a diam sollicitudin tempor id eu. Dolor sit amet consectetur adipiscing. Vitae semper quis lectus nulla at volutpat diam ut. Elementum curabitur vitae nunc sed velit dignissim sodales ut. Nunc sed blandit libero volutpat. In egestas erat imperdiet sed euismod. Neque convallis a cras semper auctor neque vitae tempus. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Lacus vel facilisis volutpat est velit egestas dui id. Non nisi est sit amet facilisis magna. Pulvinar sapien et ligula ullamcorper malesuada. Ipsum consequat nisl vel pretium. Elit eget gravida cum sociis. Lacinia at quis risus sed vulputate odio ut. Laoreet non curabitur gravida arcu. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Magna fringilla urna porttitor rhoncus dolor. Amet dictum sit amet justo donec enim diam vulputate ut. Sit amet est placerat in."
+                },
+                "tagsList": {
+                  "type": "array",
+                  "example": ["technology", "NodeJS", "Express"]
+                },
+                "status": {
+                  "type": "string",
+                  "example": "published"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                },
+                "readTime": {
+                  "type": "number",
+                  "example": 3
+                },
+                "createdAt": {
+                  "type": "date",
+                  "example": "2019-07-30T14:50:23.368Z"
+                },
+                "updatedAt": {
+                  "type": "date",
+                  "updatedAt": "2019-07-30T14:50:23.368Z"
+                },
+                "author": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "Darth"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Vader"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "darthssvader@gmail.com"
+                    },
+                    "profile": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                        },
+                        "bio": {
+                          "type": "string",
+                          "example": "I am just a guy who loves to code, bro"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://www.instagram.com/darth_vader/img.jpg"
+                        },
+                        "createdAt": {
+                          "type": "date",
+                          "example": "2019-07-30T14:00:23.458Z"
+                        },
+                        "updatedAt": {
+                          "type": "date",
+                          "updatedAt": "2019-07-30T23:22:33.439Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Articles not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "articles": {
+                  "type": "string",
+                  "example": "Articles not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

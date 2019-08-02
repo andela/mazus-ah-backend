@@ -10,6 +10,11 @@ import verifyemail from './auth/verifyemail';
 import forgotpassword from './auth/forgotpassword.json';
 import resetpassword from './auth/resetpassword.json';
 import viewArticleRating from './rating/rating.json';
+import article from './articles/articles.json';
+import articlesBySlug from './articles/articlesBySlug.json';
+import articlesByAuthor from './articles/articlesByAuthor.json';
+import userArticles from './users/userArticles.json';
+import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -18,9 +23,14 @@ swagger.paths['/auth/facebook'] = facebookLogin;
 swagger.paths['/auth/google'] = googleLogin;
 swagger.paths['/profiles'] = createProfile;
 swagger.paths['/profiles/{id}'] = viewAndEditProfile;
-swagger.paths['/verify'] = verifyemail;
+swagger.paths['/auth/verify'] = verifyemail;
 swagger.paths['/auth/forgotpassword'] = forgotpassword;
 swagger.paths['/auth/resetpassword/{token}'] = resetpassword;
 swagger.paths['/articles/{id}/ratings'] = viewArticleRating;
+swagger.paths['/articles'] = article;
+swagger.paths['/articles/{id}/{slug}'] = articlesBySlug;
+swagger.paths['/articles/{id}'] = articlesByAuthor;
+swagger.paths['/articles/{slug}'] = updateAndDeleteArticles;
+swagger.paths['/users/articles'] = userArticles;
 
 export default swagger;

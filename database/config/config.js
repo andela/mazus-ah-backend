@@ -8,6 +8,7 @@ export const development = {
 
 export const test = {
   use_env_variable: 'TEST_DATABASE_URL',
+  logging: false
 };
 
 export const production = {

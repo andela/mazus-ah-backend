@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 import Helper from '../../helpers/Auth';
 
+const password = Helper.hashPassword('passwordHash');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
@@ -12,28 +14,32 @@ module.exports = {
           firstName: 'John',
           lastName: 'Doe',
           email: 'johndoe@test.com',
-          password: 'passwordHash',
+          isVerified: true,
+          password: `${password}`,
         },
         {
           id: '8c9589fb-5b25-4df9-92ee-2b20ba4f9407',
           firstName: 'Jane',
           lastName: 'Doe',
           email: 'janedoe@test.com',
-          password: 'passwordHash',
+          isVerified: true,
+          password: `${password}`,
         },
         {
           id: 'fdfe8617-208d-4b87-a000-5d6840786ab8',
           firstName: 'Mike',
           lastName: 'Mike',
           email: 'mikemike@test.com',
-          password: 'passwordHash',
+          isVerified: false,
+          password: `${password}`,
         },
         {
           id: '90356e2a-2f35-48e9-9add-9811c23f2122',
           firstName: 'David',
           lastName: 'Noah',
           email: 'davidnoah@test.com',
-          password: 'passwordHash',
+          isVerified: false,
+          password: `${password}`,
         },
         {
           id: '32fd7e50-b687-447f-af7c-c209b8f90041',
