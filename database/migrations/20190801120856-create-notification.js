@@ -1,20 +1,23 @@
-
 /* eslint-disable no-unused-vars */
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-    .then(() => queryInterface.createTable('Comments', {
+    .then(() => queryInterface.createTable('Notifications', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      body: {
+      payload: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: Sequelize.JSON
       },
-      userId: {
+      read: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      receiverId: {
         allowNull: false,
         type: Sequelize.DataTypes.UUID,
         onDelete: 'CASCADE',
@@ -22,19 +25,10 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-        },
+        }
       },
-      articleId: {
+      type: {
         allowNull: false,
-        type: Sequelize.DataTypes.UUID,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-        references: {
-          model: 'Articles',
-          key: 'id',
-        },
-      },
-      articleSlug: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -48,6 +42,5 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       }
     })),
-
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Comments')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Notifications'),
 };
