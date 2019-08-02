@@ -1,7 +1,3 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
@@ -36,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {},
   );
-  User.associate = function(models) {
+  User.associate = (models) => {
     User.hasOne(models.Profile, {
       foreignKey: 'userId',
       as: 'profile',
@@ -80,18 +76,18 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
     });
     User.belongsToMany(models.User, {
-      foreignKey: 'userId',
-      otherKey: 'followerId',
-      as: 'followers',
-      through: 'Followers',
-      timestamps: false,
+      through: models.Follower,
+      as: 'followings',
+      foreignKey: 'followerId',
+      targetKey: 'followerId',
+      onDelete: 'CASCADE'
     });
     User.belongsToMany(models.User, {
-      foreignKey: 'followerId',
-      otherKey: 'userId',
-      as: 'followings',
-      through: 'Followers',
-      timestamps: false,
+      through: models.Follower,
+      as: 'followers',
+      onDelete: 'CASCADE',
+      foreignKey: 'userId',
+      targetKey: 'userId'
     });
   };
   return User;

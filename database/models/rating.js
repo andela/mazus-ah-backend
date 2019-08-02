@@ -1,7 +1,3 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
-
 module.exports = (sequelize, DataTypes) => {
   const Rating = sequelize.define('Rating', {
     rate: {
@@ -10,14 +6,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  Rating.associate = function (models) {
+  Rating.associate = (models) => {
     // associations can be defined here
     Rating.belongsTo(models.User, {
       foreignKey: 'userId',

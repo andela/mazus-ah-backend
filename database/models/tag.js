@@ -1,6 +1,4 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define('Tag', {
@@ -10,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  Tag.associate = function(models) {
+  Tag.associate = (models) => {
     // associations can be defined here
   };
   return Tag;

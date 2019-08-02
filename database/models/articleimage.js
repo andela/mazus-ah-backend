@@ -1,6 +1,4 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
   const ArticleImage = sequelize.define('ArticleImage', {
@@ -10,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  ArticleImage.associate = function(models) {
+  ArticleImage.associate = (models) => {
     // associations can be defined here
   };
   return ArticleImage;

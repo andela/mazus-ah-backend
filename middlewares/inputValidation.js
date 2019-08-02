@@ -173,6 +173,24 @@ const validate = {
       return next();
     }
   ],
+  validateParamsId: [
+    param('id')
+      .matches((/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))
+      .withMessage('id is not valid'),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = {};
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((error) => {
+          errorMessage[error.param] = error.msg;
+        });
+        return res.status(400).json({
+          errors: errorMessage,
+        });
+      }
+      return next();
+    }
+  ],
   resetforgotPassword: [
     check('password')
       .not()
