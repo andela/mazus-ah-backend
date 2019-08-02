@@ -17,13 +17,12 @@ export default class EmailVerification {
   * @memberof EmailVerification
   * @returns {function} - returns a function call
   */
-  static sendVerificationEmail({ protocol, hostname }, recipient, name, token) {
-    const { PORT } = process.env;
+  static sendVerificationEmail(requestInfo, recipient, name, token) {
     const email = recipient;
     const content = `<img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564047885/assets/logo_hjqgbb.png'>
                     <br><h1>Welcome ${name}</h1><br>
                     <h2>Please click the link below to confirm your email</h2><br>
-                    <h2><a href = '${protocol}://${hostname}${PORT ? `:${PORT}` : ''}/api/v1/auth/verify?email=${email}&token=${token}'>Confirm Email</a></h2>
+                    <h2><a href = '${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/auth/verify?email=${email}&token=${token}'>Confirm Email</a></h2>
                     `;
 
     Postals.sendEmail(

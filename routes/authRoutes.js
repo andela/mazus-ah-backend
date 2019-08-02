@@ -21,9 +21,10 @@ const { resetforgotPassword, resetemail } = Validate;
 const router = Router();
 
 router.post('/signup', Validate.signup, signUp);
+router.get('/verify', verifyEmail);
 router.post('/signin', Validate.signin, userSignin);
 router.post('/logout', verifyToken, logout);
-router.patch('/verify', verifyEmail);
+
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 router.get('/facebook/callback', passport.authenticate('facebook', { session: false }), socialLogin);
