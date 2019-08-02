@@ -80,15 +80,29 @@ export default class ArticleController {
 
       const article = await Article.findOne({
         where: { slug, status: 'published' },
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          include: [{
-            model: Profile,
-            as: 'profile',
-          }]
-        }]
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
+          },
+          { // Article Comments
+            model: models.Comment,
+            as: 'articlecomment',
+            attributes: ['body', 'createdAt', 'updatedAt'],
+            include: [
+              { // user
+                model: models.User,
+                as: 'user',
+                attributes: ['firstName', 'lastName', 'email', 'id'],
+              }
+            ]
+          },
+        ],
       });
 
       if (!article) {
@@ -128,15 +142,29 @@ export default class ArticleController {
             },
             status: 'published'
           },
-          include: [{
-            model: User,
-            as: 'author',
-            attributes: ['id', 'firstName', 'lastName', 'email'],
-            include: [{
-              model: Profile,
-              as: 'profile',
-            }]
-          }],
+          include: [
+            { // Author
+              model: User,
+              as: 'author',
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+              include: [{
+                model: Profile,
+                as: 'profile',
+              }]
+            },
+            { // Article Comments
+              model: models.Comment,
+              as: 'articlecomment',
+              attributes: ['body', 'createdAt', 'updatedAt'],
+              include: [
+                { // user
+                  model: models.User,
+                  as: 'user',
+                  attributes: ['firstName', 'lastName', 'email', 'id'],
+                }
+              ]
+            },
+          ],
           order: [['ratings', 'DESC']],
         });
 
@@ -147,15 +175,29 @@ export default class ArticleController {
         where: {
           status: 'published'
         },
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          include: [{
-            model: Profile,
-            as: 'profile',
-          }]
-        }],
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
+          },
+          { // Article Comments
+            model: models.Comment,
+            as: 'articlecomment',
+            attributes: ['body', 'createdAt', 'updatedAt'],
+            include: [
+              { // user
+                model: models.User,
+                as: 'user',
+                attributes: ['firstName', 'lastName', 'email', 'id'],
+              }
+            ]
+          },
+        ],
         order: [['ratings', 'DESC']],
       });
 
@@ -190,15 +232,29 @@ export default class ArticleController {
           status: 'published',
           userId: author.id,
         },
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          include: [{
-            model: Profile,
-            as: 'profile',
-          }]
-        }],
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
+          },
+          { // Article Comments
+            model: models.Comment,
+            as: 'articlecomment',
+            attributes: ['body', 'createdAt', 'updatedAt'],
+            include: [
+              { // user
+                model: models.User,
+                as: 'user',
+                attributes: ['firstName', 'lastName', 'email', 'id'],
+              }
+            ]
+          },
+        ],
         order: [['ratings', 'DESC']],
       });
 
@@ -229,15 +285,29 @@ export default class ArticleController {
         where: {
           userId: id
         },
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-          include: [{
-            model: Profile,
-            as: 'profile',
-          }]
-        }],
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
+          },
+          { // Article Comments
+            model: models.Comment,
+            as: 'articlecomment',
+            attributes: ['body', 'createdAt', 'updatedAt'],
+            include: [
+              { // user
+                model: models.User,
+                as: 'user',
+                attributes: ['firstName', 'lastName', 'email', 'id'],
+              }
+            ]
+          },
+        ],
         order: [['updatedAt', 'DESC']],
       });
 
