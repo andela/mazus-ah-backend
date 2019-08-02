@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       slug: {
         allowNull: false,
         type: DataTypes.STRING,
+        unique: true,
       },
       body: {
         allowNull: false,
@@ -92,7 +93,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });
-
     Article.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'author',

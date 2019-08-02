@@ -1,0 +1,62 @@
+{
+  "post": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Articles"],
+    "summary": "Comment on an article or respond to a comment",
+    "description": "Article comment",
+    "parameters": [
+      {
+        "name": "Post a comment",
+        "in": "body",
+        "description": "request payload",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "body": {
+              "type": "string",
+              "example": "just some comment"
+            }
+          }
+        }
+      },
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the article",
+        "schema": {
+          "type": "string",
+          "example": "3-bad-guys"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Comment posted"
+            },
+            "comment": {
+              "type": "object",
+              "properties": {
+                "body": {
+                  "type": "string",
+                  "example": "some long talk"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

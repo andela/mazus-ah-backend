@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
+    },
+    articleSlug: {
+      type: DataTypes.STRING,
     },
   }, {});
   Comment.associate = function(models) {
@@ -29,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'commentreport',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
+    });
+    Comment.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'user'
     });
   };
   return Comment;

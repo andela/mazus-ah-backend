@@ -13,13 +13,13 @@ module.exports = {
         },
         {
           id: '25a04c3d-04dc-485f-b41e-ae640fe629d4',
-          body: 'some comment by user3 on article 2',
+          body: 'I love this article about the three guys',
           userId: 'fdfe8617-208d-4b87-a000-5d6840786ab8',
           articleId: '3eab3b9c-9782-4cc8-95c4-31c3fe5df09e',
         },
         {
           id: '35dc7202-c52a-4762-8637-6a92f6492c02',
-          body: 'some comment by user1 on article 2',
+          body: 'this article is quite interesting',
           userId: 'ffe25dbe-29ea-4759-8461-ed116f6739dd',
           articleId: '3eab3b9c-9782-4cc8-95c4-31c3fe5df09e',
         },
