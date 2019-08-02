@@ -1,0 +1,39 @@
+{
+    "post": {
+      "security": [
+        {
+           "Bearer": []
+        }
+     ],
+      "tags": ["Articles"],
+      "summary": "Dislike an article",
+      "description": "Dislike an artile",
+      "parameters": [
+        {
+          "name": "slug",
+          "in": "path",
+          "required": true,
+          "description": "Slug of the article to be disliked",
+          "schema": {
+            "type": "string",
+            "example": "building-apis-with-nodejs-48458493"
+          }
+        }
+      ],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "You just disliked 'Building APIs with Nodejs'"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
