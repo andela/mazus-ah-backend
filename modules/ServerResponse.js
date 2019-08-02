@@ -72,7 +72,7 @@ export default class ServerResponse {
    * @memberof ServerResponse
    */
   static serverErrorResponse(err, req, res, next) {
-  /* istanbul ignore next-line */
+    /* istanbul ignore next-line */
     return res.status(err.status || 500).json({
       errors: {
         message:
