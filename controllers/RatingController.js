@@ -1,6 +1,7 @@
 
 import models from '../database/models';
 import ServerResponse from '../modules';
+import pagination from '../helpers/Pagination';
 
 const { successResponse, notFoundError } = ServerResponse;
 
@@ -19,7 +20,8 @@ export default class RatingController {
      * @param {object} res express response object
      * @param {object} next express next object
      *
-     * @returns {object} returns profile info
+     * @returns {object} returns ratings info
+     *
      * @memberof RatingController
      */
   static async getArticleRatings(req, res, next) {
@@ -30,21 +32,34 @@ export default class RatingController {
       if (article === null) {
         return notFoundError(req, res);
       }
+
+      const pageNumber = pagination(req.query.page, req.query.pageLimit);
       const rating = await models.Article.findAll({
+        offset: pageNumber.offset,
+        limit: pageNumber.limit,
+        subQuery: false,
         include: [
           {
             model: models.Rating,
             as: 'articlerating',
             where: { articleId: article.dataValues.id },
             attributes: ['rate'],
+
             include: [{
               model: models.User,
               as: 'userdetails',
-              attributes: ['firstName', 'lastName']
-            }]
+              attributes: ['firstName', 'lastName'],
+            }],
+            order: [
+              [models.Rating, models.User, 'firstName', 'DESC']
+            ]
           },
         ],
       });
+
+      if (!rating.length) {
+        return notFoundError(req, res);
+      }
       const { articlerating } = rating[0];
       return successResponse(res, 200, 'article', articlerating);
     } catch (error) {

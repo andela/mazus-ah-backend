@@ -19,6 +19,20 @@
           "type": "integer"
         },
         "description": "The Article ID you want to check"
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "description": "Enter page number",
+        "required": false,
+        "type": "integer"
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "Enter page size",
+        "required": false,
+        "type": "integer"
       }
     ],
     "produces": [
