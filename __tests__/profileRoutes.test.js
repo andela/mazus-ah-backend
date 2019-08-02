@@ -79,13 +79,13 @@ describe('Profile test', () => {
         .send(correctProfile)
         .end((err, res) => {
           expect(res.status).to.eql(201);
-          expect(res.body.data).to.have.property('message');
-          expect(res.body.data.message).to.eql('Your profile has been created successfully');
-          expect(res.body.data.profile).to.have.property('name');
-          expect(res.body.data.profile).to.have.property('bio');
-          expect(res.body.data.profile).to.have.property('avatar');
-          expect(res.body.data.profile.avatar).to.eql(correctProfile.avatar);
-          expect(res.body.data.profile.bio).to.eql(correctProfile.bio);
+          expect(res.body.user).to.have.property('message');
+          expect(res.body.user.message).to.eql('Your profile has been created successfully');
+          expect(res.body.user.profile).to.have.property('name');
+          expect(res.body.user.profile).to.have.property('bio');
+          expect(res.body.user.profile).to.have.property('avatar');
+          expect(res.body.user.profile.avatar).to.eql(correctProfile.avatar);
+          expect(res.body.user.profile.bio).to.eql(correctProfile.bio);
           done();
         });
     });
@@ -148,16 +148,16 @@ describe('Profile test', () => {
         .send(correctProfilEdit)
         .end((err, res) => {
           expect(res.status).to.eql(200);
-          expect(res.body).to.have.property('data');
-          expect(res.body.data.message).to.eql('Your profile has been updated successfully');
-          expect(res.body.data.profile).to.have.property('avatar');
-          expect(res.body.data.profile).to.have.property('bio');
-          expect(res.body.data.profile).to.have.property('firstName');
-          expect(res.body.data.profile).to.have.property('lastName');
-          expect(res.body.data.profile.avatar).to.eql(correctProfilEdit.avatar);
-          expect(res.body.data.profile.bio).to.eql(correctProfilEdit.bio);
-          expect(res.body.data.profile.firstName).to.eql(correctProfilEdit.firstName);
-          expect(res.body.data.profile.lastName).to.eql(correctProfilEdit.lastName);
+          expect(res.body).to.have.property('user');
+          expect(res.body.user.message).to.eql('Your profile has been updated successfully');
+          expect(res.body.user.profile).to.have.property('avatar');
+          expect(res.body.user.profile).to.have.property('bio');
+          expect(res.body.user.profile).to.have.property('firstName');
+          expect(res.body.user.profile).to.have.property('lastName');
+          expect(res.body.user.profile.avatar).to.eql(correctProfilEdit.avatar);
+          expect(res.body.user.profile.bio).to.eql(correctProfilEdit.bio);
+          expect(res.body.user.profile.firstName).to.eql(correctProfilEdit.firstName);
+          expect(res.body.user.profile.lastName).to.eql(correctProfilEdit.lastName);
           done();
         });
     });

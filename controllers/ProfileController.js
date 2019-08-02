@@ -43,7 +43,7 @@ export default class ProfileController {
           avatar,
         },
       };
-      return successResponse(res, 201, resData);
+      return successResponse(res, 201, 'user', resData);
     } catch (error) {
       return next(error);
     }
@@ -99,7 +99,7 @@ export default class ProfileController {
           lastName: lastNamedb,
         },
       };
-      return successResponse(res, 200, resData);
+      return successResponse(res, 200, 'user', resData);
     } catch (error) {
       return next(error);
     }

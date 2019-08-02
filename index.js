@@ -9,10 +9,12 @@ import passport from 'passport';
 import docs from './docs';
 import routes from './routes';
 import ServerResponse from './modules';
+import models from './database/models';
 
 const debug = Debug('dev');
 const isProduction = process.env.NODE_ENV === 'production';
 const { notFoundError, developmentServerErrorResponse, serverErrorResponse } = ServerResponse;
+const { sequelize } = models;
 const API_PREFIX = '/api/v1';
 
 // Create global app object
@@ -50,6 +52,9 @@ if (!isProduction) {
 // no stacktraces leaked to user
 app.use(serverErrorResponse);
 
+(async () => {
+  await sequelize.sync();
+})();
 // finally, let's start our server...
 const server = app.listen(process.env.PORT || 3000, () => {
   debug(`Listening on port ${server.address().port}`);

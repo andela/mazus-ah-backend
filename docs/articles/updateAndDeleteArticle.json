@@ -1,0 +1,266 @@
+{
+  "patch": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Articles"],
+    "summary": "Edit Article",
+    "description": "User edit an article \n",
+    "parameters": [
+      {
+        "name": "Edit an existing article",
+        "in": "body",
+        "description": "request payload for new article",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "example": "How To Edit an article"
+            },
+            "description": {
+              "type": "string",
+              "example": "Indepth insight on how to edit an article"
+            },
+            "body": {
+              "type": "string",
+              "example": "Long story short.... You can"
+            },
+            "tags": {
+              "type": "array",
+              "example": ["news", "information", "editing", "technology"]
+            },
+            "status": {
+              "type": "string",
+              "example": "published"
+            }
+          }
+        }
+      },
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the article to be edited",
+        "schema": {
+          "type": "string",
+          "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "Article updated successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "article": {
+              "type": "object",
+              "properties": {
+                "isPaid": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "ratings": {
+                  "type": "number",
+                  "example": 5
+                },
+                "id": {
+                  "type": "string",
+                  "example": "10ba038e-48da-487b-96e8-8d3b99b6d18a"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "How To Edit an article"
+                },
+                "slug": {
+                  "type": "string",
+                  "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+                },
+                "body": {
+                  "type": "string",
+                  "example": "Long story short.... You can."
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "When the article doesn't exist or isn't accessed by the owner",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "article": {
+                  "type": "string",
+                  "example": "Article not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "When a non-logged in user tries to edit an article",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid token provided, please sign in"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed with an invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "No token provided" }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Wrongly input details",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Title cannot be empty"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "delete": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Articles"],
+    "summary": "Delete Article",
+    "description": "User delete an article \n",
+    "parameters": [
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the article to be edited",
+        "schema": {
+          "type": "string",
+          "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "Article deleted successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "article": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Article deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "When the article doesn't exist or isn't accessed by the owner",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "article": {
+                  "type": "string",
+                  "example": "Article not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "When a non-logged in user tries to edit an article",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid token provided, please sign in"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed with an invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "No token provided" }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Wrongly input details",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Title cannot be empty"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

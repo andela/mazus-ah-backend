@@ -65,6 +65,13 @@ const users = [
     password: 'Password1',
     confirmPassword: 'Password',
   },
+  {
+    firstName: 'Obiwan',
+    lastName: 'Kenobi',
+    email: 'obiwan@kenobi.com',
+    password: 'TheEmpire1999',
+    confirmPassword: 'TheEmpire1999',
+  },
 ];
 
 export default users;

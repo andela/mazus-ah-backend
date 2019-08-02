@@ -31,13 +31,14 @@ export default class ServerResponse {
    * @static
    * @param {object} res
    * @param {number} status
+   *  @param {string} key
    * @param {object} data
    * @returns {object} - data
    * @memberof ServerResponse
    */
-  static successResponse(res, status, data) {
+  static successResponse(res, status, key, data) {
     return res.status(status).json({
-      data,
+      [key]: data,
     });
   }
 

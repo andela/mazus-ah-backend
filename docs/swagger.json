@@ -47,6 +47,47 @@
           "type": "date"
         }
       }
+    },
+    "Articles": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "ratings": {
+          "type": "number"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "isPaid": {
+          "type": "boolean"
+        },
+        "tagsList": {
+          "type": "array"
+        },
+        "readTime": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "date"
+        },
+        "updatedAt": {
+          "type": "date"
+        }
+      }
     }
   }
 }

@@ -1,0 +1,111 @@
+{
+  "get": {
+    "security": [],
+    "tags": ["Articles"],
+    "summary": "Get All Articles By an Author",
+    "description": "Return all articles available written by one author \n",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The id of the author",
+        "schema": {
+          "type": "string",
+          "example": "f6b3facb-eb83-47f8-8c1c-05207e62ed30"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "All articles returned successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "articles": {
+              "type": "array",
+              "example": [
+                {
+                  "id": 2,
+                  "title": "Getting Started With NodeJS & Express",
+                  "slug": "getting-started-with-nodejs-&-express-1564498223366-74536",
+                  "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor leo a diam sollicitudin tempor id eu. Dolor sit amet consectetur adipiscing. Vitae semper quis lectus nulla at volutpat diam ut. Elementum curabitur vitae nunc sed velit dignissim sodales ut. Nunc sed blandit libero volutpat. In egestas erat imperdiet sed euismod. Neque convallis a cras semper auctor neque vitae tempus. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Lacus vel facilisis volutpat est velit egestas dui id. Non nisi est sit amet facilisis magna. Pulvinar sapien et ligula ullamcorper malesuada. Ipsum consequat nisl vel pretium. Elit eget gravida cum sociis. Lacinia at quis risus sed vulputate odio ut. Laoreet non curabitur gravida arcu. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Magna fringilla urna porttitor rhoncus dolor. Amet dictum sit amet justo donec enim diam vulputate ut. Sit amet est placerat in. Proin sed libero enim sed. In hac habitasse platea dictumst quisque sagittis. Imperdiet nulla malesuada pellentesque elit eget. Dictumst quisque sagittis purus sit. Cursus euismod quis viverra nibh cras pulvinar mattis. Tellus integer feugiat scelerisque varius morbi enim nunc.Arcu felis bibendum ut tristique et egestas quis. A condimentum vitae sapien pellentesque habitant morbi tristique. Phasellus vestibulum lorem sed risus ultricies. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Convallis tellus id interdum velit laoreet id donec ultrices. Eu volutpat odio facilisis mauris sit amet. Faucibus interdum posuere lorem ipsum dolor sit amet. Ut consequat semper viverra nam. Orci nulla pellentesque dignissim enim sit. Vitae sapien pellentesque habitant morbi tristique senectus et netus et. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Nulla facilisi cras fermentum odio. Feugiat pretium nibh ipsum consequat nisl vel. Nec tincidunt praesent semper feugiat nibh. Iaculis urna id volutpat lacus laoreet non. At consectetur lorem donec massa sapien faucibus. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare. Sit amet porttitor eget dolor morbi. Diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Pharetra sit amet aliquam id diam maecenas ultricies. Gravida dictum fusce ut placerat orci. Sed felis eget velit aliquet sagittis. Pretium quam vulputate dignissim suspendisse. Euismod elementum nisi quis eleifend quam adipiscing vitae proin. Metus dictum at tempor commodo ullamcorper a lacus vestibulum sed. Ut enim blandit volutpat maecenas volutpat. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Odio facilisis mauris sit amet massa vitae tortor condimentum. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Neque gravida in fermentum et sollicitudin ac. Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Pharetra vel turpis nunc eget lorem dolor sed. Enim sed faucibus turpis in eu mi bibendum. Aliquam purus sit amet luctus. Ut diam quam nulla porttitor massa id neque aliquam vestibulum. Morbi quis commodo odio aenean sed adipiscing. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Nec ultrices dui sapien eget. Sed odio morbi quis commodo odio aenean sed. Nec tincidunt praesent semper feugiat nibh sed. Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus. Mauris sit amet massa vitae tortor condimentum lacinia quis vel. Proin sagittis nisl rhoncus mattis. Sagittis nisl rhoncus mattis rhoncus. Euismod lacinia at quis risus sed vulputate odio. Mi quis hendrerit dolor magna eget est lorem ipsum. Non odio euismod lacinia at quis.",
+                  "description": "How to build a simple web app in NodeJS",
+                  "isPaid": false,
+                  "ratings": 5,
+                  "status": "published",
+                  "tagsList": ["technology", "NodeJS", "Express"],
+                  "userId": 1,
+                  "readTime": 3,
+                  "createdAt": "2019-07-30T14:50:23.368Z",
+                  "updatedAt": "2019-07-30T14:50:23.368Z",
+                  "author": {
+                    "id": 1,
+                    "firstName": "Darth",
+                    "lastName": "Vader",
+                    "email": "darthssvader@gmail.com",
+                    "profile": {
+                      "id": 1,
+                      "userId": 1,
+                      "bio": "I am just a guy who loves to code, bro",
+                      "avatar": "https://www.instagram.com/tolulope_od/img.jpg",
+                      "createdAt": "2019-07-30T14:00:23.458Z",
+                      "updatedAt": "2019-07-30T23:22:33.439Z"
+                    }
+                  }
+                },
+                {
+                  "id": 1,
+                  "title": "Building Team Skills",
+                  "slug": "building-team-skills-1564495885428-67234",
+                  "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor leo a diam sollicitudin tempor id eu. Dolor sit amet consectetur adipiscing. Vitae semper quis lectus nulla at volutpat diam ut. Elementum curabitur vitae nunc sed velit dignissim sodales ut. Nunc sed blandit libero volutpat. In egestas erat imperdiet sed euismod. Neque convallis a cras semper auctor neque vitae tempus. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Lacus vel facilisis volutpat est velit egestas dui id. Non nisi est sit amet facilisis magna. Pulvinar sapien et ligula ullamcorper malesuada. Ipsum consequat nisl vel pretium. Elit eget gravida cum sociis. Lacinia at quis risus sed vulputate odio ut. Laoreet non curabitur gravida arcu. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Magna fringilla urna porttitor rhoncus dolor. Amet dictum sit amet justo donec enim diam vulputate ut. Sit amet est placerat in. Proin sed libero enim sed. In hac habitasse platea dictumst quisque sagittis. Imperdiet nulla malesuada pellentesque elit eget. Dictumst quisque sagittis purus sit. Cursus euismod quis viverra nibh cras pulvinar mattis. Tellus integer feugiat scelerisque varius morbi enim nunc.Arcu felis bibendum ut tristique et egestas quis. A condimentum vitae sapien pellentesque habitant morbi tristique. Phasellus vestibulum lorem sed risus ultricies. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat. Convallis tellus id interdum velit laoreet id donec ultrices. Eu volutpat odio facilisis mauris sit amet. Faucibus interdum posuere lorem ipsum dolor sit amet. Ut consequat semper viverra nam. Orci nulla pellentesque dignissim enim sit. Vitae sapien pellentesque habitant morbi tristique senectus et netus et. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Nulla facilisi cras fermentum odio. Feugiat pretium nibh ipsum consequat nisl vel. Nec tincidunt praesent semper feugiat nibh. Iaculis urna id volutpat lacus laoreet non. At consectetur lorem donec massa sapien faucibus. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare. Sit amet porttitor eget dolor morbi. Diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Pharetra sit amet aliquam id diam maecenas ultricies. Gravida dictum fusce ut placerat orci. Sed felis eget velit aliquet sagittis. Pretium quam vulputate dignissim suspendisse. Euismod elementum nisi quis eleifend quam adipiscing vitae proin. Metus dictum at tempor commodo ullamcorper a lacus vestibulum sed. Ut enim blandit volutpat maecenas volutpat. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Odio facilisis mauris sit amet massa vitae tortor condimentum. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Neque gravida in fermentum et sollicitudin ac. Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Pharetra vel turpis nunc eget lorem dolor sed. Enim sed faucibus turpis in eu mi bibendum. Aliquam purus sit amet luctus. Ut diam quam nulla porttitor massa id neque aliquam vestibulum. Morbi quis commodo odio aenean sed adipiscing. Sed ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Nec ultrices dui sapien eget. Sed odio morbi quis commodo odio aenean sed. Nec tincidunt praesent semper feugiat nibh sed. Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus. Mauris sit amet massa vitae tortor condimentum lacinia quis vel. Proin sagittis nisl rhoncus mattis. Sagittis nisl rhoncus mattis rhoncus. Euismod lacinia at quis risus sed vulputate odio. Mi quis hendrerit dolor magna eget est lorem ipsum. Non odio euismod lacinia at quis.",
+                  "description": "Building team skills in one week",
+                  "isPaid": false,
+                  "ratings": 3,
+                  "status": "published",
+                  "tagsList": ["team-bonding", "collaboration"],
+                  "userId": 1,
+                  "readTime": 3,
+                  "createdAt": "2019-07-30T14:11:25.429Z",
+                  "updatedAt": "2019-07-30T14:11:25.429Z",
+                  "author": {
+                    "id": 1,
+                    "firstName": "Darth",
+                    "lastName": "Vader",
+                    "email": "darthssvader@gmail.com",
+                    "profile": {
+                      "id": 1,
+                      "userId": 1,
+                      "bio": "I am just a guy who loves to code, bro",
+                      "avatar": "https://www.instagram.com/tolulope_od/img.jpg",
+                      "createdAt": "2019-07-30T14:00:23.458Z",
+                      "updatedAt": "2019-07-30T23:22:33.439Z"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Articles not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "articles": {
+                  "type": "string",
+                  "example": "Author not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -46,7 +46,7 @@ export default class RatingController {
         ],
       });
       const { articlerating } = rating[0];
-      return successResponse(res, 200, articlerating);
+      return successResponse(res, 200, 'article', articlerating);
     } catch (error) {
       return next(error);
     }

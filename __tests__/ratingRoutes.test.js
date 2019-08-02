@@ -38,10 +38,10 @@ describe('Check ratings', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.data[0]).to.have.property('rate');
-        expect(res.body.data[0]).to.have.property('userdetails');
-        expect(res.body.data[0].userdetails).to.have.property('firstName');
-        expect(res.body.data[0].userdetails).to.have.property('lastName');
+        expect(res.body.article[0]).to.have.property('rate');
+        expect(res.body.article[0]).to.have.property('userdetails');
+        expect(res.body.article[0].userdetails).to.have.property('firstName');
+        expect(res.body.article[0].userdetails).to.have.property('lastName');
         done();
       });
   });
