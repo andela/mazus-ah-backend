@@ -4,7 +4,7 @@ import chaiHttp from 'chai-http';
 import app from '..';
 import models from '../database/models';
 import mockUsersToVerify from './mockData/mockUsersToVerify';
-import MarUps from '../helpers/MarkUps';
+import MarkUps from '../helpers/MarkUps';
 
 chai.use(chaiHttp);
 
@@ -12,7 +12,7 @@ const url = '/api/v1';
 const { expect } = chai;
 const { User } = models;
 const { userToVerify, secondUserToVerify, thirdUserToVerify } = mockUsersToVerify;
-const { verified, alreadyVerified, incorrectCredentials } = MarUps;
+const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
 
 describe('verifying a user email', () => {
   let verificationCode;
