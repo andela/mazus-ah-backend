@@ -12,8 +12,8 @@ module.exports = {
           receiverId: '8c9589fb-5b25-4df9-92ee-2b20ba4f9407',
           type: 'comment',
           payload: JSON.stringify({
-            commenter: 'Pelumi',
-            title: 'Importance of frog',
+            commentBy: 'Pelumi',
+            articleTitle: 'Importance of frog',
             slug: 'importance-of-frog-123322323'
           }),
         },
@@ -23,8 +23,8 @@ module.exports = {
           receiverId: 'ffe25dbe-29ea-4759-8461-ed116f6739dd',
           type: 'comment',
           payload: JSON.stringify({
-            commenter: 'DFay MAy',
-            title: 'Fay of May',
+            commentBy: 'DFay MAy',
+            articleTitle: 'Fay of May',
             slug: 'fay-of-music-234423'
           }),
         },
