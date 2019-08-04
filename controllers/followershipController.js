@@ -1,6 +1,10 @@
 import models from '../database/models';
+import ServerResponse from '../modules';
+
 
 const { User, Follower } = models;
+const { successResponse, errorResponse } = ServerResponse;
+
 
 /**
  * @exports
@@ -26,43 +30,23 @@ export default class Followership {
     const foundUser = await User.findOne({ where: { id } });
     const foundMe = await User.findOne({ where: { id: userid } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'This author does not exist',
-        }
-      });
+      return errorResponse(res, 404, { message: 'This author does not exist' });
     }
     const { isVerified } = foundMe;
     if (!isVerified) {
-      return res.status(400).send({
-        errors: {
-          message: 'You are supposed to verify your account to follow your favourite authors',
-        }
-      });
+      return errorResponse(res, 400, { message: 'You are supposed to verify your account to follow your favourite authors' });
     }
     if (id === userid) {
-      return res.status(400).send({
-        errors: {
-          message: 'You are not allowed to follow yourself',
-        }
-      });
+      return errorResponse(res, 400, { message: 'You are not allowed to follow yourself' });
     }
 
     await Follower.findOrCreate({ where: { followerId: userid, userId: id } })
       // eslint-disable-next-line no-unused-vars
       .then(([follow, created]) => {
         if (created) {
-          return res.status(201).send({
-            follows: {
-              message: 'You followed a new author',
-            }
-          });
+          return successResponse(res, 201, 'follows', { message: 'You followed a new author' });
         }
-        return res.status(400).send({
-          errors: {
-            message: 'You already follow this author',
-          }
-        });
+        return errorResponse(res, 400, { message: 'You already follow this author' });
       });
   }
 
@@ -85,34 +69,18 @@ export default class Followership {
     const foundUser = await User.findOne({ where: { id } });
     const foundMe = await User.findOne({ where: { id: userid } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'This author does not exist',
-        }
-      });
+      return errorResponse(res, 404, { message: 'This author does not exist' });
     }
     const { isVerified } = foundMe;
     if (!isVerified) {
-      return res.status(400).send({
-        errors: {
-          message: 'You are supposed to verify your account before you can perform this action',
-        }
-      });
+      return errorResponse(res, 400, { message: 'You are supposed to verify your account before you can perform this action' });
     }
     const deleteFollow = await Follower.destroy({ where: { followerId: userid, userId: id } });
     if (deleteFollow <= 0) {
-      return res.status(400).send({
-        errors: {
-          message: 'You have already unfollowed this author',
-        }
-      });
+      return errorResponse(res, 400, { message: 'You have already unfollowed this author' });
     }
 
-    return res.status(200).send({
-      follows: {
-        message: 'You have unfollowed this author',
-      }
-    });
+    return successResponse(res, 200, 'follows', { message: 'You have unfollowed this author' });
   }
 
   /**
@@ -129,11 +97,7 @@ export default class Followership {
     const { id } = req.params;
     const foundUser = await User.findOne({ where: { id } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'this author does not exist',
-        }
-      });
+      return errorResponse(res, 404, { message: 'this author does not exist' });
     }
     const userFollowers = await Follower.findAll({
       where: { userId: id },
@@ -146,12 +110,7 @@ export default class Followership {
       ]
     });
 
-    return res.status(200).send({
-      follows: {
-        message: 'Users followers',
-        userFollowers
-      }
-    });
+    return successResponse(res, 200, 'follows', { message: 'Users followers', userFollowers });
   }
 
   /**
@@ -168,11 +127,7 @@ export default class Followership {
     const { id } = req.params;
     const foundUser = await User.findOne({ where: { id } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'this author does not exist',
-        }
-      });
+      return errorResponse(res, 404, { message: 'this author does not exist' });
     }
     const userFollowings = await Follower.findAll({
       where: { followerId: id },
@@ -185,11 +140,6 @@ export default class Followership {
       ]
     });
 
-    return res.status(200).send({
-      follows: {
-        message: 'User is following',
-        userFollowings
-      }
-    });
+    return successResponse(res, 200, 'follows', { message: 'User is following', userFollowings });
   }
 }
