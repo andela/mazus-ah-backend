@@ -8,7 +8,7 @@ import MarkUps from '../helpers/MarkUps';
 
 
 dotenv.config();
-const { successResponse } = ServerResponse;
+const { successResponse, errorResponse } = ServerResponse;
 const { BlacklistedToken, User } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
 const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
@@ -269,14 +269,9 @@ export default class AuthController {
     const { email } = req.body;
     const foundUser = await User.findOne({ where: { email } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'You are not an existing user, please sign up',
-        }
-      });
+      return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
     }
     const { id } = foundUser.dataValues;
-
     const token = Helper.createToken({
       id,
       email
@@ -285,11 +280,7 @@ export default class AuthController {
     if (process.env.NODE_ENV !== 'test') {
       sendResetEmail(req, email, token);
     }
-    return res.status(200).send({
-      email,
-      token,
-      message: 'Your reset link has been sent to your email'
-    });
+    return successResponse(res, 200, 'auth', { email, token, message: 'Your reset link has been sent to your email' });
   }
 
   /**
@@ -308,42 +299,24 @@ export default class AuthController {
     const genericWordsArray = ['Password123', 'Qwerty123', 'Password', 123];
     const genericWord = genericWordsArray.find(word => password.includes(word));
     if (genericWord) {
-      return res.status(400).send({
-        errors: {
-          message: 'Do not use a common word as the password',
-        }
-      });
+      return errorResponse(res, 400, { message: 'Do not use a common word as the password' });
     }
     if (password !== confirmPassword) {
-      return res.status(400).send({
-        errors: {
-          message: 'Password doesn\'t match, Please check you are entering the right thing!',
-        }
-      });
+      return errorResponse(res, 400, { message: 'Password doesn\'t match, Please check you are entering the right thing!' });
     }
     const { token } = req.params;
     const { id, email } = await Helper.verifyToken(token);
     const foundUser = await User.findOne({ where: { email } });
     if (!foundUser) {
-      return res.status(404).send({
-        errors: {
-          message: 'You are not an existing user, please sign up',
-        }
-      });
+      return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
     }
     const doubleReset = await BlacklistedToken.findOne({ where: { token } });
     if (doubleReset) {
-      return res.status(409).send({
-        errors: {
-          message: 'This link has already been used once, please request another link.',
-        }
-      });
+      return errorResponse(res, 409, { message: 'This link has already been used once, please request another link.' });
     }
     const hashedPassword = Helper.hashPassword(password);
     await models.User.update({ password: hashedPassword }, { where: { email } });
     await BlacklistedToken.create({ token, userId: id });
-    return res.status(200).send({
-      message: 'Your Password has been reset successfully'
-    });
+    return successResponse(res, 200, 'auth', { message: 'Your Password has been reset successfully' });
   }
 }

@@ -1,6 +1,4 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
+
 module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define(
     'Article',
@@ -41,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
       },
       readTime: {
         allowNull: false,
@@ -50,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {},
   );
-  Article.associate = function(models) {
+  Article.associate = (models) => {
     Article.hasMany(models.ArticleImage, {
       foreignKey: 'articleId',
       as: 'articleimage',

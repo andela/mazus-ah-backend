@@ -1,0 +1,49 @@
+{
+    "get": {
+      "security": [
+        {
+           "Bearer": []
+        }
+     ], 
+      "tags": ["Profile"],
+      "summary": "Fetch a users followers",
+      "description": "Get users followers",
+      "parameters": [{
+        "name": "id",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "example": "6cbc961a-9f86-4bd7-adb4-d66cad3d3270"
+        },
+        "required": true,
+        "description": "Id of user to follow"
+      }],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "Users followers",
+          "schema": {
+            "type": "object",
+            "example": {
+                "follows": {
+                    "message": "Users followers",
+                    "userFollowers": []
+                }
+            }
+          }
+        },
+        "404": {
+          "description": "Account not found",
+          "schema": {
+            "type": "object",
+            "example": {
+                "errors": {
+                    "message": "this author does not exist"
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+  
