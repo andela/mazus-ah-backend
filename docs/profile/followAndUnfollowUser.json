@@ -1,0 +1,121 @@
+{
+    "post": {
+      "security": [
+        {
+           "Bearer": []
+        }
+     ], 
+      "tags": ["Profile"],
+      "summary": "Follow a User",
+      "description": "Allow a user to follow another user",
+      "parameters": [{
+        "name": "id",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "example": "6cbc961a-9f86-4bd7-adb4-d66cad3d3270"
+        },
+        "required": true,
+        "description": "Id of user to follow"
+      }],
+      "produces": ["application/json"],
+      "responses": {
+        "201": {
+            "description": "follow a new author",
+            "schema": {
+            "type": "object",
+            "example": {
+            "follows": {
+            
+                "message": "You followed a new author"
+            }
+            }
+            }
+        },
+        "400": {
+            "description": "You already follow this author",
+            "schema": {
+                "type": "object",
+                "example": {
+                "errors": {
+            
+                    "message": "You already follow this author"
+                }
+                }
+            }
+        },
+        "404": {
+            "description": "This author does not exist",
+            "schema": {
+                "type": "object",
+                "example": {
+                "errors": {
+            
+                    "message": "This author does not exist"
+                }
+                }
+            }
+        }
+      }
+    },
+    "delete": {
+      "security": [
+        {
+           "Bearer": []
+        }
+     ],
+      "tags": ["Profile"],
+      "summary": "Unfollow a User",
+      "description": "Allows user to unfollow a user he already follows",
+      "parameters": [{
+        "name": "id",
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "example": "6cbc961a-9f86-4bd7-adb4-d66cad3d3270"
+        },
+        "required": true,
+        "description": "Id of user to follow"
+      }],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+            "description": "unfollow a new author",
+            "schema": {
+                "type": "object",
+                "example": {
+                "follows": {
+            
+                    "message": "You have unfollowed this author"
+                }
+                }
+            }
+        },
+        "400": {
+            "description": "You have already unfollowed this author",
+            "schema": {
+                "type": "object",
+                "example": {
+                "errors": {
+            
+                    "message": "You have already unfollowed this author"
+                }
+                }
+            }
+        },
+        "404": {
+            "description": "This author does not exist",
+            "schema": {
+                "type": "object",
+                "example": {
+                "errors": {
+            
+                    "message": "This author does not exist"
+                }
+                }
+            }
+        }
+      }
+    }
+  }
+  

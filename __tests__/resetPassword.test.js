@@ -18,9 +18,9 @@ describe('Reset Password Test', () => {
       .send(userEmail)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.email).to.eql(userEmail.email);
-        expect(res.body.message).to.eql('Your reset link has been sent to your email');
-        const { token } = res.body;
+        expect(res.body.auth.email).to.eql(userEmail.email);
+        expect(res.body.auth.message).to.eql('Your reset link has been sent to your email');
+        const { token } = res.body.auth;
         jwToken = token;
         done();
       });
@@ -100,7 +100,7 @@ describe('Reset Password Test', () => {
       .send(userPassword)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.message).to.eql('Your Password has been reset successfully');
+        expect(res.body.auth.message).to.eql('Your Password has been reset successfully');
 
         done();
       });

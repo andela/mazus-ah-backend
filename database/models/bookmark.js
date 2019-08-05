@@ -1,19 +1,17 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
   const Bookmark = sequelize.define('Bookmark', {
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  Bookmark.associate = function(models) {
+  Bookmark.associate = (models) => {
     // associations can be defined here
   };
   return Bookmark;

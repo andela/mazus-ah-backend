@@ -1,7 +1,3 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
-
 module.exports = (sequelize, DataTypes) => {
   const Follower = sequelize.define('Follower', {
     followerId: {
@@ -13,8 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
     },
   }, {});
-  Follower.associate = function(models) {
-    // associations can be defined here
+  Follower.associate = (models) => {
+    Follower.belongsTo(models.User, {
+      foreignKey: 'followerId',
+      as: 'followings'
+    });
   };
   return Follower;
 };

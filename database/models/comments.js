@@ -1,7 +1,3 @@
-/* eslint-disable space-before-function-paren */
-/* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
-
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     body: {
@@ -10,17 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     articleId: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
     },
     articleSlug: {
       type: DataTypes.STRING,
     },
   }, {});
-  Comment.associate = function(models) {
+  Comment.associate = (models) => {
     Comment.hasMany(models.Like, {
       foreignKey: 'commentId',
       as: 'commentlike',
