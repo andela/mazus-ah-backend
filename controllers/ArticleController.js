@@ -1,6 +1,7 @@
 import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import ArticleHelper from '../helpers/ArticleHelper';
+import pagination from '../helpers/Pagination';
 
 const {
   Article, User, Profile, Sequelize: { Op }
@@ -132,10 +133,13 @@ export default class ArticleController {
   static async getAllArticles(req, res, next) {
     try {
       let articles;
-      const { tag } = req.query;
-
+      const { tag, page, limit } = req.query;
+      const pageNumber = pagination(page, limit);
       if (tag) {
         articles = await Article.findAll({
+          offset: pageNumber.offset,
+          limit: pageNumber.limit,
+          subQuery: false,
           where: {
             tagsList: {
               [Op.contains]: [`${tag}`],
@@ -167,11 +171,13 @@ export default class ArticleController {
           ],
           order: [['ratings', 'DESC']],
         });
-
         return successResponse(res, 200, 'articles', articles);
       }
 
       articles = await Article.findAll({
+        offset: pageNumber.offset,
+        limit: pageNumber.limit,
+        subQuery: false,
         where: {
           status: 'published'
         },
@@ -221,13 +227,16 @@ export default class ArticleController {
   static async getArticlesByAuthor(req, res, next) {
     try {
       const { id } = req.params;
+      const { page, limit } = req.query;
       const author = await User.findOne({ where: { id } });
-
       if (!author) {
         return errorResponse(res, 404, { article: 'Author not found' });
       }
-
+      const pageNumber = pagination(page, limit);
       const articles = await Article.findAll({
+        offset: pageNumber.offset,
+        limit: pageNumber.limit,
+        subQuery: false,
         where: {
           status: 'published',
           userId: author.id,
