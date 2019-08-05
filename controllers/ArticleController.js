@@ -50,7 +50,7 @@ export default class ArticleController {
         readTime
       });
       const { firstName, lastName } = req.user;
-      Notification.newArticle(req, article.id, article.title, firstName, lastName);
+      Notification.newArticle(req, article.slug, article.title, firstName, lastName);
 
       return successResponse(res, 201, 'article', article);
     } catch (err) {

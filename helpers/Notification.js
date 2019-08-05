@@ -1,6 +1,9 @@
 import Pusher from 'pusher';
 import dotenv from 'dotenv';
 import models from '../database/models';
+import EmailNotification from './EmailNotification';
+
+const { User, Follower } = models;
 
 dotenv.config();
 
@@ -77,25 +80,47 @@ class Notification {
    *
    * @method newArticle
    * @param {object} requestInfo request object
-   * @param {uuid} articleId the id of the article
+   * @param {uuid} articleSlug the id of the article
    * @param {string} title the article's title
    * @param {string} firstName  the publisher's first Name
    * @param {string} lastName the publish's last name
    * @returns {null} null
    */
-  static async newArticle(requestInfo, articleId, title, firstName, lastName) {
+  static async newArticle(requestInfo, articleSlug, title, firstName, lastName) {
     const { id: userId } = requestInfo.user;
-    const followers = await models.Follower.findAll({ raw: true, where: { userId } });
+    const followers = await Follower.findAll({
+      raw: true,
+      where: { userId },
+      include: [
+        {
+          model: User,
+          as: 'followings',
+          attributes: ['id', 'firstName', 'email', 'emailNotify']
+        }
+      ]
+    });
+    const subscribers = followers.filter(subscriber => subscriber['followings.emailNotify']);
     const payload = {
       articleBy: `${firstName} ${lastName}`,
       articleTitle: title,
-      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${articleId}`,
+      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${userId}/${articleSlug}`,
     };
     followers.map(async (follower) => {
       const { followerId } = follower;
       await this.inAppNotification(payload, followerId, false, 'new aritcle');
       await this.pushNotification(followerId, payload);
     });
+    if (process.env.NODE_ENV !== 'test') {
+      subscribers.map(async (subscribedFollower) => {
+        const subscribedFollowerEmail = subscribedFollower['followings.email'];
+        const subscribedFollowerName = subscribedFollower['followings.firstName'];
+        EmailNotification.sendNotificationEmail(
+          subscribedFollowerEmail,
+          subscribedFollowerName,
+          payload
+        );
+      });
+    }
   }
 }
 
