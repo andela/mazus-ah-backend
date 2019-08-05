@@ -32,6 +32,14 @@ module.exports = {
       ratings: {
         type: Sequelize.INTEGER,
       },
+      likes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      dislikes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       status: {
         allowNull: false,
         type: Sequelize.ENUM('draft', 'published', 'trash'),

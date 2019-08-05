@@ -16,10 +16,11 @@ import articlesByAuthor from './articles/articlesByAuthor.json';
 import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
-
 import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
 import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';
+import likeArticle from './articles/likeArticle.json';
+import dislikeArticle from './articles/dislikeArticle';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -43,6 +44,8 @@ swagger.paths['/profiles/followings/{id}'] = userFollowings;
 
 
 swagger.paths['/articles/{slug}/comments'] = postComment;
+swagger.paths['/articles/{slug}/like'] = likeArticle;
+swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 
 
 export default swagger;

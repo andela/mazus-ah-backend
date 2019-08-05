@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     commentId: {
       type: DataTypes.UUID,
     },
+    like: {
+      type: DataTypes.BOOLEAN,
+    },
   }, {});
   Like.associate = (models) => {
     // associations can be defined here
