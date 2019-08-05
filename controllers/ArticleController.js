@@ -1,6 +1,7 @@
 import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import ArticleHelper from '../helpers/ArticleHelper';
+import Notification from '../helpers/Notification';
 
 const {
   Article, User, Profile, Sequelize: { Op }
@@ -47,6 +48,8 @@ export default class ArticleController {
         userId: id,
         readTime
       });
+      const { firstName, lastName } = req.user;
+      Notification.newArticle(req, article.id, article.title, firstName, lastName);
 
       return successResponse(res, 201, 'article', article);
     } catch (err) {

@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('admin', 'user'),
         defaultValue: 'user',
       },
+      emailNotify: {
+        defaultValue: true,
+        type: DataTypes.BOOLEAN,
+      },
     },
     {},
   );
@@ -76,6 +80,12 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Report, {
       foreignKey: 'userId',
       as: 'userreport',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    User.hasMany(models.Notification, {
+      foreignKey: 'userId',
+      as: 'notification',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     });

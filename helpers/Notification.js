@@ -72,6 +72,31 @@ class Notification {
       await this.pushNotification(userId, payload);
     });
   }
+
+  /**
+   *
+   * @method newArticle
+   * @param {object} requestInfo request object
+   * @param {uuid} articleId the id of the article
+   * @param {string} title the article's title
+   * @param {string} firstName  the publisher's first Name
+   * @param {string} lastName the publish's last name
+   * @returns {null} null
+   */
+  static async newArticle(requestInfo, articleId, title, firstName, lastName) {
+    const { id: userId } = requestInfo.user;
+    const followers = await models.Follower.findAll({ raw: true, where: { userId } });
+    const payload = {
+      articleBy: `${firstName} ${lastName}`,
+      articleTitle: title,
+      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${articleId}`,
+    };
+    followers.map(async (follower) => {
+      const { followerId } = follower;
+      await this.inAppNotification(payload, followerId, false, 'new aritcle');
+      await this.pushNotification(followerId, payload);
+    });
+  }
 }
 
 export default Notification;
