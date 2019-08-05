@@ -10,6 +10,8 @@ const {
   fetchArticle, checkAuthor, checkRateData, createRating, updateRating
 } = RateHelpers;
 
+const { Rating, Article } = models;
+
 
 /**
  * @class RatingController
@@ -34,6 +36,7 @@ export default class RatingController {
     try {
       const { slug } = req.params;
       const article = await models.Article.findOne({ where: { slug } });
+      let ratingSum = 0;
 
       if (article === null) {
         return notFoundError(req, res);
@@ -62,6 +65,16 @@ export default class RatingController {
           },
         ],
       });
+
+      const articleRatings = await Rating.findAll({ where: { articleId: article.dataValues.id } });
+      if (articleRatings) {
+        articleRatings.forEach((rate) => {
+          ratingSum += rate.dataValues.rate;
+        });
+        const averageRating = ratingSum / articleRatings.length;
+        const result = Math.ceil(averageRating);
+        await Article.update({ ratings: result }, { where: { id: article.dataValues.id } });
+      }
 
       if (!rating.length) {
         return notFoundError(req, res);

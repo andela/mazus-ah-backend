@@ -16,11 +16,8 @@ import articlesByAuthor from './articles/articlesByAuthor.json';
 import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
-<<<<<<< HEAD
-=======
 import rateArticles from './articles/rateArticles.json';
 
->>>>>>> feat(rating): add user rating feature
 import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
 import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';

@@ -113,6 +113,7 @@ describe('Check ratings', () => {
           expect(article).to.have.property('rate');
           expect(article).to.have.property('firstName');
           expect(article).to.have.property('lastName');
+          expect(article.rate).to.eql(mockRates[0].rate);
           done();
         });
     });
@@ -140,6 +141,7 @@ describe('Check ratings', () => {
           expect(article.message).to.be.eql('Your rating has been added successfully');
           expect(article).to.have.property('articleId');
           expect(article).to.have.property('rate');
+          expect(article.rate).to.eql(mockRates[2].rate);
           done();
         });
     });
