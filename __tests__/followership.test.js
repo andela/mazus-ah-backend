@@ -76,7 +76,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(201);
-          expect(res.body.follows.message).to.eql('You followed a new author');
+          expect(res.body.follows.message).to.eql('You followed David Noah');
           done();
         });
     });
@@ -87,7 +87,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(400);
-          expect(res.body.errors.message).to.eql('You already follow this author');
+          expect(res.body.errors.message).to.eql('You already follow David Noah');
           done();
         });
     });
@@ -145,7 +145,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(200);
-          expect(res.body.follows.message).to.eql('Users followers');
+          expect(res.body.follows.message).to.eql('David Noah has these followers');
           expect(res.body.follows.userFollowers).to.be.a('array');
           done();
         });
@@ -182,7 +182,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(200);
-          expect(res.body.follows.message).to.eql('User is following');
+          expect(res.body.follows.message).to.eql('David Noah is following');
           expect(res.body.follows.userFollowings).to.be.a('array');
           done();
         });
@@ -219,7 +219,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(200);
-          expect(res.body.follows.message).to.eql('You have unfollowed this author');
+          expect(res.body.follows.message).to.eql('You have unfollowed David Noah');
           done();
         });
     });
@@ -230,7 +230,7 @@ describe('Followership', () => {
         .set('Authorization', `Bearer ${validToken}`)
         .end((err, res) => {
           expect(res.status).to.eql(400);
-          expect(res.body.errors.message).to.eql('You have already unfollowed this author');
+          expect(res.body.errors.message).to.eql('You have already unfollowed David Noah');
           done();
         });
     });

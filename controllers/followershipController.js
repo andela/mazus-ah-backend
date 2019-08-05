@@ -32,6 +32,7 @@ export default class Followership {
     if (!foundUser) {
       return errorResponse(res, 404, { message: 'This author does not exist' });
     }
+    const { firstName, lastName } = foundUser;
     const { isVerified } = foundMe;
     if (!isVerified) {
       return errorResponse(res, 400, { message: 'You are supposed to verify your account to follow your favourite authors' });
@@ -41,12 +42,11 @@ export default class Followership {
     }
 
     await Follower.findOrCreate({ where: { followerId: userid, userId: id } })
-      // eslint-disable-next-line no-unused-vars
-      .then(([follow, created]) => {
+      .then(([, created]) => {
         if (created) {
-          return successResponse(res, 201, 'follows', { message: 'You followed a new author' });
+          return successResponse(res, 201, 'follows', { message: `You followed ${firstName} ${lastName}` });
         }
-        return errorResponse(res, 400, { message: 'You already follow this author' });
+        return errorResponse(res, 400, { message: `You already follow ${firstName} ${lastName}` });
       });
   }
 
@@ -71,16 +71,17 @@ export default class Followership {
     if (!foundUser) {
       return errorResponse(res, 404, { message: 'This author does not exist' });
     }
+    const { firstName, lastName } = foundUser;
     const { isVerified } = foundMe;
     if (!isVerified) {
       return errorResponse(res, 400, { message: 'You are supposed to verify your account before you can perform this action' });
     }
     const deleteFollow = await Follower.destroy({ where: { followerId: userid, userId: id } });
     if (deleteFollow <= 0) {
-      return errorResponse(res, 400, { message: 'You have already unfollowed this author' });
+      return errorResponse(res, 400, { message: `You have already unfollowed ${firstName} ${lastName}` });
     }
 
-    return successResponse(res, 200, 'follows', { message: 'You have unfollowed this author' });
+    return successResponse(res, 200, 'follows', { message: `You have unfollowed ${firstName} ${lastName}` });
   }
 
   /**
@@ -99,6 +100,7 @@ export default class Followership {
     if (!foundUser) {
       return errorResponse(res, 404, { message: 'this author does not exist' });
     }
+    const { firstName, lastName } = foundUser;
     const userFollowers = await Follower.findAll({
       where: { userId: id },
       include: [
@@ -110,7 +112,7 @@ export default class Followership {
       ]
     });
 
-    return successResponse(res, 200, 'follows', { message: 'Users followers', userFollowers });
+    return successResponse(res, 200, 'follows', { message: `${firstName} ${lastName} has these followers`, userFollowers });
   }
 
   /**
@@ -129,6 +131,8 @@ export default class Followership {
     if (!foundUser) {
       return errorResponse(res, 404, { message: 'this author does not exist' });
     }
+    const { firstName, lastName } = foundUser;
+
     const userFollowings = await Follower.findAll({
       where: { followerId: id },
       include: [
@@ -140,6 +144,6 @@ export default class Followership {
       ]
     });
 
-    return successResponse(res, 200, 'follows', { message: 'User is following', userFollowings });
+    return successResponse(res, 200, 'follows', { message: `${firstName} ${lastName} is following`, userFollowings });
   }
 }
