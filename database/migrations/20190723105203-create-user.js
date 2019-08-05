@@ -37,6 +37,10 @@ module.exports = {
         type: Sequelize.ENUM('admin', 'user'),
         defaultValue: 'user',
       },
+      emailNotify: {
+        defaultValue: true,
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
