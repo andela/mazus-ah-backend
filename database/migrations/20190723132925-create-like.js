@@ -38,11 +38,18 @@ module.exports = {
           key: 'id',
         },
       },
-      likedOn: {
+      like: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.BOOLEAN,
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     })),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Likes')
 };
