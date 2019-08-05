@@ -17,6 +17,9 @@ import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
 
+import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
+import userFollowers from './profile/userFollowers.json';
+import userFollowings from './profile/userFollowings.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -34,6 +37,10 @@ swagger.paths['/articles/{id}/{slug}'] = articlesBySlug;
 swagger.paths['/articles/{id}'] = articlesByAuthor;
 swagger.paths['/articles/{slug}'] = updateAndDeleteArticles;
 swagger.paths['/users/articles'] = userArticles;
+swagger.paths['/profiles/follow/{id}'] = followAndUnfollowUser;
+swagger.paths['/profiles/followers/{id}'] = userFollowers;
+swagger.paths['/profiles/followings/{id}'] = userFollowings;
+
 
 swagger.paths['/articles/{slug}/comments'] = postComment;
 

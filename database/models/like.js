@@ -1,21 +1,19 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('Like', {
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     articleId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     commentId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  Like.associate = function(models) {
+  Like.associate = (models) => {
     // associations can be defined here
   };
   return Like;

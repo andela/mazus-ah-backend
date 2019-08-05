@@ -1,6 +1,4 @@
-/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
-/* eslint-disable func-names */
 
 module.exports = (sequelize, DataTypes) => {
   const Report = sequelize.define('Report', {
@@ -17,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     articleId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     commentId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
   }, {});
-  Report.associate = function(models) {
+  Report.associate = (models) => {
     // associations can be defined here
   };
   return Report;

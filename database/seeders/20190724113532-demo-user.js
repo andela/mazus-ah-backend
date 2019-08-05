@@ -138,6 +138,14 @@ module.exports = {
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
         },
+        {
+          id: '0ec73114-c834-4dc9-838d-089083680763',
+          firstName: 'Tunji',
+          lastName: 'Noah',
+          email: 'tunji@test.com',
+          password: Helper.hashPassword('PasswoRD123__'),
+          isVerified: false,
+        },
       ],
       {},
     );
