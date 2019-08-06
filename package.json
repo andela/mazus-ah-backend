@@ -15,6 +15,7 @@
       "helpers/passportStrategies.js",
       "helpers/Pagination.js",
       "helpers/Notification.js",
+      "helpers/EmailNotification.js",
       "__tests__/*"
     ]
   },

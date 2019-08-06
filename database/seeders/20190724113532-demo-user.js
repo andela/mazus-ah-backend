@@ -146,6 +146,33 @@ module.exports = {
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: false,
         },
+        {
+          id: 'e89695aa-1f7e-468c-89dd-5fc2332e31f1',
+          firstName: 'John',
+          lastName: 'Kamali',
+          email: 'john.kamali@outlook.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: true,
+          verificationToken: '#john.kamali@outlook.com#'
+        },
+        {
+          id: '6675f038-8c66-4485-9dcf-4660ac27ccd1',
+          firstName: 'Fatima',
+          lastName: 'Kamali',
+          email: 'fatima.kamali@outlook.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: true,
+          verificationToken: '#fatima.kamali@outlook.com#'
+        },
+        {
+          id: 'e509854f-80df-413f-809f-66b5968d03ae',
+          firstName: 'Sophie',
+          lastName: 'Kamali',
+          email: 'sophie.kamali@outlook.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: false,
+          verificationToken: '#sophie.kamali@outlook.com#'
+        },
       ],
       {},
     );
