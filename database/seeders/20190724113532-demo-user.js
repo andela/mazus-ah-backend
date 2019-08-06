@@ -13,7 +13,7 @@ module.exports = {
         {
           id: 'ffe25dbe-29ea-4759-8461-ed116f6739dd',
           firstName: 'John',
-          lastName: 'Doe',
+          lastName: 'Done',
           email: 'johndoe@test.com',
           isVerified: true,
           password: `${password}`,
@@ -21,7 +21,7 @@ module.exports = {
         {
           id: '8c9589fb-5b25-4df9-92ee-2b20ba4f9407',
           firstName: 'Jane',
-          lastName: 'Doe',
+          lastName: 'Done',
           email: 'janedoe@test.com',
           isVerified: true,
           password: `${password}`,

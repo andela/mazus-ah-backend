@@ -1,0 +1,109 @@
+{
+  "post": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Articles"],
+    "summary": "Rate an article",
+    "description": "Article Ratings",
+    "parameters": [
+      {
+        "name": "rating",
+        "in": "body",
+        "description": "request payload",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "rate": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        }
+      },
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "The slug of the article",
+        "schema": {
+          "type": "string",
+          "example": "3-bad-guys"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Your rating has been updated successfully"
+                }
+              },
+              "404": {
+                "description": "Article with that slug does not exist",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Resource not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "400": {
+                "description": "You can't rate your article",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "You can't rate your article"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "401": {
+                "description": "Unverified users can't rate article",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "unverified users can't rate articles"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
