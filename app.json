@@ -2,9 +2,7 @@
   "addons": [
     "heroku-postgresql"
   ],
-  "buildpacks": [
-
-  ],
+  "buildpacks": [],
   "env": {
     "SECRET_KEY": {
       "required": true
@@ -46,8 +44,7 @@
       "required": true
     }
   },
-  "formation": {
-  },
+  "formation": {},
   "name": "mazus-ah-backend",
   "scripts": {
     "postdeploy": "npx sequelize-cli db:seed:all"

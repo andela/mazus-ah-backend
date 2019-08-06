@@ -1,7 +1,9 @@
 {
   "get": {
     "security": [],
-    "tags": ["Articles"],
+    "tags": [
+      "Articles"
+    ],
     "summary": "Get an Article by the Slug",
     "description": "Return one article byt the slug \n",
     "parameters": [
@@ -26,7 +28,9 @@
         }
       }
     ],
-    "produces": ["application/json"],
+    "produces": [
+      "application/json"
+    ],
     "responses": {
       "200": {
         "description": "All articles returned successfully",
@@ -62,7 +66,11 @@
                 },
                 "tagsList": {
                   "type": "array",
-                  "example": ["technology", "NodeJS", "Express"]
+                  "example": [
+                    "technology",
+                    "NodeJS",
+                    "Express"
+                  ]
                 },
                 "status": {
                   "type": "string",
