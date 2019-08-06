@@ -39,14 +39,14 @@ describe('Custom search', () => {
       .query({ keyword })
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
-        expect(res.body).to.have.keys('matches found');
-        expect(res.body['matches found'].keyword).to.be.eql(keyword);
-        expect(res.body['matches found'].articles).to.be.an('array');
-        expect(res.body['matches found'].articles.length).to.be.greaterThan(0);
+        expect(res.body).to.have.keys('matches');
+        expect(res.body.matches.keyword).to.be.eql(keyword);
+        expect(res.body.matches.articles).to.be.an('array');
+        expect(res.body.matches.articles.length).to.be.greaterThan(0);
         done();
       });
   });
-  it('returns matching results from the authors table for a correct article title input', (done) => {
+  it('returns matching results from the authors table for a correct author input', (done) => {
     const keyword = 'John';
     chai
       .request(app)
@@ -54,10 +54,10 @@ describe('Custom search', () => {
       .query({ keyword })
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
-        expect(res.body).to.have.keys('matches found');
-        expect(res.body['matches found'].keyword).to.be.eql(keyword);
-        expect(res.body['matches found'].authors).to.be.an('array');
-        expect(res.body['matches found'].authors.length).to.be.greaterThan(0);
+        expect(res.body).to.have.keys('matches');
+        expect(res.body.matches.keyword).to.be.eql(keyword);
+        expect(res.body.matches.authors).to.be.an('array');
+        expect(res.body.matches.authors.length).to.be.greaterThan(0);
         done();
       });
   });

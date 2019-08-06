@@ -1,7 +1,9 @@
 import { Router } from 'express';
-import customSearch from '../controllers/searchController';
+import SearchController from '../controllers/searchController';
 
 const router = Router();
+
+const { customSearch } = SearchController;
 
 router.get('/', customSearch);
 
