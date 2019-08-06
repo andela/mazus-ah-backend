@@ -50,7 +50,7 @@ swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 
 swagger.paths['/notifications'] = getNotifcation;
-swagger.paths['notifications/{id}'] = updateNotification;
+swagger.paths['/notifications/{id}'] = updateNotification;
 
 
 export default swagger;
