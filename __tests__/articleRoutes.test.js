@@ -246,6 +246,7 @@ describe('Article Routes Test', () => {
       .get('/api/v1/users/articles')
       .set('Authorization', `Bearer ${validUserToken}`)
       .end((err, res) => {
+        console.log(res.body.articles);
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.property('articles');
         expect(res.body.articles).to.be.to.a('array');

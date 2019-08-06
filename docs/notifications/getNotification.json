@@ -1,0 +1,40 @@
+{
+  "get": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": [
+      "Notifications"
+    ],
+    "summary": "Get notifications",
+    "description": "Get all the notifications \n",
+    "parameters": [],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "Notifications fetched successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "GET"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }     
+    }
+  }
+}

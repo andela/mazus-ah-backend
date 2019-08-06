@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     receiverId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     type: {
       allowNull: false,
