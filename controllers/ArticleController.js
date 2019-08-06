@@ -463,7 +463,7 @@ export default class ArticleController {
       });
       if (bookMarked) {
         await Bookmark.destroy({ where: { userId: id } });
-        return successResponse(res, 200, 'bookmark', { message: 'Article has been removed bookmarked successfully' });
+        return successResponse(res, 200, 'bookmark', { message: 'Article has been removed from bookmarked successfully' });
       }
       try {
         await Bookmark.create({
@@ -472,10 +472,35 @@ export default class ArticleController {
         });
       } catch (error) {
         return errorResponse(res, 400, {
-          bookmark: 'Article with the specified Id was not found'
+          bookmark: 'Something went wrong, unable to bookmark article'
         });
       }
       return successResponse(res, 200, 'bookmark', { message: 'Article has been bookmarked successfully' });
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  /**
+   *
+   * @param {object} req express request object
+   * @param {Object} res express respond object
+   * @param {function} next
+   * @returns {object} All the articles bookmarked by the user
+   */
+  static async getAllBookmark(req, res, next) {
+    try {
+      const { id } = req.user;
+      const bookmarks = await models.Bookmark.findAll({
+        where: { userId: id },
+        include: [
+          {
+            model: models.Article,
+            as: 'article',
+          }
+        ]
+      });
+      return successResponse(res, 200, 'bookmarks', { message: 'Bookmarks fetched successfully', bookmarks });
     } catch (error) {
       return next(error);
     }

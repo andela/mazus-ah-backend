@@ -303,7 +303,7 @@ describe('Article Routes Test', () => {
         expect(res.body).to.have.property('errors');
         expect(res.body.errors).to.be.a('object');
         expect(res.body.errors).to.have.property('bookmark');
-        expect(res.body.errors.bookmark).to.eql('Article with the specified Id was not found');
+        expect(res.body.errors.bookmark).to.eql('Something went wrong, unable to bookmark article');
         done();
       });
   });

@@ -8,8 +8,14 @@ import commentValidate from '../middlewares/commentValidations';
 import Validate from '../middlewares/inputValidation';
 
 const {
-  createArticle, getArticlesArticleBySlug, getAllArticles, getArticlesByAuthor,
-  editArticle, deleteArticle, bookmarkArticle
+  createArticle,
+  getArticlesArticleBySlug,
+  getAllArticles,
+  getArticlesByAuthor,
+  editArticle,
+  deleteArticle,
+  bookmarkArticle,
+  getAllBookmark,
 } = ArticleController;
 const { postComment } = CommentController;
 const { likeArticle, dislikeArticle } = LikesController;
@@ -17,6 +23,9 @@ const { verifyToken, verifiedUserOnly } = AuthMiddleware;
 const { articleValidation, validateId } = articleValidationSchema;
 
 const router = Router();
+
+router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
+router.get('/bookmarks', verifyToken, getAllBookmark);
 
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
 router.get('/:id/:slug', validateId, getArticlesArticleBySlug);
@@ -29,6 +38,5 @@ router.post('/:slug/comments', verifyToken, verifiedUserOnly, commentValidate.co
 router.post('/:slug/like', verifyToken, verifiedUserOnly, likeArticle);
 router.post('/:slug/dislike', verifyToken, verifiedUserOnly, dislikeArticle);
 
-router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
 
 export default router;
