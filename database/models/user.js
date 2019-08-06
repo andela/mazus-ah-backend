@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
     });
     User.hasMany(models.Notification, {
-      foreignKey: 'userId',
+      foreignKey: 'receiverId',
       as: 'notification',
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',

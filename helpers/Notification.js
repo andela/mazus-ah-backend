@@ -107,7 +107,7 @@ class Notification {
     };
     followers.map(async (follower) => {
       const { followerId } = follower;
-      await this.inAppNotification(payload, followerId, false, 'new aritcle');
+      await this.inAppNotification(payload, followerId, false, 'new article');
       await this.pushNotification(followerId, payload);
     });
     if (process.env.NODE_ENV !== 'test') {
