@@ -5,7 +5,7 @@ import pagination from '../helpers/Pagination';
 import Notification from '../helpers/Notification';
 
 const {
-  Article, User, Profile, Sequelize: { Op }
+  Article, User, Profile, Sequelize: { Op }, Bookmark
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -439,6 +439,45 @@ export default class ArticleController {
       return successResponse(res, 200, 'article', { message: 'Article has been deleted' });
     } catch (err) {
       return next(err);
+    }
+  }
+
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @method bookmarkArticle
+   * @returns {object} returns the details of the bookmarkedmitem
+   * @static
+   */
+  static async bookmarkArticle(req, res, next) {
+    try {
+      const { id: articleId } = req.params;
+      const { id } = req.user;
+      const bookMarked = await Bookmark.findOne({
+        where: {
+          userId: id,
+          articleId
+        }
+      });
+      if (bookMarked) {
+        await Bookmark.destroy({ where: { userId: id } });
+        return successResponse(res, 200, 'bookmark', { message: 'Article has been removed bookmarked successfully' });
+      }
+      try {
+        await Bookmark.create({
+          userId: id,
+          articleId,
+        });
+      } catch (error) {
+        return errorResponse(res, 400, {
+          bookmark: 'Article with the specified Id was not found'
+        });
+      }
+      return successResponse(res, 200, 'bookmark', { message: 'Article has been bookmarked successfully' });
+    } catch (error) {
+      return next(error);
     }
   }
 }
