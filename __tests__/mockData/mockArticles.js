@@ -40,6 +40,13 @@ const articles = [
     tags: ['sports', 'football', 'soccer'],
     status: 'published'
   },
+  {
+    title: 'All you need to know about Bond 25',
+    description: 'This is something you already know',
+    body: 'Daniel Craig the present.......',
+    tags: ['movies', 'james bond', 'hollywood'],
+    status: 'published'
+  },
 ];
 
 export default articles;

@@ -14,6 +14,8 @@
       "helpers/Postals.js",
       "helpers/passportStrategies.js",
       "helpers/Pagination.js",
+      "helpers/Notification.js",
+      "helpers/EmailNotification.js",
       "__tests__/*"
     ]
   },
@@ -56,6 +58,7 @@
     "passport-local": "^1.0.0",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
+    "pusher": "^2.2.2",
     "request": "^2.87.0",
     "sequelize": "^5.10.2",
     "sequelize-cli": "^5.5.0",

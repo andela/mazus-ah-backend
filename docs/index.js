@@ -23,6 +23,8 @@ import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';
 import likeArticle from './articles/likeArticle.json';
 import dislikeArticle from './articles/dislikeArticle';
+import getNotifcation from './notifications/getNotification.json';
+import updateNotification from './notifications/patchNotification.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -47,6 +49,9 @@ swagger.paths['/articles/{slug}/comments'] = postComment;
 swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
+
+swagger.paths['/notifications'] = getNotifcation;
+swagger.paths['/notifications/{id}'] = updateNotification;
 
 
 export default swagger;
