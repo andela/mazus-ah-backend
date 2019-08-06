@@ -17,7 +17,7 @@ import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
 import rateArticles from './articles/rateArticles.json';
-
+import trendingArticles from './articles/trendingArticles.json';
 import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
 import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';
@@ -47,6 +47,7 @@ swagger.paths['/articles/{slug}/comments'] = postComment;
 swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
+swagger.paths['/articles/trends'] = trendingArticles;
 
 
 export default swagger;

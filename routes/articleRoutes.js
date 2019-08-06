@@ -5,7 +5,9 @@ import AuthMiddleware from '../middlewares/Authentication';
 import articleValidationSchema from '../middlewares/articleValidation';
 import validate from '../middlewares/commentValidations';
 import LikesController from '../controllers/LikesController';
+import Trending from '../controllers/TrendingArticlesController';
 
+const { trend } = Trending;
 const {
   createArticle, getArticlesArticleBySlug, getAllArticles, getArticlesByAuthor,
   editArticle, deleteArticle
@@ -17,6 +19,7 @@ const { articleValidation, validateId } = articleValidationSchema;
 
 const router = Router();
 
+router.get('/trends', trend);
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
 router.get('/:id/:slug', validateId, getArticlesArticleBySlug);
 router.get('/:id', validateId, getArticlesByAuthor);

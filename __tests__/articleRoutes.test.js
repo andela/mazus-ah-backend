@@ -294,4 +294,15 @@ describe('Article Routes Test', () => {
         done();
       });
   });
+
+  it('should return trending articles when the endpoint is hit', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/trends`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('trends');
+        expect(res.body.trends).to.be.to.a('array');
+        done();
+      });
+  });
 });

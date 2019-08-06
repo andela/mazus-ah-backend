@@ -109,6 +109,7 @@ export default class ArticleController {
       if (!article) {
         return errorResponse(res, 404, { article: 'Article not found' });
       }
+      await Article.increment({ readCount: 1 }, { where: { slug } });
 
       return successResponse(res, 200, 'article', article);
     } catch (err) {
