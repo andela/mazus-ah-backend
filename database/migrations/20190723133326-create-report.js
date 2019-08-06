@@ -18,9 +18,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      reportedBy: {
+      userId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DataTypes.UUID,
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
       articleId: {
         type: Sequelize.DataTypes.UUID,
@@ -41,6 +46,11 @@ module.exports = {
         },
       },
       createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
