@@ -2,44 +2,34 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-    .then(() => queryInterface.createTable('Users', {
+    .then(() => queryInterface.createTable('Notifications', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.UUID,
         defaultValue: Sequelize.literal('uuid_generate_v4()'),
       },
-      email: {
+      payload: {
         allowNull: false,
-        type: Sequelize.STRING,
-        unique: true,
+        type: Sequelize.JSON
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      firstName: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      verificationToken: {
-        type: Sequelize.STRING,
-      },
-      isVerified: {
-        defaultValue: false,
+      read: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      receiverId: {
+        allowNull: false,
+        type: Sequelize.DataTypes.UUID,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+        }
       },
       type: {
-        type: Sequelize.ENUM('admin', 'user'),
-        defaultValue: 'user',
-      },
-      emailNotify: {
-        defaultValue: true,
-        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -50,7 +40,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
+      }
     })),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Notifications'),
 };

@@ -1,5 +1,6 @@
 import models from '../database/models';
 import ServerResponse from '../modules';
+import Notification from '../helpers/Notification';
 
 const { successResponse, notFoundError, errorResponse } = ServerResponse;
 /**
@@ -21,19 +22,20 @@ export default class CommentController {
     try {
       const { body } = req.body;
       const { slug } = req.params;
-      const userId = req.user.id;
+      const { id: userId, firstName, lastName } = req.user;
 
       const article = await models.Article.findOne({ where: { slug } });
       if (!article) return notFoundError(req, res);
-
-      if (article.dataValues.status !== 'published') return errorResponse(res, 405, 'cannot comment on a draft article');
+      const { id, title, status } = article.dataValues;
+      if (status !== 'published') return errorResponse(res, 405, 'cannot comment on a draft article');
 
       const articleComment = await models.Comment.create({
         body,
         userId,
-        articleId: article.dataValues.id,
+        articleId: id,
         articleSlug: slug,
       });
+      Notification.newComment(slug, id, title, firstName, lastName);
 
       return successResponse(res, 201, 'comment', articleComment.dataValues);
     } catch (error) {

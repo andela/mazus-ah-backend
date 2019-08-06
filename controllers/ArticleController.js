@@ -2,6 +2,7 @@ import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import ArticleHelper from '../helpers/ArticleHelper';
 import pagination from '../helpers/Pagination';
+import Notification from '../helpers/Notification';
 
 const {
   Article, User, Profile, Sequelize: { Op }
@@ -48,6 +49,8 @@ export default class ArticleController {
         userId: id,
         readTime
       });
+      const { firstName, lastName } = req.user;
+      Notification.newArticle(req, article.slug, article.title, firstName, lastName);
 
       return successResponse(res, 201, 'article', article);
     } catch (err) {
