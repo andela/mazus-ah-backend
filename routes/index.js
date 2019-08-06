@@ -7,6 +7,7 @@ import userRoutes from './userRoutes';
 import notificationRoutes from './notificationRoutes';
 import emailSubscriptionRoute from './emailSubscriptionRoute';
 import commentRoutes from './commentRoutes';
+import searchRoutes from './searchRoutes';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/users', userRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/users', emailSubscriptionRoute);
 router.use('/comments', commentRoutes);
+router.use('/search', searchRoutes);
 
 export default router;

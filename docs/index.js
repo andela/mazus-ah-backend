@@ -27,6 +27,7 @@ import getNotifcation from './notifications/getNotification.json';
 import updateNotification from './notifications/patchNotification.json';
 import getAllBookmark from './users/getBookmark.json';
 import bookmarkArticle from './articles/bookmarkArticles.json';
+import searchArticle from './articles/searchArticle.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -57,5 +58,6 @@ swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/articles/trends'] = trendingArticles;
+swagger.paths['/search?keyword'] = searchArticle;
 
 export default swagger;
