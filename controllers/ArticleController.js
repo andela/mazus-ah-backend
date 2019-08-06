@@ -97,7 +97,7 @@ export default class ArticleController {
           { // Article Comments
             model: models.Comment,
             as: 'articlecomment',
-            attributes: ['body', 'createdAt', 'updatedAt'],
+            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
                 model: models.User,
@@ -162,7 +162,7 @@ export default class ArticleController {
             { // Article Comments
               model: models.Comment,
               as: 'articlecomment',
-              attributes: ['body', 'createdAt', 'updatedAt'],
+              attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
               include: [
                 { // user
                   model: models.User,
@@ -197,7 +197,7 @@ export default class ArticleController {
           { // Article Comments
             model: models.Comment,
             as: 'articlecomment',
-            attributes: ['body', 'createdAt', 'updatedAt'],
+            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
                 model: models.User,
@@ -257,7 +257,7 @@ export default class ArticleController {
           { // Article Comments
             model: models.Comment,
             as: 'articlecomment',
-            attributes: ['body', 'createdAt', 'updatedAt'],
+            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
                 model: models.User,
@@ -310,7 +310,7 @@ export default class ArticleController {
           { // Article Comments
             model: models.Comment,
             as: 'articlecomment',
-            attributes: ['body', 'createdAt', 'updatedAt'],
+            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
                 model: models.User,

@@ -8,8 +8,11 @@ import app from '../index';
 chai.use(chaiHttp);
 
 const url = '/api/v1/articles';
+const likesUrl = '/api/v1/comments/likes';
 const { expect } = chai;
 let validToken;
+let commentId;
+let commentLikerToken;
 
 describe('Testing comment endpoints', () => {
   before((done) => {
@@ -24,6 +27,22 @@ describe('Testing comment endpoints', () => {
       .end((err, res) => {
         const { token } = res.body.user;
         validToken = token;
+        done();
+      });
+  });
+
+  before((done) => {
+    const likerUser = {
+      email: 'johndoe@test.com',
+      password: 'passwordHash',
+    };
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(likerUser)
+      .end((err, res) => {
+        const { token } = res.body.user;
+        commentLikerToken = token;
         done();
       });
   });
@@ -75,6 +94,8 @@ describe('Testing comment endpoints', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .send({ body: 'I think technology is the new oil' })
       .end((err, res) => {
+        const { id } = res.body.comment;
+        commentId = id;
         expect(res.status).to.eql(201);
         expect(res.body).to.have.property('comment');
         expect(res.body.comment.body).to.eql('I think technology is the new oil');
@@ -97,6 +118,49 @@ describe('Testing comment endpoints', () => {
       .end((err, res) => {
         expect(res.status).to.eql(500);
         stub.restore();
+        done();
+      });
+  });
+
+  it('should let a user like a comment', (done) => {
+    chai
+      .request(app).post(`${likesUrl}/${commentId}`)
+      .set('Authorization', `Bearer ${commentLikerToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('comment');
+        expect(res.body.comment).to.have.property('message');
+        expect(res.body.comment.message).to.eql('Comment liked');
+        expect(res.body.comment).to.have.property('like');
+        expect(res.body.comment.like).to.have.property('id');
+        expect(res.body.comment.like).to.have.property('commentId').to.eql(commentId);
+        done();
+      });
+  });
+
+  it('should not like an article that does not exist', (done) => {
+    chai
+      .request(app)
+      .post(`${likesUrl}/ffe25dbe-29ea-4759-8461-ed116f6739dd`)
+      .set('Authorization', `Bearer ${commentLikerToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(404);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors).to.have.property('comment').eql('That comment does not exist');
+        done();
+      });
+  });
+
+  it('should remove a like from a comment', (done) => {
+    chai
+      .request(app).post(`${likesUrl}/${commentId}`)
+      .set('Authorization', `Bearer ${commentLikerToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body).to.have.property('comment');
+        expect(res.body.comment).to.have.property('message');
+        expect(res.body.comment.message).to.eql('\'Like\' has been removed');
         done();
       });
   });

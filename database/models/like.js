@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Like.associate = (models) => {
     // associations can be defined here
+    Like.belongsTo(models.Comment, {
+      foreignKey: 'commentId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Like;
 };
