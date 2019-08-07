@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
+      likes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
+      dislikes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       status: {
         allowNull: false,
         type: DataTypes.ENUM('draft', 'published', 'trash'),

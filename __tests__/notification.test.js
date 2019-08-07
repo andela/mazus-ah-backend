@@ -49,10 +49,10 @@ describe('Fetching user notifications', () => {
       .set('Authorization', `Bearer ${firstUserToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.notification[0]).to.have.property('payload');
-        expect(res.body.notification[0].payload).to.be.a('object');
-        expect(res.body.notification[0].read).to.eql(false);
-        expect(res.body.notification[0].type).to.eql('new article');
+        expect(res.body.notification.notification[0]).to.have.property('payload');
+        expect(res.body.notification.notification[0].payload).to.be.a('object');
+        expect(res.body.notification.notification[0].read).to.eql(false);
+        expect(res.body.notification.notification[0].type).to.eql('new article');
         done();
       });
   });
@@ -125,7 +125,7 @@ describe('Marking a user notification as read', () => {
       .get(`${url}/notifications`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .end((err, res) => {
-        notificationId = res.body.notification[0].id;
+        notificationId = res.body.notification.notification[0].id;
         done();
       });
   });
@@ -135,7 +135,7 @@ describe('Marking a user notification as read', () => {
       .set('Authorization', `Bearer ${firstUserToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.notification).to.eql('Notifications successfully updated to read');
+        expect(res.body.notification.message).to.eql('Notifications successfully updated to read');
         done();
       });
   });

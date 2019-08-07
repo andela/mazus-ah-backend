@@ -144,6 +144,20 @@
           "type": "string",
           "example": "technology"
         }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "description": "Enter page number",
+        "required": false,
+        "type": "integer"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "description": "Enter page size",
+        "required": false,
+        "type": "integer"
       }
     ],
     "produces": ["application/json"],

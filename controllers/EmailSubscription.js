@@ -30,7 +30,7 @@ export default class EmailSubscription {
         return successResponse(res, 200, 'subscription', 'You have unsubscribed for email notifications');
       }
       await User.update({ emailNotify: true }, { where: { id } });
-      return successResponse(res, 200, 'subscription', 'You have subscribed for email notifications');
+      return successResponse(res, 200, 'subscription', { message: 'You have subscribed for email notifications' });
     } catch (error) {
       return next(error);
     }

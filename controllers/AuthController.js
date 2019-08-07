@@ -280,11 +280,6 @@ export default class AuthController {
     if (process.env.NODE_ENV !== 'test') {
       sendResetEmail(req, email, token);
     }
-    // return res.status(200).send({
-    //   email,
-    //   token,
-    //   message: 'Your reset link has been sent to your email'
-    // });
     return successResponse(res, 200, 'auth', { email, token, message: 'Your reset link has been sent to your email' });
   }
 

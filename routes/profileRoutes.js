@@ -11,6 +11,7 @@ const {
   viewProfile,
   getNumberOfReadArticles
 } = ProfileController;
+
 const {
   validateId,
   editProfileValidate,
