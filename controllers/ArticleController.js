@@ -172,7 +172,6 @@ export default class ArticleController {
               ]
             },
           ],
-          order: [['ratings', 'DESC']],
         });
         return successResponse(res, 200, 'articles', articles);
       }
@@ -207,7 +206,6 @@ export default class ArticleController {
             ]
           },
         ],
-        order: [['ratings', 'DESC']],
       });
 
       return successResponse(res, 200, 'articles', articles);
@@ -267,7 +265,6 @@ export default class ArticleController {
             ]
           },
         ],
-        order: [['ratings', 'DESC']],
       });
 
       return successResponse(res, 200, 'articles', articles);
