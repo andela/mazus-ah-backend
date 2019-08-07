@@ -493,7 +493,7 @@ export default class ArticleController {
       const { id } = req.user;
       const { id: userId } = req.params;
       if (id !== userId) {
-        return errorResponse(res, 401, 'You are not allowed to view this user\'s bookmarks');
+        return errorResponse(res, 403, 'You are not allowed to view this user\'s bookmarks');
       }
       const bookmarks = await models.Bookmark.findAll({
         where: { userId: id },

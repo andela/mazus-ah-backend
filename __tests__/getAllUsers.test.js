@@ -42,7 +42,7 @@ describe('Testing GET users endpoint', () => {
       .get(`${url}/11d509cc-b787-4abf-b176-fdb63cb9ed44/bookmarks`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
-        expect(res.status).to.be.eql(401);
+        expect(res.status).to.be.eql(403);
         expect(res.body.errors).to.eql('You are not allowed to view this user\'s bookmarks');
         done();
       });
