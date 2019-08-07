@@ -1,0 +1,38 @@
+{
+  "post": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Bookmark"],
+    "summary": "User should be able to bookmark article",
+    "description": "Bookmark Article",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "request payload",
+        "schema": {
+          "type": "object",
+          "example": "f6b3facb-eb83-47f8-8c1c-05207e62ed30"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Article has been bookmarked successfully"
+            }
+          }
+        }
+      }
+    }
+  }
+}

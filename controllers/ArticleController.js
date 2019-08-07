@@ -5,7 +5,7 @@ import pagination from '../helpers/Pagination';
 import Notification from '../helpers/Notification';
 
 const {
-  Article, User, Profile, Sequelize: { Op }
+  Article, User, Profile, Sequelize: { Op }, Bookmark
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -436,6 +436,74 @@ export default class ArticleController {
       return successResponse(res, 200, 'article', { message: 'Article has been deleted' });
     } catch (err) {
       return next(err);
+    }
+  }
+
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @method bookmarkArticle
+   * @returns {object} returns the details of the bookmarkedmitem
+   * @static
+   */
+  static async bookmarkArticle(req, res, next) {
+    try {
+      const { id: articleId } = req.params;
+      const { id } = req.user;
+      const bookMarked = await Bookmark.findOne({
+        where: {
+          userId: id,
+          articleId
+        }
+      });
+      if (bookMarked) {
+        await Bookmark.destroy({ where: { userId: id } });
+        return successResponse(res, 200, 'bookmark', { message: 'Article has been removed from bookmarked successfully' });
+      }
+      try {
+        await Bookmark.create({
+          userId: id,
+          articleId,
+        });
+      } catch (error) {
+        return errorResponse(res, 400, {
+          bookmark: 'Something went wrong, unable to bookmark article'
+        });
+      }
+      return successResponse(res, 200, 'bookmark', { message: 'Article has been bookmarked successfully' });
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  /**
+   *
+   * @param {object} req express request object
+   * @param {Object} res express respond object
+   * @param {function} next
+   * @returns {object} All the articles bookmarked by the user
+   */
+  static async getAllBookmark(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { id: userId } = req.params;
+      if (id !== userId) {
+        return errorResponse(res, 403, 'You are not allowed to view this user\'s bookmarks');
+      }
+      const bookmarks = await models.Bookmark.findAll({
+        where: { userId: id },
+        include: [
+          {
+            model: models.Article,
+            as: 'article',
+          }
+        ]
+      });
+      return successResponse(res, 200, 'bookmarks', { message: 'Bookmarks fetched successfully', bookmarks });
+    } catch (error) {
+      return next(error);
     }
   }
 }
