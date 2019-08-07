@@ -17,7 +17,7 @@ import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
 import rateArticles from './articles/rateArticles.json';
-
+import trendingArticles from './articles/trendingArticles.json';
 import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
 import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';
@@ -56,6 +56,7 @@ swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
+swagger.paths['/articles/trends'] = trendingArticles;
 
 
 export default swagger;

@@ -6,7 +6,9 @@ import articleValidationSchema from '../middlewares/articleValidation';
 import LikesController from '../controllers/LikesController';
 import commentValidate from '../middlewares/commentValidations';
 import Validate from '../middlewares/inputValidation';
+import Trending from '../controllers/TrendingArticlesController';
 
+const { trend } = Trending;
 const {
   createArticle,
   getSingleArticleBySlug,
@@ -25,6 +27,7 @@ const router = Router();
 
 router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
 
+router.get('/trends', trend);
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
 router.get('/:slug', getSingleArticleBySlug);
 router.get('/author/:id', validateId, getArticlesByAuthor);
