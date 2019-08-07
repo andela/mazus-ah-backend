@@ -1,0 +1,28 @@
+{
+  "post": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": ["Bookmark"],
+    "summary": "User should be able to bookmark article",
+    "description": "Bookmark Article",
+    "parameters": [],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Bookmark fetched successfully"
+            }
+          }
+        }
+      }
+    }
+  }
+}

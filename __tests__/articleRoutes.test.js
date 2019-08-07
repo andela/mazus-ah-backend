@@ -294,4 +294,40 @@ describe('Article Routes Test', () => {
         done();
       });
   });
+  it('should not bookmark if article id does not exist', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/cf67650f-5b74-416e-9050-89f92f147ecb/bookmark`)
+      .set('Authorization', `Bearer ${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors).to.have.property('bookmark');
+        expect(res.body.errors.bookmark).to.eql('Something went wrong, unable to bookmark article');
+        done();
+      });
+  });
+  it('should not bookmark if user is not logged in', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/${seededArticles[1].id}/bookmark`)
+      .end((err, res) => {
+        expect(res.status).to.eql(401);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors).to.have.property('message');
+        expect(res.body.errors.message).to.eql('No token provided');
+        done();
+      });
+  });
+  it('should successfully boomark an article', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/${seededArticles[1].id}/bookmark`)
+      .set('Authorization', `Bearer ${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body.bookmark).to.have.property('message');
+        expect(res.body.bookmark.message).to.eql('Article has been removed from bookmarked successfully');
+        done();
+      });
+  });
 });
