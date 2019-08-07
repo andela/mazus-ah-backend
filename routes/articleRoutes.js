@@ -15,7 +15,6 @@ const {
   editArticle,
   deleteArticle,
   bookmarkArticle,
-  getAllBookmark,
 } = ArticleController;
 const { postComment } = CommentController;
 const { likeArticle, dislikeArticle } = LikesController;
@@ -25,7 +24,6 @@ const { articleValidation, validateId } = articleValidationSchema;
 const router = Router();
 
 router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
-router.get('/bookmarks', verifyToken, getAllBookmark);
 
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
 router.get('/:id/:slug', validateId, getArticlesArticleBySlug);

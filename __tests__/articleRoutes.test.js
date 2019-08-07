@@ -326,7 +326,7 @@ describe('Article Routes Test', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
         expect(res.body.bookmark).to.have.property('message');
-        expect(res.body.bookmark.message).to.eql('Article has been bookmarked successfully');
+        expect(res.body.bookmark.message).to.eql('Article has been removed from bookmarked successfully');
         done();
       });
   });
