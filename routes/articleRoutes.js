@@ -9,7 +9,7 @@ import Validate from '../middlewares/inputValidation';
 
 const {
   createArticle,
-  getArticlesArticleBySlug,
+  getSingleArticleBySlug,
   getAllArticles,
   getArticlesByAuthor,
   editArticle,
@@ -26,8 +26,8 @@ const router = Router();
 router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
 
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
-router.get('/:id/:slug', validateId, getArticlesArticleBySlug);
-router.get('/:id', validateId, getArticlesByAuthor);
+router.get('/:slug', getSingleArticleBySlug);
+router.get('/author/:id', validateId, getArticlesByAuthor);
 router.get('/', getAllArticles);
 router.patch('/:slug', verifyToken, verifiedUserOnly, articleValidation, editArticle);
 router.delete('/:slug', verifyToken, verifiedUserOnly, deleteArticle);
