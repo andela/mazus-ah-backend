@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     articleSlug: {
       type: DataTypes.STRING,
     },
+    likes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   }, {});
   Comment.associate = (models) => {
     Comment.hasMany(models.Like, {

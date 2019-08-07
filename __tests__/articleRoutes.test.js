@@ -13,7 +13,6 @@ let validUserToken;
 let notArticleOwnerToken;
 let unverifiedUserToken;
 let articleSlug;
-let userId;
 const fakeUserId = 'f6b3facb-eb83-47f8-8c1c-05207e62ed30';
 
 describe('Article Routes Test', () => {
@@ -23,8 +22,7 @@ describe('Article Routes Test', () => {
       .post('/api/v1/auth/signin')
       .send(seededUsers[0])
       .end((err, res) => {
-        const { token, id } = res.body.user;
-        userId = id;
+        const { token } = res.body.user;
         validUserToken = token;
       });
 
@@ -33,8 +31,7 @@ describe('Article Routes Test', () => {
       .post('/api/v1/auth/signin')
       .send(seededUsers[2])
       .end((err, res) => {
-        const { token, id } = res.body.user;
-        userId = id;
+        const { token } = res.body.user;
         notArticleOwnerToken = token;
       });
 
@@ -193,7 +190,7 @@ describe('Article Routes Test', () => {
 
   it('should get an article by the slug', (done) => {
     chai.request(app)
-      .get(`${API_PREFIX}/${userId}/${articleSlug}`)
+      .get(`${API_PREFIX}/${articleSlug}`)
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.property('article');
@@ -207,7 +204,7 @@ describe('Article Routes Test', () => {
 
   it('should return an error when trying to get articles for an author that doesn\'t exist', (done) => {
     chai.request(app)
-      .get(`${API_PREFIX}/${fakeUserId}/${articleSlug}`)
+      .get(`${API_PREFIX}/author/${fakeUserId}`)
       .end((err, res) => {
         expect(res.status).to.be.eql(404);
         expect(res.body).to.have.property('errors');
@@ -219,7 +216,7 @@ describe('Article Routes Test', () => {
 
   it('should return an error when trying to get articles for an author with an invalid id', (done) => {
     chai.request(app)
-      .get(`${API_PREFIX}/sillyId/${articleSlug}`)
+      .get(`${API_PREFIX}/author/sillyId`)
       .end((err, res) => {
         expect(res.status).to.be.eql(400);
         expect(res.body).to.have.property('errors');
@@ -291,6 +288,42 @@ describe('Article Routes Test', () => {
         expect(res.body.article).to.be.to.a('object');
         expect(res.body.article).to.have.property('message');
         expect(res.body.article.message).to.eql('Article has been deleted');
+        done();
+      });
+  });
+  it('should not bookmark if article id does not exist', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/cf67650f-5b74-416e-9050-89f92f147ecb/bookmark`)
+      .set('Authorization', `Bearer ${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors).to.have.property('bookmark');
+        expect(res.body.errors.bookmark).to.eql('Something went wrong, unable to bookmark article');
+        done();
+      });
+  });
+  it('should not bookmark if user is not logged in', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/${seededArticles[1].id}/bookmark`)
+      .end((err, res) => {
+        expect(res.status).to.eql(401);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors).to.have.property('message');
+        expect(res.body.errors.message).to.eql('No token provided');
+        done();
+      });
+  });
+  it('should successfully boomark an article', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/${seededArticles[1].id}/bookmark`)
+      .set('Authorization', `Bearer ${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body.bookmark).to.have.property('message');
+        expect(res.body.bookmark.message).to.eql('Article has been removed from bookmarked successfully');
         done();
       });
   });

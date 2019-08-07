@@ -12,7 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
   Bookmark.associate = (models) => {
-    // associations can be defined here
+    Bookmark.belongsTo(models.Article, {
+      foreignKey: 'articleId',
+      as: 'article',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Bookmark;
 };

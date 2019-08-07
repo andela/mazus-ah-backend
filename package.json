@@ -17,6 +17,7 @@
       "helpers/Notification.js",
       "helpers/EmailNotification.js",
       "middlewares/Authentication.js",
+      "middlewares/inputValidation.js",
       "__tests__/*"
     ]
   },

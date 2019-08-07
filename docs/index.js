@@ -25,6 +25,8 @@ import likeArticle from './articles/likeArticle.json';
 import dislikeArticle from './articles/dislikeArticle';
 import getNotifcation from './notifications/getNotification.json';
 import updateNotification from './notifications/patchNotification.json';
+import getAllBookmark from './users/getBookmark.json';
+import bookmarkArticle from './articles/bookmarkArticles.json';
 
 
 swagger.paths['/auth/signup'] = signup;
@@ -51,9 +53,12 @@ swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 swagger.paths['/articles/trends'] = trendingArticles;
+swagger.paths['/users/bookmarks'] = getAllBookmark;
+swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
+swagger.paths['/articles/trends'] = trendingArticles;
 
 
 export default swagger;
