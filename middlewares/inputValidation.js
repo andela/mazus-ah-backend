@@ -52,7 +52,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -80,7 +80,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -108,7 +108,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -142,7 +142,7 @@ const validate = {
           errorMessage[error.param] = error.msg;
         });
         return res.status(400).json({
-          errors: errorMessage,
+          errors: errorMessage
         });
       }
       return next();
@@ -159,6 +159,42 @@ const validate = {
         }
         return true;
       }),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = {};
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((error) => {
+          errorMessage[error.param] = error.msg;
+        });
+        return res.status(400).json({
+          errors: errorMessage
+        });
+      }
+      return next();
+    }
+  ],
+  validateRate: [
+    check('rate')
+      .isInt({ min: 1, max: 5 })
+      .withMessage('The rate value you entered is not valid, rate should be between 1 and 5'),
+    (req, res, next) => {
+      const errors = validationResult(req);
+      const errorMessage = {};
+      if (!errors.isEmpty()) {
+        errors.array({ onlyFirstError: true }).forEach((error) => {
+          errorMessage[error.param] = error.msg;
+        });
+        return res.status(400).json({
+          errors: errorMessage
+        });
+      }
+      return next();
+    }
+  ],
+  validateParamsId: [
+    param('id')
+      .matches((/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))
+      .withMessage('id is not valid'),
     (req, res, next) => {
       const errors = validationResult(req);
       const errorMessage = {};

@@ -102,15 +102,26 @@ export default class Authentication {
    *
    * @memberof Authentication
    */
-  static fetchRequester(req, res, next) {
+  static async fetchRequester(req, res, next) {
     try {
       const bearer = req.headers.authorization;
       if (bearer) {
         const token = bearer.split(' ')[1];
+        const blacklistedToken = await BlacklistedToken.findOne({
+          where: { token },
+        });
+        if (blacklistedToken) {
+          return errorResponse(res, 403, {
+            message: 'Invalid token provided, please sign in',
+          });
+        }
         jwt.verify(token, SECRET_KEY, (err, decoded) => {
-          if (!err) {
-            req.user = decoded;
+          if (err) {
+            return errorResponse(res, 403, {
+              message: 'Invalid token provided',
+            });
           }
+          req.user = decoded;
         });
         return next();
       }

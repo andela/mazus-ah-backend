@@ -9,8 +9,10 @@ const {
   createProfile,
   editProfile,
   viewProfile,
-  getNumberOfReadArticles
+  articlesUserRead,
+  articlesReadCount,
 } = ProfileController;
+
 const {
   validateId,
   editProfileValidate,
@@ -29,7 +31,8 @@ const router = Router();
 
 router.post('/', verifyToken, createProfileValidate, createProfile);
 router.patch('/:id', verifyToken, editProfileValidate, editProfile);
-router.get('/readingstatistics', verifyToken, verifiedUserOnly, getNumberOfReadArticles);
+router.get('/readcount', verifyToken, verifiedUserOnly, articlesReadCount);
+router.get('/readingstatistics', verifyToken, verifiedUserOnly, articlesUserRead);
 router.get('/:id', verifyToken, validateId, viewProfile);
 router.post('/follow/:id', verifyToken, validateParamsId, follow);
 router.delete('/follow/:id', verifyToken, validateParamsId, unfollow);

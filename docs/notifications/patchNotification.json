@@ -1,0 +1,48 @@
+{
+  "get": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": [
+      "Notifications"
+    ],
+    "summary": "Updtae notifications",
+    "description": "update a notifications to read\n",
+    "parameters": [{
+      "in": "path",
+      "name": "id",
+      "schema": {
+        "type": "integer"
+      },
+      "description": "The notifications's Id notifications to update"
+    }
+      ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "Notifications fetched successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "GET"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }     
+    }
+  }
+}

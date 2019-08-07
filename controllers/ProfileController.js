@@ -130,13 +130,13 @@ export default class ProfileController {
   }
 
   /**
-   * @method getNumberOfReadArticles
+   * @method articlesUserRead
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {function} next
    * @returns {object} returns object response
    */
-  static async getNumberOfReadArticles(req, res, next) {
+  static async articlesUserRead(req, res, next) {
     const userId = req.user.id;
     try {
       const getStatistics = await models.Reading.findAll({ raw: true, where: { userId } });
@@ -145,14 +145,20 @@ export default class ProfileController {
       return next(error);
     }
   }
+
   /**
-   * @method subscribedArticles
+   * @method articleReadCount
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {function} next
    * @returns {object} returns object response
    */
-  static async subscribedArticles(req, res, next) {
-    
+  static async articlesReadCount(req, res, next) {
+    const userId = req.user.id;
+    try {
+      const authorArticles = await models.Article.findAll({ raw: true, where: { userId } });
+    } catch (error) {
+      return next(error);
+    }
   }
 }

@@ -20,7 +20,7 @@ class Notification {
     try {
       const { id } = req.user;
       const notification = await models.Notification.findAll({ where: { receiverId: id } });
-      return successResponse(res, 200, 'notification', notification);
+      return successResponse(res, 200, 'notification', { notification });
     } catch (error) {
       return next(error);
     }
@@ -48,7 +48,7 @@ class Notification {
         }
       );
       if (markRead[0]) {
-        return successResponse(res, 200, 'notification', 'Notifications successfully updated to read');
+        return successResponse(res, 200, 'notification', { message: 'Notifications successfully updated to read' });
       }
       return errorResponse(res, 400, 'Notification was not updated succesfully');
     } catch (error) {

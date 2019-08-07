@@ -35,7 +35,7 @@ describe('Subscribing to email notifications', () => {
       .set('Authorization', `Bearer ${firstUserToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.subscription).to.eql('You have subscribed for email notifications');
+        expect(res.body.subscription.message).to.eql('You have subscribed for email notifications');
         done();
       });
   });
