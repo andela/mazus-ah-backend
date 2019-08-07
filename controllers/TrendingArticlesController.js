@@ -2,7 +2,7 @@ import models from '../database/models';
 import ServerResponse from '../modules';
 
 
-const { Article } = models;
+const { Article, User, Profile } = models;
 const { successResponse } = ServerResponse;
 
 /**
@@ -28,6 +28,17 @@ export default class Trending {
       where: {
         status: 'published'
       },
+      include: [
+        { // Author
+          model: User,
+          as: 'author',
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+          include: [{
+            model: Profile,
+            as: 'profile',
+          }]
+        },
+      ],
       order: [
         ['readCount', 'DESC'],
         ['createdAt', 'DESC'],
