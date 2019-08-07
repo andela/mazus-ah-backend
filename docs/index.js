@@ -25,6 +25,7 @@ import likeArticle from './articles/likeArticle.json';
 import dislikeArticle from './articles/dislikeArticle';
 import getNotifcation from './notifications/getNotification.json';
 import updateNotification from './notifications/patchNotification.json';
+import getAllUsers from './users/allUser.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -52,6 +53,7 @@ swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
+swagger.paths['/users'] = getAllUsers;
 
 
 export default swagger;
