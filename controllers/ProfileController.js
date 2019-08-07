@@ -128,4 +128,31 @@ export default class ProfileController {
       return next(error);
     }
   }
+
+  /**
+   * @method getNumberOfReadArticles
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   * @returns {object} returns object response
+   */
+  static async getNumberOfReadArticles(req, res, next) {
+    const userId = req.user.id;
+    try {
+      const getStatistics = await models.Reading.findAll({ raw: true, where: { userId } });
+      return successResponse(res, 200, 'articlesRead', getStatistics.length);
+    } catch (error) {
+      return next(error);
+    }
+  }
+  /**
+   * @method subscribedArticles
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   * @returns {object} returns object response
+   */
+  static async subscribedArticles(req, res, next) {
+    
+  }
 }

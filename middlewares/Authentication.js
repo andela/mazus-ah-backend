@@ -88,4 +88,35 @@ export default class Authentication {
 
     return next();
   }
+
+  /**
+   *Extract request id if token is present
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {function} next function
+   *
+   * @memberof Authentication
+   */
+  static fetchRequester(req, res, next) {
+    try {
+      const bearer = req.headers.authorization;
+      if (bearer) {
+        const token = bearer.split(' ')[1];
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+          if (!err) {
+            req.user = decoded;
+          }
+        });
+        return next();
+      }
+      next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 }

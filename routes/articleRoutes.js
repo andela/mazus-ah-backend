@@ -10,13 +10,13 @@ const {
   editArticle, deleteArticle
 } = ArticleController;
 const { postComment } = CommentController;
-const { verifyToken, verifiedUserOnly } = AuthMiddleware;
+const { verifyToken, verifiedUserOnly, fetchRequester } = AuthMiddleware;
 const { articleValidation, validateId } = articleValidationSchema;
 
 const router = Router();
 
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
-router.get('/:id/:slug', validateId, getArticlesArticleBySlug);
+router.get('/:id/:slug', fetchRequester, validateId, getArticlesArticleBySlug);
 router.get('/:id', validateId, getArticlesByAuthor);
 router.get('/', getAllArticles);
 router.patch('/:slug', verifyToken, verifiedUserOnly, articleValidation, editArticle);

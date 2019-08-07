@@ -16,6 +16,7 @@
       "helpers/Pagination.js",
       "helpers/Notification.js",
       "helpers/EmailNotification.js",
+      "middlewares/Authentication.js",
       "__tests__/*"
     ]
   },

@@ -4,7 +4,7 @@ import ArticleHelper from '../helpers/ArticleHelper';
 import Notification from '../helpers/Notification';
 
 const {
-  Article, User, Profile, Sequelize: { Op }
+  Article, User, Reading, Profile, Sequelize: { Op }
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -111,7 +111,12 @@ export default class ArticleController {
       if (!article) {
         return errorResponse(res, 404, { article: 'Article not found' });
       }
-
+      // Update Reading table
+      if (req.user) {
+        const userId = req.user.id;
+        const articleId = article.dataValues.id;
+        await Reading.findOrCreate({ where: { userId, articleId } });
+      }
       return successResponse(res, 200, 'article', article);
     } catch (err) {
       return next(err);

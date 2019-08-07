@@ -99,6 +99,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       targetKey: 'userId'
     });
+    User.hasMany(models.Reading, {
+      foreignKey: 'userId',
+      as: 'reading',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return User;
 };

@@ -5,7 +5,12 @@ import ProfileController from '../controllers/ProfileController';
 import Validate from '../middlewares/inputValidation';
 import Followership from '../controllers/followershipController';
 
-const { createProfile, editProfile, viewProfile } = ProfileController;
+const {
+  createProfile,
+  editProfile,
+  viewProfile,
+  getNumberOfReadArticles
+} = ProfileController;
 const {
   validateId,
   editProfileValidate,
@@ -19,11 +24,12 @@ const {
   getUserFollowings,
 } = Followership;
 
-const { verifyToken } = AuthMiddlewware;
+const { verifyToken, verifiedUserOnly } = AuthMiddlewware;
 const router = Router();
 
 router.post('/', verifyToken, createProfileValidate, createProfile);
 router.patch('/:id', verifyToken, editProfileValidate, editProfile);
+router.get('/readingstatistics', verifyToken, verifiedUserOnly, getNumberOfReadArticles);
 router.get('/:id', verifyToken, validateId, viewProfile);
 router.post('/follow/:id', verifyToken, validateParamsId, follow);
 router.delete('/follow/:id', verifyToken, validateParamsId, unfollow);
