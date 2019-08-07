@@ -73,15 +73,9 @@ export default class ArticleController {
    *
    * @memberof ArticleController
    */
-  static async getArticlesArticleBySlug(req, res, next) {
+  static async getSingleArticleBySlug(req, res, next) {
     try {
-      const { slug, id } = req.params;
-      const findUser = await User.findOne({ where: { id } });
-
-      if (!findUser) {
-        return errorResponse(res, 404, { article: 'Author not found' });
-      }
-
+      const { slug } = req.params;
       const article = await Article.findOne({
         where: { slug, status: 'published' },
         include: [
@@ -108,7 +102,6 @@ export default class ArticleController {
           },
         ],
       });
-
       if (!article) {
         return errorResponse(res, 404, { article: 'Article not found' });
       }
