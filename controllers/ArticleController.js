@@ -118,6 +118,8 @@ export default class ArticleController {
         const articleId = article.dataValues.id;
         await Reading.findOrCreate({ where: { userId, articleId } });
       }
+      await Article.increment({ readCount: 1 }, { where: { slug } });
+
       return successResponse(res, 200, 'article', article);
     } catch (err) {
       return next(err);

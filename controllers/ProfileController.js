@@ -156,7 +156,12 @@ export default class ProfileController {
   static async articlesReadCount(req, res, next) {
     const userId = req.user.id;
     try {
-      const authorArticles = await models.Article.findAll({ raw: true, where: { userId } });
+      const authorArticlesDetails = await models.Article.findAll({
+        raw: true,
+        where: { userId },
+        attributes: ['title', 'id', 'readCount', 'slug', 'userId']
+      });
+      successResponse(res, 200, 'allArticlesStatistics', authorArticlesDetails);
     } catch (error) {
       return next(error);
     }
