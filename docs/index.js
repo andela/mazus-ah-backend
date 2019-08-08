@@ -32,6 +32,9 @@ import shareArticle from './articles/shareArticles/shareByMail.json';
 import articlesReadCount from './statistics/articlesReadCount.json';
 import myReadCount from './statistics/myReadCount.json';
 import reportArticle from './articles/reportArticle.json';
+import createUser from './admin/createUser.json';
+import updateDeleteUser from './admin/updateDeleteUser.json';
+
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -66,5 +69,9 @@ swagger.paths['/search?keyword'] = searchArticle;
 swagger.paths['/articles/{slug}/share/mail'] = shareArticle;
 swagger.paths['/statistics/published'] = articlesReadCount;
 swagger.paths['/statistics/read'] = myReadCount;
+
+swagger.paths['/admin/users'] = createUser;
+swagger.paths['/admin/users/{id}'] = updateDeleteUser;
+
 
 export default swagger;

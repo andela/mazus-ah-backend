@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       type: {
-        type: Sequelize.ENUM('admin', 'user'),
+        type: Sequelize.ENUM('admin', 'user', 'super-admin'),
         defaultValue: 'user',
       },
       emailNotify: {

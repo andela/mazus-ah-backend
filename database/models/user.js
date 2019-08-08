@@ -26,8 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
       },
       type: {
-        type: DataTypes.ENUM('admin', 'user'),
+        type: DataTypes.ENUM('admin', 'user', 'super-admin'),
+        values: ['admin', 'user', 'super-admin'],
         defaultValue: 'user',
+        allowNull: false,
       },
       emailNotify: {
         defaultValue: true,

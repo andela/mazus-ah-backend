@@ -4,6 +4,7 @@ import profileRoutes from './profileRoutes';
 import ratingRoutes from './ratingRoutes';
 import articleRoutes from './articleRoutes';
 import userRoutes from './userRoutes';
+import adminRoutes from './adminRoutes';
 import notificationRoutes from './notificationRoutes';
 import emailSubscriptionRoute from './emailSubscriptionRoute';
 import commentRoutes from './commentRoutes';
@@ -22,6 +23,7 @@ router.use('/users', emailSubscriptionRoute);
 router.use('/comments', commentRoutes);
 router.use('/search', searchRoutes);
 router.use('/statistics', statisticsRoutes);
+router.use('/admin', adminRoutes);
 
 
 export default router;

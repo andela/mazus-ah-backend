@@ -1,0 +1,232 @@
+{
+  "post": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "summary": "signup user",
+    "description": "Signup user. \n",
+    "parameters": [
+      {
+        "name": "Create User Account",
+        "in": "body",
+        "description": "request payload",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "example": "tunjiabioye@gmail.com"
+            },
+            "firstName": {
+              "type": "string",
+              "example": "Tunji"
+            },
+            "lastName": {
+              "type": "string",
+              "example": "Abioye"
+            },
+            "password": {
+              "type": "string",
+              "example": "Pa55w0rd"
+            },
+            "confirmPassword": {
+              "type": "string",
+              "example": "Pa55w0rd"
+            }
+          }
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "201": {
+        "description": "User Created",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 201
+            },
+            "method": {
+              "type": "string",
+              "example": "POST"
+            },
+            "message": {
+              "type": "string",
+              "example": "Your Account has been created successfully!"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjA0ZWRiMDZiZDc2MTQwMzgyOWNkMzkiLCJuYW1lIjoiQW1vcyBUb2JpIiwiZW1haWwiOiJ0b2JpQGdva2FkYS5uZyIsImlhdCI6MTUyNzA0OTY0OSwiZXhwIjoxNTI3MTM2MDQ5fQ.-mrtcyVbcCmfyP7HovesvPLT4CFD3kCLzmY24BbKPcU"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "tunjiabioye@gmail.com"
+                },
+                "isVerified": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "verificationToken": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjA0ZWRiMDZiZDc2MTQwMzgyOWNkMzkiLCJuYW1lIjoiQW1vcyBUb2JpIiwiZW1haWwiOiJ0b2JpQGdva2FkYS5uZyIsImlhdCI6MTUyNzA0OTY0OSwiZXhwIjoxNTI3MTM2MDQ5fQ.-mrtcyVbcCmfyP7HovesvPLT4CFD3kCLzmY24BbKPcU"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Email is required",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "POST"
+            },
+            "message": {
+              "type": "string",
+              "example": "Please input a valid email address"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "get": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "summary": "Get All Users",
+    "description": "Return all Users available \n",
+    "parameters": [
+      {
+        "name": "page",
+        "in": "query",
+        "description": "Enter page number",
+        "required": false,
+        "type": "integer"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "description": "Enter page size",
+        "required": false,
+        "type": "integer"
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "All Users returned successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "Users": {
+              "type": "array",
+              "example": [
+                {
+                  "id": "8c9589fb-5b25-4df9-92ee-2b20ba4f9407",
+                  "email": "janedoe@test.com",
+                  "firstName": "Jane",
+                  "lastName": "Done",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "fdfe8617-208d-4b87-a000-5d6840786ab8",
+                  "email": "mikemike@test.com",
+                  "firstName": "Mike",
+                  "lastName": "Mike",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "90356e2a-2f35-48e9-9add-9811c23f2122",
+                  "email": "davidnoah@test.com",
+                  "firstName": "David",
+                  "lastName": "Noah",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "588ae2cd-de3f-404a-87b3-8a6d50864833",
+                  "email": "pelumi@test.com",
+                  "firstName": "Pelumi",
+                  "lastName": "Noah",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "356304da-50bc-4488-9c85-88874a9efb16",
+                  "email": "Jody.Heathcote@yahoo.com",
+                  "firstName": "Anika",
+                  "lastName": "Trantow",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "51d509cc-b787-4abf-b176-fdb63cb9ed44",
+                  "email": "Maximus.Orn@gmail.com",
+                  "firstName": "Sincere",
+                  "lastName": "Skiles",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "1810e81d-9e5c-4a50-97e2-410fa230e166",
+                  "email": "Kelley_McGlynn@gmail.com",
+                  "firstName": "Mina",
+                  "lastName": "Cummings",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "c3ee24b4-46ea-4b96-bad9-a114a8baf7a8",
+                  "email": "Britney_Senger50@yahoo.com",
+                  "firstName": "Nicholaus",
+                  "lastName": "Will",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "a3868c24-6648-434c-8085-cf16ceb8915c",
+                  "email": "Vernon.Price1@gmail.com",
+                  "firstName": "Estrella",
+                  "lastName": "Ryan",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                },
+                {
+                  "id": "cf4aa1aa-7996-400e-a92d-b0ee07c91277",
+                  "email": "Shanel65@yahoo.com",
+                  "firstName": "Vesta",
+                  "lastName": "Kuvalis",
+                  "createdAt": "2019-08-08T10:05:44.171Z"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

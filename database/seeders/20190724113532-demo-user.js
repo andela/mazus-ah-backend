@@ -16,6 +16,7 @@ module.exports = {
           lastName: 'Done',
           email: 'johndoe@test.com',
           isVerified: true,
+          type: 'user',
           password: `${password}`,
         },
         {
@@ -24,6 +25,7 @@ module.exports = {
           lastName: 'Done',
           email: 'janedoe@test.com',
           isVerified: true,
+          type: 'user',
           password: `${password}`,
         },
         {
@@ -32,6 +34,7 @@ module.exports = {
           lastName: 'Mike',
           email: 'mikemike@test.com',
           isVerified: false,
+          type: 'user',
           password: `${password}`,
         },
         {
@@ -40,7 +43,8 @@ module.exports = {
           lastName: 'Noah',
           email: 'davidnoah@test.com',
           isVerified: false,
-          password: `${password}`,
+          type: 'user',
+          password: `${password}`
         },
         {
           id: '588ae2cd-de3f-404a-87b3-8a6d50864833',
@@ -49,6 +53,7 @@ module.exports = {
           email: 'pelumi@test.com',
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: '356304da-50bc-4488-9c85-88874a9efb16',
@@ -57,6 +62,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: '51d509cc-b787-4abf-b176-fdb63cb9ed44',
@@ -65,6 +71,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: '1810e81d-9e5c-4a50-97e2-410fa230e166',
@@ -73,6 +80,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: 'c3ee24b4-46ea-4b96-bad9-a114a8baf7a8',
@@ -81,6 +89,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: 'a3868c24-6648-434c-8085-cf16ceb8915c',
@@ -89,6 +98,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: 'cf4aa1aa-7996-400e-a92d-b0ee07c91277',
@@ -96,6 +106,7 @@ module.exports = {
           lastName: faker.name.lastName(),
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
+          type: 'user'
 
         },
         {
@@ -104,6 +115,7 @@ module.exports = {
           lastName: faker.name.lastName(),
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
+          type: 'user'
 
         },
         {
@@ -112,6 +124,7 @@ module.exports = {
           lastName: faker.name.lastName(),
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
+          type: 'user'
 
         },
         {
@@ -120,6 +133,7 @@ module.exports = {
           lastName: faker.name.lastName(),
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
+          type: 'user'
 
         },
         {
@@ -129,6 +143,7 @@ module.exports = {
           email: faker.internet.email(),
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: '32fd7e50-b687-447f-af7c-c209b8f98765',
@@ -137,6 +152,7 @@ module.exports = {
           email: 'dd@test.com',
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: true,
+          type: 'user'
         },
         {
           id: '0ec73114-c834-4dc9-838d-089083680763',
@@ -145,6 +161,7 @@ module.exports = {
           email: 'tunji@test.com',
           password: Helper.hashPassword('PasswoRD123__'),
           isVerified: false,
+          type: 'user'
         },
         {
           id: 'e89695aa-1f7e-468c-89dd-5fc2332e31f1',
@@ -153,6 +170,7 @@ module.exports = {
           email: 'john.kamali@outlook.com',
           password: Helper.hashPassword('P455w0rd'),
           isVerified: true,
+          type: 'user',
           verificationToken: '#john.kamali@outlook.com#'
         },
         {
@@ -162,6 +180,7 @@ module.exports = {
           email: 'fatima.kamali@outlook.com',
           password: Helper.hashPassword('P455w0rd'),
           isVerified: true,
+          type: 'user',
           verificationToken: '#fatima.kamali@outlook.com#'
         },
         {
@@ -171,6 +190,7 @@ module.exports = {
           email: 'sophie.kamali@outlook.com',
           password: Helper.hashPassword('P455w0rd'),
           isVerified: false,
+          type: 'user',
           verificationToken: '#sophie.kamali@outlook.com#'
         },
         {
@@ -180,6 +200,7 @@ module.exports = {
           email: 'saintyomex@gmail.com',
           password: Helper.hashPassword('P455w0rd'),
           isVerified: false,
+          type: 'user',
           verificationToken: '$2a$10$i79.wjir1Y4VU60ompBe.evpStnMeAcJVVBCjkpuqasgmr4fFwEX.'
         },
         {
@@ -189,7 +210,18 @@ module.exports = {
           email: 'seconduser@outlook.com',
           password: Helper.hashPassword('P455w0rd'),
           isVerified: false,
+          type: 'user',
           verificationToken: '$2a$10$i79.ksdjksjdks.ksdkshdksehdjahdjah.'
+        },
+        {
+          id: '793213e7-044c-4f5e-9688-1884461b189f',
+          firstName: 'Jamal',
+          lastName: 'Sabri',
+          email: 'jamal.sabri@mail.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: true,
+          verificationToken: 'jamal.sabri@outlook.com#',
+          type: 'super-admin'
         }
       ],
       {},

@@ -10,6 +10,10 @@ const seededUsers = [
   {
     email: 'janedoe@test.com',
     password: 'passwordHash'
+  },
+  {
+    email: 'jamal.sabri@mail.com',
+    password: 'P455w0rd'
   }
 ];
 
