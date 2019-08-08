@@ -12,8 +12,8 @@ let userId;
 describe('Testing GET users endpoint', () => {
   before((done) => {
     const user = {
-      email: 'johndoe@test.com',
-      password: 'passwordHash',
+      email: 'pelumi@test.com',
+      password: 'PasswoRD123__',
     };
     chai
       .request(app)
@@ -26,7 +26,7 @@ describe('Testing GET users endpoint', () => {
         done();
       });
   });
-  it('should get all articles successfully', (done) => {
+  it('should get all Users successfully', (done) => {
     chai
       .request(app)
       .get(url)
@@ -36,6 +36,15 @@ describe('Testing GET users endpoint', () => {
         expect(res.body.users).to.have.property('message');
         expect(res.body.users.message).to.eql('Users fetched successfully');
         expect(res.body.users).to.be.a('object');
+        expect(res.body.users).to.have.property('allUsers');
+        expect(res.body.users.allUsers[0]).to.have.property('id');
+        expect(res.body.users.allUsers[0]).to.have.property('firstName');
+        expect(res.body.users.allUsers[0]).to.have.property('lastName');
+        expect(res.body.users.allUsers[0]).to.have.property('email');
+        expect(res.body.users.allUsers[0]).to.have.property('isVerified');
+        expect(res.body.users.allUsers[0]).to.have.property('type');
+        expect(res.body.users.allUsers[0]).to.have.property('emailNotify');
+        expect(res.body.users.allUsers[0]).to.have.property('profile');
         done();
       });
   });
