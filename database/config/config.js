@@ -4,6 +4,7 @@ config();
 
 export const development = {
   use_env_variable: 'DATABASE_URL',
+  logging: false,
 };
 
 export const test = {
