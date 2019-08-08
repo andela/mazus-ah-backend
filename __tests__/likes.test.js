@@ -40,6 +40,18 @@ describe('Testing /like & /dislike endpoints', () => {
         done();
       });
   });
+  it('should successfully remove a like from an article', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/building-apis-with-nodejs-48458493/like`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql("Your like on 'Building APIs with Nodejs' has been removed");
+        done();
+      });
+  });
   it('should successfully dislike an article', (done) => {
     chai
       .request(app)
@@ -49,6 +61,55 @@ describe('Testing /like & /dislike endpoints', () => {
         expect(res.status).to.eql(201);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.eql("You just disliked 'Building APIs with Nodejs'");
+        done();
+      });
+  });
+  it('should successfully change the dislike of an article to like ', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/building-apis-with-nodejs-48458493/like`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql("You just liked 'Building APIs with Nodejs'");
+        done();
+      });
+  });
+  it('should successfully change the like of an article to dislike', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/building-apis-with-nodejs-48458493/dislike`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql("You just disliked 'Building APIs with Nodejs'");
+        done();
+      });
+  });
+
+  it('should successfully dislike an article', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/some-slug/dislike`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql("You just disliked 'Some title'");
+        done();
+      });
+  });
+  it('should successfully remove a disliked article', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/some-slug/dislike`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.eql("Your dislike on 'Some title' has been removed");
         done();
       });
   });
