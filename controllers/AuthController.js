@@ -9,7 +9,10 @@ import MarkUps from '../helpers/MarkUps';
 
 dotenv.config();
 const { successResponse, errorResponse } = ServerResponse;
-const { BlacklistedToken, User } = models;
+const {
+  BlacklistedToken,
+  User,
+} = models;
 const { sendResetEmail } = ForgotPasswordEmail;
 const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
 
@@ -111,7 +114,7 @@ export default class AuthController {
   static async userSignin(req, res) {
     const { email, password } = req.body;
 
-    const user = await models.User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
       return res.status(401).send({
@@ -241,12 +244,12 @@ export default class AuthController {
   static async verifyEmail(req, res, next) {
     try {
       const { email, token } = req.query;
-      const foundUser = await models.User.findOne({ where: { email } });
+      const foundUser = await User.findOne({ where: { email } });
       if (foundUser.isVerified === true) {
         res.setHeader('Content-Type', 'text/html');
         res.send(alreadyVerified);
       } else if (foundUser.verificationToken === token) {
-        await models.User.update({ isVerified: true }, { where: { email } });
+        await User.update({ isVerified: true }, { where: { email } });
         res.setHeader('Content-Type', 'text/html');
         res.send(verified);
       } else if (foundUser.verificationToken !== token) {
@@ -315,7 +318,7 @@ export default class AuthController {
       return errorResponse(res, 409, { message: 'This link has already been used once, please request another link.' });
     }
     const hashedPassword = Helper.hashPassword(password);
-    await models.User.update({ password: hashedPassword }, { where: { email } });
+    await User.update({ password: hashedPassword }, { where: { email } });
     await BlacklistedToken.create({ token, userId: id });
     return successResponse(res, 200, 'auth', { message: 'Your Password has been reset successfully' });
   }

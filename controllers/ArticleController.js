@@ -6,7 +6,12 @@ import Notification from '../helpers/Notification';
 import ShareArticle from '../helpers/ShareArticle';
 
 const {
-  Article, User, Profile, Sequelize: { Op }, Bookmark
+  Article,
+  User,
+  Profile,
+  Sequelize: { Op },
+  Bookmark,
+  Comment,
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -90,12 +95,12 @@ export default class ArticleController {
             }]
           },
           { // Article Comments
-            model: models.Comment,
+            model: Comment,
             as: 'articlecomment',
             attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
-                model: models.User,
+                model: User,
                 as: 'user',
                 attributes: ['firstName', 'lastName', 'email', 'id'],
               }
@@ -155,12 +160,12 @@ export default class ArticleController {
               }]
             },
             { // Article Comments
-              model: models.Comment,
+              model: Comment,
               as: 'articlecomment',
               attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
               include: [
                 { // user
-                  model: models.User,
+                  model: User,
                   as: 'user',
                   attributes: ['firstName', 'lastName', 'email', 'id'],
                 }
@@ -189,12 +194,12 @@ export default class ArticleController {
             }]
           },
           { // Article Comments
-            model: models.Comment,
+            model: Comment,
             as: 'articlecomment',
             attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
-                model: models.User,
+                model: User,
                 as: 'user',
                 attributes: ['firstName', 'lastName', 'email', 'id'],
               }
@@ -248,12 +253,12 @@ export default class ArticleController {
             }]
           },
           { // Article Comments
-            model: models.Comment,
+            model: Comment,
             as: 'articlecomment',
             attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
-                model: models.User,
+                model: User,
                 as: 'user',
                 attributes: ['firstName', 'lastName', 'email', 'id'],
               }
@@ -300,12 +305,12 @@ export default class ArticleController {
             }]
           },
           { // Article Comments
-            model: models.Comment,
+            model: Comment,
             as: 'articlecomment',
             attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
             include: [
               { // user
-                model: models.User,
+                model: User,
                 as: 'user',
                 attributes: ['firstName', 'lastName', 'email', 'id'],
               }
@@ -487,11 +492,11 @@ export default class ArticleController {
       if (id !== userId) {
         return errorResponse(res, 403, 'You are not allowed to view this user\'s bookmarks');
       }
-      const bookmarks = await models.Bookmark.findAll({
+      const bookmarks = await Bookmark.findAll({
         where: { userId: id },
         include: [
           {
-            model: models.Article,
+            model: Article,
             as: 'article',
           }
         ]
