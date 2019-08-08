@@ -1,0 +1,58 @@
+{
+  "get": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Articles"
+    ],
+    "summary": "Shares an article",
+    "description": "Share an article by mail \n",
+    "parameters": [
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "3-bad-guys"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "Article has been shared successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "article": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Article not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "articles": {
+                  "type": "string",
+                  "example": "Article not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
