@@ -17,6 +17,7 @@ const {
   editArticle,
   deleteArticle,
   bookmarkArticle,
+  shareArticle
 } = ArticleController;
 const { postComment } = CommentController;
 const { verifyToken, verifiedUserOnly, fetchRequester } = AuthMiddleware;
@@ -38,6 +39,9 @@ router.delete('/:slug', verifyToken, verifiedUserOnly, deleteArticle);
 router.post('/:slug/comments', verifyToken, verifiedUserOnly, commentValidate.comment, postComment);
 router.post('/:slug/like', verifyToken, verifiedUserOnly, likeArticle);
 router.post('/:slug/dislike', verifyToken, verifiedUserOnly, dislikeArticle);
+router.get('/:slug/share/mail', verifyToken, verifiedUserOnly, shareArticle);
+router.get('/:slug/share/twitter', verifyToken, verifiedUserOnly, shareArticle);
+router.get('/:slug/share/facebook', verifyToken, verifiedUserOnly, shareArticle);
 
 
 export default router;

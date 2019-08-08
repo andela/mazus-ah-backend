@@ -29,6 +29,7 @@ import getAllBookmark from './users/getBookmark.json';
 import bookmarkArticle from './articles/bookmarkArticles.json';
 import articlesReadCount from './profile/articlesReadCount.json';
 import myReadCount from './profile/myReadCount.json';
+import shareArticle from './articles/shareArticles/shareByMail.json';
 
 
 swagger.paths['/auth/signup'] = signup;
@@ -63,5 +64,6 @@ swagger.paths['/articles/trends'] = trendingArticles;
 swagger.paths['/profiles/articlesreadcount'] = articlesReadCount;
 swagger.paths['profiles/myreadcount'] = myReadCount;
 
+swagger.paths['/articles/{slug}/share/mail'] = shareArticle;
 
 export default swagger;
