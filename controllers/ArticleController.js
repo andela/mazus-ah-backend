@@ -6,7 +6,7 @@ import Notification from '../helpers/Notification';
 import ShareArticle from '../helpers/ShareArticle';
 
 const {
-  Article, User, Profile, Sequelize: { Op }, Bookmark
+  Article, User, Profile, Sequelize: { Op }, Bookmark, Reading
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -105,6 +105,12 @@ export default class ArticleController {
       });
       if (!article) {
         return errorResponse(res, 404, { article: 'Article not found' });
+      }
+      // Update Reading table
+      if (req.user) {
+        const userId = req.user.id;
+        const articleId = article.dataValues.id;
+        await Reading.findOrCreate({ where: { userId, articleId } });
       }
       await Article.increment({ readCount: 1 }, { where: { slug } });
 

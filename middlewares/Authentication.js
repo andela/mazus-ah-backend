@@ -88,4 +88,46 @@ export default class Authentication {
 
     return next();
   }
+
+  /**
+   *Extract request user id if token is present
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {function} next function
+   *
+   * @memberof Authentication
+   */
+  static async fetchRequester(req, res, next) {
+    try {
+      const bearer = req.headers.authorization;
+      if (bearer) {
+        const token = bearer.split(' ')[1];
+        const blacklistedToken = await BlacklistedToken.findOne({
+          where: { token },
+        });
+        if (blacklistedToken) {
+          return errorResponse(res, 401, {
+            message: 'Invalid token provided, please sign in',
+          });
+        }
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+          if (err) {
+            return errorResponse(res, 401, {
+              message: 'Invalid token provided',
+            });
+          }
+          req.user = decoded;
+        });
+        return next();
+      }
+      next();
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
