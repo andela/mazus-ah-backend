@@ -18,7 +18,16 @@ export default class userController {
    */
   static async getAllUsers(req, res, next) {
     try {
-      const allUsers = await models.User.findAll();
+      const allUsers = await models.User.findAll({
+        attributes: ['id', 'firstName', 'lastName', 'email', 'isVerified', 'type', 'emailNotify'],
+        include: [
+          {
+            model: models.Profile,
+            as: 'profile',
+            attributes: ['id', 'userId', 'bio', 'avatar']
+          }
+        ]
+      });
       return successResponse(res, 200, 'users', { message: 'Users fetched successfully', allUsers });
     } catch (error) {
       return next(error);
