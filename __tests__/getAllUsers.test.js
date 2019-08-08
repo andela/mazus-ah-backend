@@ -36,7 +36,9 @@ describe('Testing GET users endpoint', () => {
         expect(res.body.users).to.have.property('message');
         expect(res.body.users.message).to.eql('Users fetched successfully');
         expect(res.body.users).to.be.a('object');
-
+        done();
+      });
+  });
   it('should return error 400 if id is invalid', (done) => {
     chai.request(app)
       .get(`${url}/11d509cc-b787-f-b176-fdb63cb9ed44/bookmarks`)
