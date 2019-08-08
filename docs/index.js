@@ -27,6 +27,8 @@ import getNotifcation from './notifications/getNotification.json';
 import updateNotification from './notifications/patchNotification.json';
 import getAllBookmark from './users/getBookmark.json';
 import bookmarkArticle from './articles/bookmarkArticles.json';
+import articlesReadCount from './profile/articlesReadCount.json';
+import myReadCount from './profile/myReadCount.json';
 
 
 swagger.paths['/auth/signup'] = signup;
@@ -55,10 +57,11 @@ swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 swagger.paths['/articles/trends'] = trendingArticles;
 swagger.paths['/users/bookmarks'] = getAllBookmark;
 swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
-
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/articles/trends'] = trendingArticles;
+swagger.paths['/profiles/articlesreadcount'] = articlesReadCount;
+swagger.paths['profiles/myreadcount'] = myReadCount;
 
 
 export default swagger;

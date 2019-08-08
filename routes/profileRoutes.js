@@ -31,7 +31,7 @@ const router = Router();
 
 router.post('/', verifyToken, createProfileValidate, createProfile);
 router.patch('/:id', verifyToken, editProfileValidate, editProfile);
-router.get('/articlereadcount', verifyToken, verifiedUserOnly, articlesReadCount);
+router.get('/articlesreadcount', verifyToken, verifiedUserOnly, articlesReadCount);
 router.get('/myreadcount', verifyToken, verifiedUserOnly, articlesUserRead);
 router.get('/:id', verifyToken, validateId, viewProfile);
 router.post('/follow/:id', verifyToken, validateParamsId, follow);

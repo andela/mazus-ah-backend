@@ -147,7 +147,7 @@ export default class ProfileController {
   }
 
   /**
-   * @method articleReadCount
+   * @method articlesReadCount
    * @param {object} req express request object
    * @param {object} res express response object
    * @param {function} next

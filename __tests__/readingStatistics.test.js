@@ -25,7 +25,7 @@ describe('Reading statistics for articles published by an author', () => {
   });
   it('should return an array of objects in another object', (done) => {
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
@@ -39,7 +39,7 @@ describe('Reading statistics for articles published by an author', () => {
   });
   it('should return an error response when token is not provided', (done) => {
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', '')
       .end((err, res) => {
         expect(res.status).to.eql(401);
@@ -49,7 +49,7 @@ describe('Reading statistics for articles published by an author', () => {
   });
   it('should return an error response when an invalid token is provided', (done) => {
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', `Bearer ${userToken}s`)
       .end((err, res) => {
         expect(res.status).to.eql(403);
@@ -69,7 +69,7 @@ describe('Reading statistics for articles published by an author', () => {
   });
   it('should return an error response if the user has not been verified', (done) => {
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', `Bearer ${secondUserToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(401);
@@ -79,7 +79,7 @@ describe('Reading statistics for articles published by an author', () => {
   });
   it('should return an error response when a blacklisted token is provided', (done) => {
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(403);
@@ -92,7 +92,7 @@ describe('Reading statistics for articles published by an author', () => {
     const error = new Error('Something went wrong');
     stub.yields(error);
     chai.request(app)
-      .get(`${url}/profiles/articlereadcount`)
+      .get(`${url}/profiles/articlesreadcount`)
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(500);
@@ -171,7 +171,7 @@ describe('Reading statistics for articles an author or user has read', () => {
         done();
       });
   });
-  it('should throw a server error', (done) => {
+  it('should throw a server error of 500', (done) => {
     const stub = sinon.stub(Reading, 'findAll');
     const error = new Error('Something went wrong');
     stub.yields(error);

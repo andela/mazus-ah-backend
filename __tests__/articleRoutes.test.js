@@ -14,6 +14,7 @@ let notArticleOwnerToken;
 let unverifiedUserToken;
 let articleSlug;
 const fakeUserId = 'f6b3facb-eb83-47f8-8c1c-05207e62ed30';
+const blacklistedToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9obiIsImlhdCI6MTU2NDAwOTA5NCwiZXhwIjoxNTY0MDEyNjk0fQ.J5ktoXlmLxOtV8R16sNPMXXeydwRdCA8h6Cep-AzZnc';
 
 describe('Article Routes Test', () => {
   before((done) => {
@@ -335,6 +336,26 @@ describe('Article Routes Test', () => {
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.property('trends');
         expect(res.body.trends).to.be.to.a('array');
+        done();
+      });
+  });
+  it('should return an error response when a blacklisted token is provided', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/${articleSlug}`)
+      .set('Authorization', `Bearer ${blacklistedToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(403);
+        expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
+        done();
+      });
+  });
+  it('should return an error response when an invalid token is provided', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/${articleSlug}`)
+      .set('Authorization', `Bearer ${validUserToken}s`)
+      .end((err, res) => {
+        expect(res.status).to.eql(403);
+        expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });
   });

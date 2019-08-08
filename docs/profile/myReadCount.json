@@ -1,0 +1,29 @@
+{
+    "get": {
+        "security": [
+            {
+                "Bearer": []
+            }
+        ],
+        "tags": ["Profile"],
+        "summary": "Get the read count of a user/author",
+        "description": "Return the number of articles a user has read \n",
+        "produces": ["application/json"],
+        "responses": {
+            "200": {
+            "description": "user read count",
+            "schema": {
+                "type": "object",
+                "properties": {
+                "articlesRead": {
+                    "type": "object",
+                    "example": {
+                        "articlesRead": 20
+                    }
+                }
+                }
+            }
+            }
+        }
+      }
+    }
