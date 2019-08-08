@@ -24,7 +24,7 @@ export default class userController {
           {
             model: models.Profile,
             as: 'profile',
-            attributes: ['id', 'userId', 'bio', 'avatar']
+            attributes: ['id', 'bio', 'avatar']
           }
         ]
       });
