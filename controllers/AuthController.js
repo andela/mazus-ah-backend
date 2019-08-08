@@ -90,12 +90,6 @@ export default class AuthController {
       message: 'Your Account has been created successfully!',
       user: {
         token,
-        id: registeredUser.id,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
-        email: registeredUser.email,
-        isVerified: registeredUser.isVerified,
-        verificationToken,
       }
     });
   }
@@ -140,12 +134,7 @@ export default class AuthController {
     return res.status(200).send({
       message: 'You have successfully logged in',
       user: {
-        id,
         token,
-        email,
-        firstName,
-        lastName,
-        isVerified,
       }
     });
   }

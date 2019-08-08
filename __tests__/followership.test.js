@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwtDecode from 'jwt-decode';
 import app from '..';
 
 chai.use(chaiHttp);
@@ -23,7 +24,9 @@ describe('Followership', () => {
       .post('/api/v1/auth/signin')
       .send(user)
       .end((err, res) => {
-        const { token, id } = res.body.user;
+        const { token } = res.body.user;
+        const decoded = jwtDecode(token);
+        const { id } = decoded;
         validToken = token;
         userId = id;
         done();

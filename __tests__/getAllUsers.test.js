@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwtDecode from 'jwt-decode';
 import app from '../index';
 
 chai.use(chaiHttp);
@@ -21,7 +22,9 @@ describe('Testing GET users endpoint', () => {
       .send(user)
       .end((err, res) => {
         const { token } = res.body.user;
-        userId = res.body.user.id;
+        const decoded = jwtDecode(token);
+        const { id } = decoded;
+        userId = id;
         validToken = token;
         done();
       });

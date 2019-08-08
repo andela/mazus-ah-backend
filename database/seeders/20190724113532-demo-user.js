@@ -173,6 +173,24 @@ module.exports = {
           isVerified: false,
           verificationToken: '#sophie.kamali@outlook.com#'
         },
+        {
+          id: 'f876854f-80df-413f-809f-66b5968d03fa',
+          firstName: 'Victor',
+          lastName: 'Ajayi',
+          email: 'saintyomex@gmail.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: false,
+          verificationToken: '$2a$10$i79.wjir1Y4VU60ompBe.evpStnMeAcJVVBCjkpuqasgmr4fFwEX.'
+        },
+        {
+          id: '7b76954f-80df-413f-809f-66b5968d03fa',
+          firstName: 'Victor',
+          lastName: 'Ajayi',
+          email: 'seconduser@outlook.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: false,
+          verificationToken: '$2a$10$i79.ksdjksjdks.ksdkshdksehdjahdjah.'
+        }
       ],
       {},
     );
