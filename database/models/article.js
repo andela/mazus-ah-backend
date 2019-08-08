@@ -53,6 +53,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      readCount: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: '0',
+      },
     },
     {},
   );

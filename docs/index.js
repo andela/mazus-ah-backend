@@ -17,7 +17,7 @@ import userArticles from './users/userArticles.json';
 import updateAndDeleteArticles from './articles/updateAndDeleteArticle.json';
 import postComment from './articles/postComment.json';
 import rateArticles from './articles/rateArticles.json';
-
+import trendingArticles from './articles/trendingArticles.json';
 import followAndUnfollowUser from './profile/followAndUnfollowUser.json';
 import userFollowers from './profile/userFollowers.json';
 import userFollowings from './profile/userFollowings.json';
@@ -26,6 +26,9 @@ import dislikeArticle from './articles/dislikeArticle';
 import getNotifcation from './notifications/getNotification.json';
 import updateNotification from './notifications/patchNotification.json';
 import getAllUsers from './users/allUser.json';
+import getAllBookmark from './users/getBookmark.json';
+import bookmarkArticle from './articles/bookmarkArticles.json';
+import shareArticle from './articles/shareArticles/shareByMail.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -50,10 +53,14 @@ swagger.paths['/articles/{slug}/comments'] = postComment;
 swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
+swagger.paths['/users/bookmarks'] = getAllBookmark;
+swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/users'] = getAllUsers;
+swagger.paths['/articles/trends'] = trendingArticles;
 
+swagger.paths['/articles/{slug}/share/mail'] = shareArticle;
 
 export default swagger;
