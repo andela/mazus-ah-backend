@@ -3,6 +3,7 @@ import ServerResponse from '../modules/ServerResponse';
 import ArticleHelper from '../helpers/ArticleHelper';
 import pagination from '../helpers/Pagination';
 import Notification from '../helpers/Notification';
+import ShareArticle from '../helpers/ShareArticle';
 
 const {
   Article, User, Profile, Sequelize: { Op }, Bookmark
@@ -498,6 +499,46 @@ export default class ArticleController {
       return successResponse(res, 200, 'bookmarks', { message: 'Bookmarks fetched successfully', bookmarks });
     } catch (error) {
       return next(error);
+    }
+  }
+
+  /**
+     * Share an article
+     *
+     * @static
+     *
+     * @param {object} req
+     * @param {object} res
+     * @param {function} next
+     *
+     * @returns {object} object
+     *
+     * @memberof ArticleController
+     */
+  static async shareArticle(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const { email } = req.body;
+      const article = await Article.findOne({ where: { slug } });
+
+      if (!article) return errorResponse(res, 404, { article: 'Article not found' });
+
+      const { title: articleTitle } = article.dataValues;
+
+      if (req.url.search(/\/mail/g) > 0) {
+        ShareArticle.shareArticleByMail(req, email, articleTitle, slug);
+        return successResponse(res, 200, 'article', { message: 'Article has been successfully shared ' });
+      }
+      if (req.url.search(/\/twitter/g) > 0) {
+        const shareLink = ShareArticle.shareArticleByTwitter(req, slug);
+        return res.redirect(shareLink);
+      }
+      if (req.url.search(/\/facebook/g) > 0) {
+        const shareLink = ShareArticle.shareArticleByFacebook(req, slug);
+        return res.redirect(shareLink);
+      }
+    } catch (err) {
+      return next(err);
     }
   }
 }
