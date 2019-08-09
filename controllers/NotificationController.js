@@ -1,12 +1,13 @@
 import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 
+const { Notification } = models;
 const { successResponse, errorResponse } = ServerResponse;
 /**
  * @class Notiidication
  * @exports Notification
  */
-class Notification {
+class NotificationController {
   /**
    * Get all notifications
    * @async
@@ -19,7 +20,7 @@ class Notification {
   static async getNotifications(req, res, next) {
     try {
       const { id } = req.user;
-      const notification = await models.Notification.findAll({ where: { receiverId: id } });
+      const notification = await Notification.findAll({ where: { receiverId: id } });
       return successResponse(res, 200, 'notification', { notification });
     } catch (error) {
       return next(error);
@@ -36,7 +37,7 @@ class Notification {
     try {
       const { id } = req.params;
       const { id: receiverId } = req.user;
-      const markRead = await models.Notification.update(
+      const markRead = await Notification.update(
         {
           read: true
         },
@@ -58,4 +59,4 @@ class Notification {
 }
 
 
-export default Notification;
+export default NotificationController;

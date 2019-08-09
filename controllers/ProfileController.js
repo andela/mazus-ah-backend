@@ -1,6 +1,10 @@
 import models from '../database/models';
 import ServerResponse from '../modules';
 
+const {
+  User,
+  Profile,
+} = models;
 const { successResponse, errorResponse } = ServerResponse;
 /**
  * @class ProfileController
@@ -20,16 +24,16 @@ export default class ProfileController {
   static async createProfile(req, res, next) {
     try {
       const { id } = req.user;
-      const { dataValues } = await models.User.findOne({ where: { id } });
+      const { dataValues } = await User.findOne({ where: { id } });
       if (!dataValues.isVerified) {
         return errorResponse(res, 401, 'You need to verify your account first');
       }
       const { avatar, bio } = req.body;
-      const profileExist = await models.Profile.findOne({ where: { userId: id } });
+      const profileExist = await Profile.findOne({ where: { userId: id } });
       if (profileExist) {
         return errorResponse(res, 409, 'Profile already exists');
       }
-      await models.Profile.create({
+      await Profile.create({
         userId: id,
         avatar,
         bio,
@@ -60,7 +64,7 @@ export default class ProfileController {
   static async editProfile(req, res, next) {
     try {
       const { id } = req.params;
-      const hasProfile = await models.Profile.findOne({ where: { userId: id } });
+      const hasProfile = await Profile.findOne({ where: { userId: id } });
 
       if (id !== req.user.id) {
         return errorResponse(res, 403, 'You are not allowed to edit this profile');
@@ -77,17 +81,17 @@ export default class ProfileController {
         lastName,
       } = req.body;
 
-      await models.Profile.update(
+      await Profile.update(
         { bio, avatar },
         { where: { userId: id } },
       );
 
-      await models.User.update(
+      await User.update(
         { firstName, lastName },
         { where: { id } },
       );
-      const { dataValues: userData } = await models.User.findOne({ where: { id } });
-      const { dataValues: profileData } = await models.Profile.findOne({ where: { userId: id } });
+      const { dataValues: userData } = await User.findOne({ where: { id } });
+      const { dataValues: profileData } = await Profile.findOne({ where: { userId: id } });
       const { firstName: firstNamedb, lastName: lastNamedb } = userData;
       const { avatar: avatardb, bio: biodb } = profileData;
       const resData = {
@@ -117,7 +121,7 @@ export default class ProfileController {
   static async viewProfile(req, res, next) {
     try {
       const { id } = req.params;
-      const profileData = await models.Profile.findOne({ where: { userId: id } });
+      const profileData = await Profile.findOne({ where: { userId: id } });
       return res.status(200).json({
         message: 'Profile fetched successfully',
         profile: {

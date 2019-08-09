@@ -1,7 +1,10 @@
 import models from '../database/models';
 import ServerResponse from '../modules';
 
-
+const {
+  Article,
+  Like,
+} = models;
 const { errorResponse, successResponse } = ServerResponse;
 
 /**
@@ -22,19 +25,19 @@ export default class likeController {
       const { slug } = req.params;
       const userId = req.user.id;
 
-      const article = await models.Article.findOne({ where: { slug } });
+      const article = await Article.findOne({ where: { slug } });
       if (!article) return errorResponse(res, 404, { message: 'Article not found' });
 
       const articleId = article.dataValues.id;
 
-      const previousChoice = await models.Like.findOne({ where: { userId, articleId } });
+      const previousChoice = await Like.findOne({ where: { userId, articleId } });
 
       // Check for previous like on article and undo
       if (previousChoice && (previousChoice.like === true)) {
-        await models.Like.destroy({ where: { userId, articleId } });
+        await Like.destroy({ where: { userId, articleId } });
 
         // Update count on article table
-        await models.Article.update(
+        await Article.update(
           { likes: (article.dataValues.likes - 1) },
           { where: { slug } },
         );
@@ -46,13 +49,13 @@ export default class likeController {
       }
       // Check if user previously disliked article (change dislike to like if true)
       if (previousChoice && (previousChoice.like === false)) {
-        await models.Like.update(
+        await Like.update(
           { like: true },
           { where: { userId, articleId } },
         );
 
         // Update count on article table
-        await models.Article.update(
+        await Article.update(
           {
             likes: (article.dataValues.likes + 1),
             dislikes: (article.dataValues.dislikes - 1),
@@ -66,14 +69,14 @@ export default class likeController {
       }
 
       // Create new like if all above checks fail
-      await models.Like.create({
+      await Like.create({
         articleId,
         userId,
         like: true,
       });
 
       // Update count on article table
-      await models.Article.update(
+      await Article.update(
         { likes: (article.dataValues.likes + 1) },
         { where: { slug } },
       );
@@ -100,18 +103,18 @@ export default class likeController {
       const { slug } = req.params;
       const userId = req.user.id;
 
-      const article = await models.Article.findOne({ where: { slug } });
+      const article = await Article.findOne({ where: { slug } });
       if (!article) return errorResponse(res, 404, { message: 'Article not found' });
 
       const articleId = article.dataValues.id;
 
-      const previousChoice = await models.Like.findOne({ where: { userId, articleId } });
+      const previousChoice = await Like.findOne({ where: { userId, articleId } });
 
       // Check for previous dislike on article and undo
       if (previousChoice && (previousChoice.like === false)) {
-        await models.Like.destroy({ where: { userId, articleId } });
+        await Like.destroy({ where: { userId, articleId } });
         // Update count on article table
-        await models.Article.update(
+        await Article.update(
           { dislikes: (article.dataValues.dislikes - 1) },
           { where: { slug } },
         );
@@ -123,12 +126,12 @@ export default class likeController {
       }
       // Check if user previously liked article (change like to dislike if true)
       if (previousChoice && (previousChoice.like === true)) {
-        await models.Like.update(
+        await Like.update(
           { like: false },
           { where: { userId, articleId } },
         );
         // Update count on article table
-        await models.Article.update(
+        await Article.update(
           {
             likes: (article.dataValues.likes - 1),
             dislikes: (article.dataValues.dislikes + 1),
@@ -143,14 +146,14 @@ export default class likeController {
       }
 
       // Create new dislike if all above checks fail
-      await models.Like.create({
+      await Like.create({
         articleId,
         userId,
         like: false,
       });
 
       // Update count on article table
-      await models.Article.update(
+      await Article.update(
         { dislikes: (article.dataValues.dislikes + 1) },
         { where: { slug } },
       );
