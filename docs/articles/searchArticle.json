@@ -1,0 +1,40 @@
+{
+  "get": {
+    "security": [],
+    "tags": ["Articles"],
+    "summary": "Search for an Article",
+    "description": "Article comment",
+    "parameters": [
+      {
+        "name": "keyword",
+        "in": "query",
+        "required": true,
+        "description": "Search an article",
+        "schema": {
+          "type": "string",
+          "example": "3 bad guys"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "match found": {
+              "type": "object",
+              "properties": {
+                "articles": {
+                  "type": "array",
+                  "example": "[3 bad guys]"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

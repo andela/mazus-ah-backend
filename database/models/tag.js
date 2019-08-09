@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tag.associate = (models) => {
     // associations can be defined here
+    Tag.belongsTo(models.Article, {
+      foreignKey: 'articleId',
+      as: 'tags',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Tag;
 };

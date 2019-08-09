@@ -18,6 +18,9 @@ module.exports = {
           status: 'published',
           userId: 'fdfe8617-208d-4b87-a000-5d6840786ab8',
           readTime: 10,
+          tagsList: [
+            'Nodejs',
+          ],
         },
         {
           id: 'ab8b9dc1-22bc-4dc2-b2dd-942a5dcbf03b',
