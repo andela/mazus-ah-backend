@@ -99,7 +99,7 @@ describe('Article Routes Test', () => {
     chai.request(app)
       .post(`${API_PREFIX}`).send(mockArticles[3]).set('Authorization', 'Bearer faketokenvaluehere')
       .end((err, res) => {
-        expect(res.status).to.be.eql(403);
+        expect(res.status).to.be.eql(401);
         expect(res.body).to.have.property('errors');
         expect(res.body.errors).to.be.to.a('object');
         expect(res.body.errors).to.have.property('message').eql('Invalid token provided');

@@ -4,6 +4,8 @@ import ServerResponse from '../modules';
 const {
   User,
   Profile,
+  Reading,
+  Article,
 } = models;
 const { successResponse, errorResponse } = ServerResponse;
 /**
@@ -143,7 +145,7 @@ export default class ProfileController {
   static async articlesUserRead(req, res, next) {
     const userId = req.user.id;
     try {
-      const getStatistics = await models.Reading.findAll({ raw: true, where: { userId } });
+      const getStatistics = await Reading.findAll({ raw: true, where: { userId } });
       return successResponse(res, 200, 'articlesRead', getStatistics.length);
     } catch (error) {
       return next(error);
@@ -160,7 +162,7 @@ export default class ProfileController {
   static async articlesReadCount(req, res, next) {
     const userId = req.user.id;
     try {
-      const authorArticlesDetails = await models.Article.findAll({
+      const authorArticlesDetails = await Article.findAll({
         raw: true,
         where: { userId },
         attributes: ['title', 'id', 'readCount', 'slug', 'userId']

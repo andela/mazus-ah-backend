@@ -52,7 +52,7 @@ describe('Reading statistics for articles published by an author', () => {
       .get(`${url}/statistics/published`)
       .set('Authorization', `Bearer ${userToken}s`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });
@@ -82,7 +82,7 @@ describe('Reading statistics for articles published by an author', () => {
       .get(`${url}/statistics/published`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });
@@ -136,7 +136,7 @@ describe('Reading statistics for articles an author or user has read', () => {
       .get(`${url}/statistics/read`)
       .set('Authorization', `Bearer ${userToken}s`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });
@@ -166,7 +166,7 @@ describe('Reading statistics for articles an author or user has read', () => {
       .get(`${url}/statistics/read`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });

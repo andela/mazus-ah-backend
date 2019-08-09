@@ -71,7 +71,7 @@ describe('Fetching user notifications', () => {
       .get(`${url}/notifications`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });
@@ -81,7 +81,7 @@ describe('Fetching user notifications', () => {
       .get(`${url}/notifications`)
       .set('Authorization', `Bearer ${firstUserToken}s`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });
@@ -176,7 +176,7 @@ describe('Marking a user notification as read', () => {
       .patch(`${url}/notifications/${notificationId}`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });
@@ -186,7 +186,7 @@ describe('Marking a user notification as read', () => {
       .patch(`${url}/notifications/${notificationId}`)
       .set('Authorization', `Bearer ${firstUserToken}s`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });
