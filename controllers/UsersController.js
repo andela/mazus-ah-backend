@@ -20,6 +20,9 @@ export default class userController {
     try {
       const allUsers = await models.User.findAll({
         attributes: ['id', 'firstName', 'lastName', 'email', 'isVerified', 'type', 'emailNotify'],
+        order: [
+          ['firstName', 'ASC'],
+        ],
         include: [
           {
             model: models.Profile,

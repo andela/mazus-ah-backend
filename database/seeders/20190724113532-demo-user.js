@@ -19,6 +19,14 @@ module.exports = {
           password: `${password}`,
         },
         {
+          id: '1a9589fb-5b25-4df9-92ee-2b20ba4f9407',
+          firstName: 'Aana',
+          lastName: 'Bella',
+          email: 'BA@test.com',
+          isVerified: true,
+          password: `${password}`,
+        },
+        {
           id: '8c9589fb-5b25-4df9-92ee-2b20ba4f9407',
           firstName: 'Jane',
           lastName: 'Done',

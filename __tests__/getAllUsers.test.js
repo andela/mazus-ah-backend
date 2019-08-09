@@ -45,6 +45,11 @@ describe('Testing GET users endpoint', () => {
         expect(res.body.users.allUsers[0]).to.have.property('type');
         expect(res.body.users.allUsers[0]).to.have.property('emailNotify');
         expect(res.body.users.allUsers[0]).to.have.property('profile');
+        expect(res.body.users.allUsers[0].firstName).to.eql('Aana');
+        expect(res.body.users.allUsers[0].lastName).to.eql('Bella');
+        expect(res.body.users.allUsers[0].email).to.eql('BA@test.com');
+        expect(res.body.users.allUsers[0].isVerified).to.eql(true);
+        expect(res.body.users.allUsers[0].emailNotify).to.eql(true);
         done();
       });
   });
