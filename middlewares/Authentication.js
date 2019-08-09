@@ -116,11 +116,13 @@ export default class Authentication {
           });
         }
         jwt.verify(token, SECRET_KEY, (err, decoded) => {
+          /* istanbul ignore next-line */
           if (err) {
             return errorResponse(res, 401, {
               message: 'Invalid token provided',
             });
           }
+          /* istanbul ignore next-line */
           req.user = decoded;
         });
         return next();

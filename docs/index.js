@@ -64,6 +64,5 @@ swagger.paths['/articles/trends'] = trendingArticles;
 swagger.paths['/articles/{slug}/share/mail'] = shareArticle;
 swagger.paths['/statistics/published'] = articlesReadCount;
 swagger.paths['/statistics/read'] = myReadCount;
-swagger.paths['/articles/{slug}/report'] = reportArticle;
 
 export default swagger;
