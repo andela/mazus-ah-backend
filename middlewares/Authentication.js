@@ -154,7 +154,27 @@ export default class Authentication {
     if (type !== 'super-admin') {
       return errorResponse(res, 403, { message: 'User not authorized' });
     }
+    return next();
+  }
 
+  /**
+  * Checks for admin or super-admin
+  *
+  * @static
+  *
+  * @param {object} req
+  * @param {object} res
+  * @param {function} next
+  *
+  * @returns {function} next function
+  *
+  * @memberof Authentication
+  */
+  static async verifyAdmins(req, res, next) {
+    const { type } = req.user;
+    if ((type !== 'admin') && (type !== 'super-admin')) {
+      return errorResponse(res, 403, { message: 'User not authorized' });
+    }
     return next();
   }
 }

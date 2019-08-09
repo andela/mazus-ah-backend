@@ -600,4 +600,55 @@ export default class ArticleController {
       return next(error);
     }
   }
+
+  /**
+   * Get reported articles
+   * @param {object} req express request object
+   * @param {Object} res express respond object
+   * @param {function} next
+   * @returns {object} object with an array of reported articles
+   *
+   * @memberof ArticleController
+   */
+  static async getReportedArticles(req, res, next) {
+    try {
+      const reportedArticles = await Article.findAll({
+        where: {
+          reports: {
+            [Op.gt]: 0,
+          }
+        },
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
+          },
+          { // Report
+            model: Report,
+            as: 'articlereport',
+            include: [
+              { // User
+                model: User,
+                as: 'user',
+                attributes: ['id', 'firstName', 'lastName', 'email'],
+                include: [{
+                  model: Profile,
+                  as: 'profile',
+                }]
+              }
+            ]
+          }
+        ],
+      });
+
+      return successResponse(res, 200, 'reportedArticles', reportedArticles);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
