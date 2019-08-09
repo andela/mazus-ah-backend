@@ -80,6 +80,36 @@ const users = [
     email: 'mikemike@test.com',
     password: 'passwordHash',
   },
+  {
+    email: 'jonsnow@mail.com',
+    firstName: 'Jon',
+    lastName: 'Snow',
+    password: 'Pasusword1',
+    confirmPassword: 'Pasusword1',
+    type: 'super-admin',
+  },
+  {
+    email: 'jonsnow@mail.com',
+    password: 'Pasusword1',
+  },
+  {
+    email: 'sansastark@mail.com',
+    firstName: 'Sansa',
+    lastName: 'Stark',
+    password: 'Pasusword1',
+    confirmPassword: 'Pasusword1',
+  },
+  {
+    email: 'sansasnow@mail.com',
+    firstName: 'Sansa',
+    lastName: 'Stark',
+  },
+  {
+    email: 'sansasnow@mail.com',
+    firstName: 'Sansa',
+    lastName: 'Stark',
+    type: 'admin',
+  },
 ];
 
 export default users;

@@ -28,6 +28,9 @@
     "FACEBOOK_CALLBACK_URL": {
       "required": true
     },
+    "FRONTEND_URL": {
+      "required": true
+    },
     "SENDGRID_API_KEY": {
       "required": true
     },
@@ -37,7 +40,7 @@
     "PUSHER_APP_KEY": {
       "required": true
     },
-    "PUSHER_APP_SECRET":{
+    "PUSHER_APP_SECRET": {
       "required": true
     },
     "PUSHER_APP_CLUSTER": {

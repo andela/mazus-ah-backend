@@ -34,5 +34,4 @@ router.get('/google/callback', passport.authenticate('google', { session: false 
 
 router.post('/forgotpassword', resetemail, forgotPassword);
 router.patch('/resetpassword/:token', resetforgotPassword, resetPassword);
-
 export default router;
