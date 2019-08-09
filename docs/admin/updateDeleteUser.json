@@ -1,13 +1,28 @@
 {
-  "post": {
-    "tags": [
-      "Auth"
+  "patch": {
+    "security": [
+      {
+        "Bearer": []
+      }
     ],
-    "summary": "signup user",
-    "description": "Signup user. \n",
+    "tags": [
+      "Admin"
+    ],
+    "summary": "update a user details",
+    "description": "Update user. \n",
     "parameters": [
       {
-        "name": "Create Account",
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The id of the user to be updated",
+        "schema": {
+          "type": "string",
+          "example": "588ae2cd-de3f-404a-87b3-8a6d50864833"
+        }
+      },
+      {
+        "name": "Update user's details",
         "in": "body",
         "description": "request payload",
         "schema": {
@@ -25,9 +40,9 @@
               "type": "string",
               "example": "Abioye"
             },
-            "password": {
+            "type": {
               "type": "string",
-              "example": "pa55w0rd"
+              "example": "admin"
             }
           }
         }
@@ -98,6 +113,103 @@
             "data": {
               "type": "string",
               "example": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "delete": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "summary": "Delete User",
+    "description": "Super Admin can delete a user \n",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The id of the user to be deleted",
+        "schema": {
+          "type": "string",
+          "example": "588ae2cd-de3f-404a-87b3-8a6d50864833"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "User has been deleted",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User has been deleted"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "When the user doesn't exist",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "article": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed with an invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No token provided"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Wrongly input details",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Title cannot be empty"
+                }
+              }
             }
           }
         }

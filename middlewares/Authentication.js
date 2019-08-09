@@ -91,6 +91,7 @@ export default class Authentication {
 
   /**
    *Extract request user id if token is present
+   *Verify token for Authenticated routes
    *
    * @static
    *
@@ -131,5 +132,29 @@ export default class Authentication {
     } catch (error) {
       return next(error);
     }
+  }
+
+  /**
+   *
+   *Verify token for Authenticated routes
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {function} next function
+   *
+   * @memberof Authentication
+   */
+  static async verifySuperAdmin(req, res, next) {
+    const { type } = req.user;
+
+    if (type !== 'super-admin') {
+      return errorResponse(res, 403, { message: 'User not authorized' });
+    }
+
+    return next();
   }
 }
