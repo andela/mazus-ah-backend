@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.hasMany(models.Report, {
       foreignKey: 'userId',
-      as: 'userreport',
+      as: 'user',
       onUpdate: 'CASCADE',
     });
     User.hasMany(models.Notification, {

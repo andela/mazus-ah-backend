@@ -23,7 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {});
   Report.associate = (models) => {
-    // associations can be defined here
+    Report.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'user',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
   };
   return Report;
 };

@@ -11,11 +11,11 @@ const url = '/api/v1/articles';
 const { expect } = chai;
 let validToken;
 
-describe('Testing comment endpoints', () => {
+describe('Testing Reports endpoints', () => {
   before((done) => {
     const user = {
-      email: 'dd@test.com',
-      password: 'PasswoRD123__',
+      email: 'jamal.sabri@mail.com',
+      password: 'P455w0rd',
     };
     chai
       .request(app)
@@ -24,6 +24,18 @@ describe('Testing comment endpoints', () => {
       .end((err, res) => {
         const { token } = res.body.user;
         validToken = token;
+        done();
+      });
+  });
+  it('should get an empty array if no reports yet', (done) => {
+    chai.request(app)
+      .get(`${url}/reportedarticles`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('reportedArticles');
+        expect(res.body.reportedArticles).to.be.a('array');
+        expect(res.body.reportedArticles.length).to.eql(0);
         done();
       });
   });
@@ -70,7 +82,7 @@ describe('Testing comment endpoints', () => {
         done();
       });
   });
-  it('should throw a 500 when an error occurs on the server', (done) => {
+  it('should throw a 500 on server error while creating a report', (done) => {
     const stub = sinon
       .stub(models.Article, 'findOne')
       .rejects(new Error('Server error occured'));
@@ -79,6 +91,36 @@ describe('Testing comment endpoints', () => {
       .post(`${url}/some-slug/report`)
       .set('Authorization', `Bearer ${validToken}`)
       .send({ reportTitle: 'title', reportBody: 'some message' })
+      .end((err, res) => {
+        expect(res.status).to.eql(500);
+        stub.restore();
+        done();
+      });
+  });
+
+  it('should get all reported articles', (done) => {
+    chai.request(app)
+      .get(`${url}/reportedarticles`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('reportedArticles');
+        expect(res.body.reportedArticles).to.be.a('array');
+        expect(res.body.reportedArticles[0].slug).to.eql('some-slug');
+        expect(res.body.reportedArticles[0].title).to.eql('Some title');
+        expect(res.body.reportedArticles[0].body).to.eql('the body the article goes here');
+        expect(res.body.reportedArticles[0].reports).to.eql(1);
+        done();
+      });
+  });
+  it('should throw a 500 on server error while getting reported articles', (done) => {
+    const stub = sinon
+      .stub(models.Article, 'findAll')
+      .rejects(new Error('Server error occured'));
+    chai
+      .request(app)
+      .get(`${url}/reportedarticles`)
+      .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(500);
         stub.restore();
