@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwtDecode from 'jwt-decode';
 import app from '..';
 import models from '../database/models';
 import mockUsers from './mockData/mockUsers';
@@ -23,12 +24,14 @@ describe('User signup tests', () => {
         .post(`${url}/auth/signup`)
         .send(mockUsers[5])
         .end((err, res) => {
+          const { token } = res.body.user;
+          const decoded = jwtDecode(token);
           expect(res.status).to.eql(201);
           expect(res.body.message).to.eql('Your Account has been created successfully!');
           expect(res.body.user).to.have.property('token');
-          expect(res.body.user).to.have.property('isVerified');
-          expect(res.body.user).to.have.property('email');
-          expect(res.body.user.email).to.eql(mockUsers[5].email);
+          expect(decoded.email).to.eql(mockUsers[5].email);
+          expect(decoded.firstName).to.eql(mockUsers[5].firstName);
+          expect(decoded.lastName).to.eql(mockUsers[5].lastName);
           done();
         });
     });
@@ -64,12 +67,14 @@ describe('test for user login', () => {
       .post(`${url}/auth/signin`)
       .send(mockUsers[6])
       .end((err, res) => {
+        const { token } = res.body.user;
+        const decoded = jwtDecode(token);
         expect(res.status).to.eql(200);
         expect(res.body.message).to.eql('You have successfully logged in');
         expect(res.body.user).to.have.property('token');
-        expect(res.body.user).to.have.property('isVerified');
-        expect(res.body.user).to.have.property('email');
-        expect(res.body.user.email).to.eql(mockUsers[6].email);
+        expect(decoded.emailAddress).to.eql(mockUsers[6].email);
+        expect(decoded).to.have.property('firstName');
+        expect(decoded).to.have.property('lastName');
         done();
       });
   });

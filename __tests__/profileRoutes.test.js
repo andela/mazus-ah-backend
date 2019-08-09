@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwtDecode from 'jwt-decode';
 import models from '../database/models';
 
 import app from '../index';
@@ -33,7 +34,8 @@ describe('Profile test', () => {
       .send(user)
       .end((err, res) => {
         const { token } = res.body.user;
-        const { id } = res.body.user;
+        const decoded = jwtDecode(token);
+        const { id } = decoded;
         userId = id;
         validToken = token;
         done();

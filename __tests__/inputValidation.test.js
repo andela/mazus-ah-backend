@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwtDecode from 'jwt-decode';
 import app from '..';
 import mockUsers from './mockData/mockUsers';
 
@@ -67,13 +68,14 @@ describe('User tests', () => {
       .post(`${url}/auth/signup`)
       .send(mockUsers[4])
       .end((err, res) => {
+        const { token } = res.body.user;
+        const decoded = jwtDecode(token);
         expect(res.status).eql(201);
         expect(res.body).to.have.property('user');
-        expect(res.body.user).to.have.property('firstName');
-        expect(res.body.user).to.have.property('lastName');
-        expect(res.body.user.email).eql(mockUsers[4].email);
-        expect(res.body.user.firstName).eql(mockUsers[4].firstName);
-        expect(res.body.user.lastName).eql(mockUsers[4].lastName);
+        expect(res.body.user).to.have.property('token');
+        expect(decoded.email).to.eql(mockUsers[4].email);
+        expect(decoded.firstName).to.eql(mockUsers[4].firstName);
+        expect(decoded.lastName).to.eql(mockUsers[4].lastName);
         done();
       });
   });

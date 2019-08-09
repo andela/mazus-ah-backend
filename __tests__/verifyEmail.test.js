@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -5,29 +6,24 @@ import app from '..';
 import models from '../database/models';
 import mockUsersToVerify from './mockData/mockUsersToVerify';
 import MarkUps from '../helpers/MarkUps';
+import Helper from '../helpers/Auth';
 
 chai.use(chaiHttp);
 
 const url = '/api/v1';
 const { expect } = chai;
 const { User } = models;
+const { hashUserData } = Helper;
 const { userToVerify, secondUserToVerify, thirdUserToVerify } = mockUsersToVerify;
 const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
+const verificationCode = hashUserData(userToVerify.email);
+const secondVerificationCode = hashUserData(secondUserToVerify.email);
+const thirdVerificationCode = hashUserData(thirdUserToVerify.email);
 
 describe('verifying a user email', () => {
-  let verificationCode;
-  before((done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(userToVerify)
-      .end((err, res) => {
-        verificationCode = res.body.user.verificationToken;
-        done();
-      });
-  });
   it('should return a success response object when a user successfully verifies an email', (done) => {
     chai.request(app)
-      .get(`${url}/auth/verify?email=${userToVerify.email}&token=${verificationCode}`)
+      .get(`${url}/auth/verify?email=${userToVerify.email}&token=${userToVerify.verificationToken}`)
       .end((err, res) => {
         expect(res.text).to.eql(verified);
         done();
@@ -41,31 +37,11 @@ describe('verifying a user email', () => {
         done();
       });
   });
-  let secondVerificationCode;
-  before((done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(secondUserToVerify)
-      .end((err, res) => {
-        secondVerificationCode = res.body.user.verificationToken;
-        done();
-      });
-  });
   it('should throw an error when user attempts to verify an email with the wrong information', (done) => {
     chai.request(app)
       .get(`${url}/auth/verify?email=${secondUserToVerify.email}&token=${secondVerificationCode.slice(0, 34)}`)
       .end((err, res) => {
         expect(res.text).to.eql(incorrectCredentials);
-        done();
-      });
-  });
-  let thirdVerificationCode;
-  before((done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(thirdUserToVerify)
-      .end((err, res) => {
-        thirdVerificationCode = res.body.user.verificationToken;
         done();
       });
   });
