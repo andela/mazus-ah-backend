@@ -12,6 +12,8 @@ const {
   Sequelize: { Op },
   Bookmark,
   Comment,
+  Reading,
+  Report,
 } = models;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
@@ -110,6 +112,12 @@ export default class ArticleController {
       });
       if (!article) {
         return errorResponse(res, 404, { article: 'Article not found' });
+      }
+      // Update Reading table
+      if (req.user) {
+        const userId = req.user.id;
+        const articleId = article.dataValues.id;
+        await Reading.findOrCreate({ where: { userId, articleId } });
       }
       await Article.increment({ readCount: 1 }, { where: { slug } });
 
@@ -441,6 +449,8 @@ export default class ArticleController {
 
   /**
    *
+   * @static
+   *
    * @param {object} req
    * @param {object} res
    * @param {function} next
@@ -544,6 +554,50 @@ export default class ArticleController {
       }
     } catch (err) {
       return next(err);
+    }
+  }
+
+  /**
+   * Report an article
+   * @param {object} req express request object
+   * @param {Object} res express respond object
+   * @param {function} next
+   * @returns {object} object with message converning reported article
+   *
+   * @memberof ArticleController
+   */
+  static async reportArticle(req, res, next) {
+    try {
+      const { slug } = req.params;
+      const userId = req.user.id;
+      const { reportTitle, reportBody } = req.body;
+
+      const article = await Article.findOne({ where: { slug } });
+      if (!article) return errorResponse(res, 404, { message: 'Article not found' });
+
+      const articleId = article.dataValues.id;
+
+      const report = await Report.create({
+        userId,
+        articleId,
+        reportTitle,
+        reportBody,
+      });
+
+      const userReportsOnArticle = await Report.findAndCountAll({ where: { userId, articleId } });
+
+      // Multiple reports on an article by a user should count as 1 report
+      if (!(userReportsOnArticle.count > 1)) {
+        // Update reports count on article table
+        await Article.update(
+          { reports: (article.dataValues.reports + 1) },
+          { where: { slug } },
+        );
+      }
+
+      return successResponse(res, 201, 'report', report.dataValues);
+    } catch (error) {
+      return next(error);
     }
   }
 }

@@ -132,4 +132,42 @@ export default class ProfileController {
       return next(error);
     }
   }
+
+  /**
+   * @method articlesUserRead
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   * @returns {object} returns object response
+   */
+  static async articlesUserRead(req, res, next) {
+    const userId = req.user.id;
+    try {
+      const getStatistics = await models.Reading.findAll({ raw: true, where: { userId } });
+      return successResponse(res, 200, 'articlesRead', getStatistics.length);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  /**
+   * @method articlesReadCount
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   * @returns {object} returns object response
+   */
+  static async articlesReadCount(req, res, next) {
+    const userId = req.user.id;
+    try {
+      const authorArticlesDetails = await models.Article.findAll({
+        raw: true,
+        where: { userId },
+        attributes: ['title', 'id', 'readCount', 'slug', 'userId']
+      });
+      successResponse(res, 200, 'allArticlesStatistics', authorArticlesDetails);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }

@@ -17,12 +17,15 @@ const {
   editArticle,
   deleteArticle,
   bookmarkArticle,
-  shareArticle
+  shareArticle,
+  reportArticle,
 } = ArticleController;
+
 const { postComment } = CommentController;
 const { likeArticle, dislikeArticle } = LikesController;
-const { verifyToken, verifiedUserOnly } = AuthMiddleware;
+const { verifyToken, verifiedUserOnly, fetchRequester } = AuthMiddleware;
 const { articleValidation, validateId } = articleValidationSchema;
+const { validateReport } = commentValidate;
 
 const router = Router();
 
@@ -30,7 +33,7 @@ router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUse
 
 router.get('/trends', trend);
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
-router.get('/:slug', getSingleArticleBySlug);
+router.get('/:slug', fetchRequester, getSingleArticleBySlug);
 router.get('/author/:id', validateId, getArticlesByAuthor);
 router.get('/', getAllArticles);
 router.patch('/:slug', verifyToken, verifiedUserOnly, articleValidation, editArticle);
@@ -42,6 +45,6 @@ router.post('/:slug/dislike', verifyToken, verifiedUserOnly, dislikeArticle);
 router.get('/:slug/share/mail', verifyToken, verifiedUserOnly, shareArticle);
 router.get('/:slug/share/twitter', verifyToken, verifiedUserOnly, shareArticle);
 router.get('/:slug/share/facebook', verifyToken, verifiedUserOnly, shareArticle);
-
+router.post('/:slug/report', verifyToken, verifiedUserOnly, validateReport, reportArticle);
 
 export default router;
