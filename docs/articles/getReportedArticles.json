@@ -1,0 +1,104 @@
+{
+  "get": {
+    "security": [
+      {
+          "Bearer": []
+      }
+    ],
+    "tags": ["Articles"],
+    "summary": "Get reported articles",
+    "description": "get reported articles",
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "reportedArticles": {
+              "type": "array",
+              "example": [
+                {
+                  "id": "ab8b9dd2-22bc-4dc2-b2dd-942a5dcb5437",
+                  "title": "Building APIs with Nodejs",
+                  "slug": "building-apis-with-nodejs-48458493",
+                  "body": "Welcome to building apis with nodejs, this is a beginner friendly tutorial...",
+                  "description": "A nodejs tutorial",
+                  "isPaid": false,
+                  "ratings": null,
+                  "likes": 0,
+                  "dislikes": 0,
+                  "status": "published",
+                  "reports": 1,
+                  "tagsList": null,
+                  "userId": "fdfe8617-208d-4b87-a000-5d6840786ab8",
+                  "readTime": 10,
+                  "readCount": 0,
+                  "createdAt": "2019-08-09T13:59:20.985Z",
+                  "updatedAt": "2019-08-09T14:00:32.360Z",
+                  "author": {
+                    "id": "fdfe8617-208d-4b87-a000-5d6840786ab8",
+                    "firstName": "Mike",
+                    "lastName": "Mike",
+                    "email": "mikemike@test.com",
+                    "profile": null
+                  },
+                  "articlereport": [
+                    {
+                      "id": "d2551a7c-3ba3-4d7a-ab56-2a24461017f7",
+                      "reportTitle": "Title goes here",
+                      "reportBody": "State your report...",
+                      "userId": "8c9589fb-5b25-4df9-92ee-2b20ba4f9407",
+                      "articleId": "ab8b9dd2-22bc-4dc2-b2dd-942a5dcb5437",
+                      "commentId": null,
+                      "createdAt": "2019-08-09T14:00:32.328Z",
+                      "updatedAt": "2019-08-09T14:00:32.328Z",
+                      "user": {
+                        "id": "8c9589fb-5b25-4df9-92ee-2b20ba4f9407",
+                        "firstName": "Jane",
+                        "lastName": "Done",
+                        "email": "janedoe@test.com",
+                        "profile": null
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Route accessed with invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid token provided"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed without token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "No token provided" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
