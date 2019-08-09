@@ -1,85 +1,84 @@
 {
-    "post": {
-      "security": [
-        {
-            "Bearer": []
+  "post": {
+    "security": [
+      {
+          "Bearer": []
+      }
+    ],
+    "tags": ["Articles"],
+    "summary": "Report an article",
+    "description": "report artile",
+    "parameters": [
+      {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "Slug of the article to be reported",
+        "schema": {
+          "type": "string",
+          "example": "building-apis-with-nodejs-48458493"
         }
-      ],
-      "tags": ["Articles"],
-      "summary": "Report an article",
-      "description": "report artile",
-      "parameters": [
-        {
-          "name": "slug",
-          "in": "path",
-          "required": true,
-          "description": "Slug of the article to be reported",
-          "schema": {
-            "type": "string",
-            "example": "building-apis-with-nodejs-48458493"
-          }
-        },
-        {
-          "name": "Submit a report",
-          "in": "body",
-          "description": "submit a report",
-          "required": true,
-          "schema": {
-            "type": "object",
-            "properties": {
-              "reportTitle": {
-                "type": "string",
-                "example": "Title goes here"
-              },
-              "reportBody": {
-                "type": "string",
-                "example": "State your report..."
-              }
+      },
+      {
+        "name": "Submit a report",
+        "in": "body",
+        "description": "submit a report",
+        "required": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "reportTitle": {
+              "type": "string",
+              "example": "Title goes here"
+            },
+            "reportBody": {
+              "type": "string",
+              "example": "State your report..."
             }
           }
         }
-      ],
-      "produces": ["application/json"],
-      "responses": {
-        "201": {
-          "description": "",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "example": "report submitted'"
-              }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "report submitted'"
             }
           }
-        },
-        "403": {
-          "description": "Route accessed with invalid token",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "errors": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "string",
-                    "example": "Invalid token provided"
-                  }
+        }
+      },
+      "403": {
+        "description": "Route accessed with invalid token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid token provided"
                 }
               }
             }
           }
-        },
-        "401": {
-          "description": "Route accessed without token",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "errors": {
-                "type": "object",
-                "properties": {
-                  "message": { "type": "string", "example": "No token provided" }
-                }
+        }
+      },
+      "401": {
+        "description": "Route accessed without token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string", "example": "No token provided" }
               }
             }
           }
@@ -87,3 +86,4 @@
       }
     }
   }
+}

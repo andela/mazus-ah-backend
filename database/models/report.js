@@ -10,11 +10,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.TEXT,
     },
-    reportedBy: {
+    userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
     },
     articleId: {
+      allowNull: false,
       type: DataTypes.UUID,
     },
     commentId: {

@@ -45,6 +45,10 @@ module.exports = {
         type: Sequelize.ENUM('draft', 'published', 'trash'),
         defaultValue: 'draft',
       },
+      reports: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       tagsList: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         defaultValue: [],

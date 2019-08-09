@@ -57,6 +57,7 @@ swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 swagger.paths['/users/bookmarks'] = getAllBookmark;
 swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
+swagger.paths['/articles/{slug}/report'] = reportArticle;
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/articles/trends'] = trendingArticles;
