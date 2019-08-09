@@ -3,7 +3,11 @@ import ServerResponse from '../modules';
 import Notification from '../helpers/Notification';
 
 const { successResponse, notFoundError, errorResponse } = ServerResponse;
-const { Comment, Like } = models;
+const {
+  Comment,
+  Like,
+  Article,
+} = models;
 
 /**
  * @class CommentController
@@ -26,12 +30,12 @@ export default class CommentController {
       const { slug } = req.params;
       const { id: userId, firstName, lastName } = req.user;
 
-      const article = await models.Article.findOne({ where: { slug } });
+      const article = await Article.findOne({ where: { slug } });
       if (!article) return notFoundError(req, res);
       const { id, title, status } = article.dataValues;
       if (status !== 'published') return errorResponse(res, 405, 'cannot comment on a draft article');
 
-      const articleComment = await models.Comment.create({
+      const articleComment = await Comment.create({
         body,
         userId,
         articleId: id,
