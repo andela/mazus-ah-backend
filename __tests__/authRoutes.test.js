@@ -142,7 +142,7 @@ describe('Auth Routes Test', () => {
       .post(`${API_PREFIX}/logout`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body)
           .to.have.property('errors')
           .to.be.a('object');
