@@ -1,0 +1,44 @@
+{
+  "get": {
+    "security": [
+      {
+         "Bearer": []
+      }
+   ],
+    "tags": [
+      "Profile"
+    ],
+    "summary": "Get all article",
+    "description": "Get all articles \n",
+    "parameters": [],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "All Users fetched successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number",
+              "example": 400
+            },
+            "method": {
+              "type": "string",
+              "example": "POST"
+            },
+            "message": {
+              "type": "string",
+              "example": "All users fetched successfully"
+            },
+            "data": {
+              "type": "string",
+              "example": null
+            }
+          }
+        }
+      }     
+    }
+  }
+}
