@@ -10,7 +10,11 @@ const {
   fetchArticle, checkAuthor, checkRateData, createRating, updateRating
 } = RateHelpers;
 
-const { Rating, Article } = models;
+const {
+  Rating,
+  Article,
+  User,
+} = models;
 
 
 /**
@@ -35,7 +39,7 @@ export default class RatingController {
   static async getArticleRatings(req, res, next) {
     try {
       const { slug } = req.params;
-      const article = await models.Article.findOne({ where: { slug } });
+      const article = await Article.findOne({ where: { slug } });
       let ratingSum = 0;
 
       if (article === null) {
@@ -43,24 +47,24 @@ export default class RatingController {
       }
 
       const pageNumber = pagination(req.query.page, req.query.pageLimit);
-      const rating = await models.Article.findAll({
+      const rating = await Article.findAll({
         offset: pageNumber.offset,
         limit: pageNumber.limit,
         subQuery: false,
         include: [
           {
-            model: models.Rating,
+            model: Rating,
             as: 'articlerating',
             where: { articleId: article.dataValues.id },
             attributes: ['rate'],
 
             include: [{
-              model: models.User,
+              model: User,
               as: 'userdetails',
               attributes: ['firstName', 'lastName'],
             }],
             order: [
-              [models.Rating, models.User, 'firstName', 'DESC']
+              [Rating, User, 'firstName', 'DESC']
             ]
           },
         ],
