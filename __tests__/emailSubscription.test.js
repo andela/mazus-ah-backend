@@ -74,7 +74,7 @@ describe('Subscribing to email notifications', () => {
       .patch(`${url}/users/emailNotify`)
       .set('Authorization', `Bearer ${blacklistedToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided, please sign in');
         done();
       });
@@ -84,7 +84,7 @@ describe('Subscribing to email notifications', () => {
       .patch(`${url}/users/emailNotify`)
       .set('Authorization', `Bearer ${secondUserToken}s`)
       .end((err, res) => {
-        expect(res.status).to.eql(403);
+        expect(res.status).to.eql(401);
         expect(res.body.errors.message).to.eql('Invalid token provided');
         done();
       });

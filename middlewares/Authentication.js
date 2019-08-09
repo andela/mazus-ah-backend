@@ -44,14 +44,14 @@ export default class Authentication {
       });
 
       if (blacklistedToken) {
-        return errorResponse(res, 403, {
+        return errorResponse(res, 401, {
           message: 'Invalid token provided, please sign in',
         });
       }
 
       jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
-          return errorResponse(res, 403, {
+          return errorResponse(res, 401, {
             message: 'Invalid token provided',
           });
         }
