@@ -28,6 +28,7 @@ import updateNotification from './notifications/patchNotification.json';
 import getAllBookmark from './users/getBookmark.json';
 import bookmarkArticle from './articles/bookmarkArticles.json';
 import shareArticle from './articles/shareArticles/shareByMail.json';
+import reportArticle from './articles/reportArticle.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -55,6 +56,7 @@ swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 swagger.paths['/users/bookmarks'] = getAllBookmark;
 swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 
+swagger.paths['/articles/{slug}/report'] = reportArticle;
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/articles/trends'] = trendingArticles;
