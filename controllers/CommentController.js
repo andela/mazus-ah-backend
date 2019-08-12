@@ -178,16 +178,23 @@ export default class CommentController {
       const { body } = req.body;
       const comment = await Comment.findOne({ where: { id: commentId } });
       if (!comment) {
+<<<<<<< HEAD
         return errorResponse(res, 404, { message: 'Comment does not exist' });
+=======
+        return errorResponse(res, 404, 'That comment does not exist');
+>>>>>>> feature(comment) user can edit comment
       }
       if (comment.dataValues.userId !== id) {
         return errorResponse(res, 403, 'You are not allowed to edit another user\'s comment');
       }
+<<<<<<< HEAD
       await CommentHistory.create({
         userId: id,
         commentId,
         oldComment: comment.body,
       });
+=======
+>>>>>>> feature(comment) user can edit comment
       const editedComment = await Comment.update(
         {
           body
@@ -202,6 +209,7 @@ export default class CommentController {
       next(error);
     }
   }
+<<<<<<< HEAD
 
   /**
    * Method to get a comment edit history
@@ -227,4 +235,6 @@ export default class CommentController {
       return next(error);
     }
   }
+=======
+>>>>>>> feature(comment) user can edit comment
 }

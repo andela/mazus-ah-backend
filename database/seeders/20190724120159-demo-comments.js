@@ -29,6 +29,7 @@ module.exports = {
           userId: '6675f038-8c66-4485-9dcf-4660ac27ccd1',
           articleId: 'a2cda7e8-28ba-4507-9563-3e4ea280efb6',
         },
+<<<<<<< HEAD
         {
           id: '6675f038-8c66-4485-9dcf-4660ac27ccd5',
           body: 'Nice one',
@@ -41,6 +42,8 @@ module.exports = {
           userId: '6675f038-8c66-4485-9dcf-4660ac27ccd1',
           articleId: 'a2cda7e8-28ba-4507-9563-3e4ea280efb6',
         },
+=======
+>>>>>>> feature(comment) user can edit comment
       ],
       {},
     );

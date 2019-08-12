@@ -122,7 +122,11 @@ describe('Testing edit comment endpoint', () => {
       .end((err, res) => {
         expect(res.status).to.eql(404);
         expect(res.body).to.have.property('errors');
+<<<<<<< HEAD
         expect(res.body.errors.message).to.eql('Comment does not exist');
+=======
+        expect(res.body.errors).to.eql('That comment does not exist');
+>>>>>>> feature(comment) user can edit comment
         done();
       });
   });
