@@ -37,6 +37,7 @@ import createUser from './admin/createUser.json';
 import updateDeleteUser from './admin/updateDeleteUser.json';
 
 import getReportedArticles from './articles/getReportedArticles.json';
+import likeComment from './comments/likeComment.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -76,6 +77,8 @@ swagger.paths['/statistics/read'] = myReadCount;
 
 swagger.paths['/admin/users'] = createUser;
 swagger.paths['/admin/users/{id}'] = updateDeleteUser;
+
+swagger.paths['/comments/likes/{commentId}'] = likeComment;
 
 
 export default swagger;

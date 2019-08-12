@@ -56,8 +56,8 @@ describe('Testing comment endpoints', () => {
       .end((err, res) => {
         expect(res.status).to.eql(404);
         expect(res.body).to.have.property('errors');
-        expect(res.body.errors).to.have.property('message');
-        expect(res.body.errors.message).to.eql('Resource not found');
+        expect(res.body.errors).to.have.property('article');
+        expect(res.body.errors.article).to.eql('That article does not exist');
         done();
       });
   });
@@ -106,6 +106,29 @@ describe('Testing comment endpoints', () => {
         done();
       });
   });
+
+  it('should post a comment with a highlighted text successfully', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/some-slug/comments`)
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ body: 'I think technology is the new oil', highlightedText: 'Technology is change the landscape of Africa' })
+      .end((err, res) => {
+        const { id } = res.body.comment;
+        commentId = id;
+        expect(res.status).to.eql(201);
+        expect(res.body).to.have.property('comment');
+        expect(res.body.comment.body).to.eql('I think technology is the new oil');
+        expect(res.body.comment).to.have.property('id');
+        expect(res.body.comment).to.have.property('userId');
+        expect(res.body.comment).to.have.property('articleId');
+        expect(res.body.comment).to.have.property('articleSlug').eql('some-slug');
+        expect(res.body.comment).to.have.property('highlightedText').eql('Technology is change the landscape of Africa');
+        expect(res.body.comment).to.have.property('containsHighlightedText').eql(true);
+        done();
+      });
+  });
+
   it('should throw a 500 when an error occurs on the server', (done) => {
     const stub = sinon
       .stub(models.Comment, 'create')

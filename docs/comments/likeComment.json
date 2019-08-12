@@ -1,0 +1,90 @@
+{
+  "post": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Articles", "Comments"],
+    "summary": "Like a comment on an article",
+    "description": "Like a comment on an article",
+    "parameters": [
+      {
+        "name": "commentId",
+        "in": "path",
+        "required": true,
+        "description": "ID of the comment to be liked",
+        "schema": {
+          "type": "string",
+          "example": "4cd751f7-cf51-45ff-978f-f8ff003511b8"
+        }
+      }
+    ],
+    "produces": ["application/json"],
+    "responses": {
+      "201": {
+        "description": "Succesfully liked a comment",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Comment liked"
+                },
+                "like": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "f3c0dfb8-3cfc-4cb6-94e7-67ad95803d03"
+                    },
+                    "commentId": {
+                      "type": "string",
+                      "example": "4cd751f7-cf51-45ff-978f-f8ff003511b8"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "ffe25dbe-29ea-4759-8461-ed116f6739dd"
+                    },
+                    "like": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2019-08-12T19:11:02.458Z"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2019-08-12T19:11:02.458Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "200": {
+        "description": "Successfully removed like from a comment",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "'Like' has been removed"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

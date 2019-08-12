@@ -41,6 +41,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
+      containsHighlightedText: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      highlightedText: {
+        allowNull: true,
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
