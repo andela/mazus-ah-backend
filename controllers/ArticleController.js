@@ -99,7 +99,7 @@ export default class ArticleController {
           { // Article Comments
             model: Comment,
             as: 'articlecomment',
-            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
+            attributes: ['body', 'likes', 'highlightedText', 'containsHighlightedText', 'createdAt', 'updatedAt'],
             include: [
               { // user
                 model: User,
