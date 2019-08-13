@@ -203,6 +203,23 @@ describe('Article Routes Test', () => {
       });
   });
 
+  it('should get an article by the slug', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/3-bad-guys`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.be.a('object');
+        expect(res.body.article).to.have.property('title').eql('3 Bad Guys');
+        expect(res.body.article).to.have.property('slug').eql('3-bad-guys');
+        expect(res.body.article).to.have.property('tagsList').eql(null);
+        expect(res.body.article.articlecomment).to.be.a('array');
+        expect(res.body.article.articlecomment[0]).to.have.property('highlightedText').to.eql(null);
+        expect(res.body.article.articlecomment[0]).to.have.property('containsHighlightedText').to.eql(false);
+        done();
+      });
+  });
+
   it('should return an error when trying to get articles for an author that doesn\'t exist', (done) => {
     chai.request(app)
       .get(`${API_PREFIX}/author/${fakeUserId}`)
