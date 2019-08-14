@@ -5,7 +5,7 @@
           "Bearer": []
       }
     ],
-    "tags": ["Articles"],
+    "tags": ["Admin"],
     "summary": "Get reported articles",
     "description": "get reported articles",
     "produces": ["application/json"],

@@ -36,7 +36,7 @@ import reportArticle from './articles/reportArticle.json';
 import createUser from './admin/createUser.json';
 import updateDeleteUser from './admin/updateDeleteUser.json';
 
-import getReportedArticles from './articles/getReportedArticles.json';
+import getReportedArticles from './admin/getReportedArticles.json';
 import likeComment from './comments/likeComment.json';
 
 swagger.paths['/auth/signup'] = signup;
@@ -65,7 +65,7 @@ swagger.paths['/articles/{slug}/ratings'] = rateArticles;
 swagger.paths['/users/bookmarks'] = getAllBookmark;
 swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 swagger.paths['/articles/{slug}/report'] = reportArticle;
-swagger.paths['/articles/reportedarticles'] = getReportedArticles;
+swagger.paths['/admin/reportedarticles'] = getReportedArticles;
 swagger.paths['/notifications'] = getNotifcation;
 swagger.paths['/notifications/{id}'] = updateNotification;
 swagger.paths['/users'] = getAllUsers;
