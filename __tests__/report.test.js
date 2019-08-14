@@ -8,6 +8,7 @@ import app from '../index';
 chai.use(chaiHttp);
 
 const url = '/api/v1/articles';
+const baseUrl = '/api/v1/admin';
 const { expect } = chai;
 let validToken;
 
@@ -29,7 +30,7 @@ describe('Testing Reports endpoints', () => {
   });
   it('should get an empty array if no reports yet', (done) => {
     chai.request(app)
-      .get(`${url}/reportedarticles`)
+      .get(`${baseUrl}/reportedarticles`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
@@ -100,7 +101,7 @@ describe('Testing Reports endpoints', () => {
 
   it('should get all reported articles', (done) => {
     chai.request(app)
-      .get(`${url}/reportedarticles`)
+      .get(`${baseUrl}/reportedarticles`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
@@ -119,7 +120,7 @@ describe('Testing Reports endpoints', () => {
       .rejects(new Error('Server error occured'));
     chai
       .request(app)
-      .get(`${url}/reportedarticles`)
+      .get(`${baseUrl}/reportedarticles`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(500);
