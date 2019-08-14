@@ -10,4 +10,5 @@ const { verifyToken, verifiedUserOnly } = AuthMiddleware;
 router.post('/likes/:commentId', verifyToken, verifiedUserOnly, likeComment);
 router.patch('/:commentId', verifyToken, verifiedUserOnly, commentValidate.comment, editComment);
 
+
 export default router;
