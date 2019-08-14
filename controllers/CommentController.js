@@ -7,6 +7,7 @@ const {
   Comment,
   Like,
   Article,
+  CommentHistory
 } = models;
 
 /**
@@ -177,11 +178,16 @@ export default class CommentController {
       const { body } = req.body;
       const comment = await Comment.findOne({ where: { id: commentId } });
       if (!comment) {
-        return errorResponse(res, 404, 'That comment does not exist');
+        return errorResponse(res, 404, { message: 'Comment does not exist' });
       }
       if (comment.dataValues.userId !== id) {
         return errorResponse(res, 403, 'You are not allowed to edit another user\'s comment');
       }
+      await CommentHistory.create({
+        userId: id,
+        commentId,
+        oldComment: comment.body,
+      });
       const editedComment = await Comment.update(
         {
           body
@@ -194,6 +200,31 @@ export default class CommentController {
       return successResponse(res, 200, 'comment', editedComment[1][0]);
     } catch (error) {
       next(error);
+    }
+  }
+
+  /**
+   * Method to get a comment edit history
+   *
+   * @static
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {object} details of the edited comment
+   * @memberof CommentController
+   */
+  static async getEditCommentHistory(req, res, next) {
+    try {
+      const { commentId } = req.params;
+      const commentHistory = await CommentHistory.findAll({
+        where: { commentId },
+        order: [
+          ['updatedAt', 'DESC'],
+        ],
+      });
+      return successResponse(res, 200, 'commentHistory', commentHistory);
+    } catch (error) {
+      return next(error);
     }
   }
 }

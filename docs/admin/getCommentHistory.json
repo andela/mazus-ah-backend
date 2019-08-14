@@ -1,0 +1,111 @@
+{
+  "get": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Admin"
+    ],
+    "summary": "Get previous versions of a comment",
+    "description": "Get previous versions of a comment",
+    "parameters": [
+      {
+        "name": "commentId",
+        "in": "path",
+        "required": true,
+        "description": "id of the comment",
+        "schema": {
+          "type": "string",
+          "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "commentHistory",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "commentHistory": {
+              "type": "array",
+              "example": [
+                {
+                  "id": "162271f4-4191-412d-b833-38339160fe80",
+                  "commentId": "35dc7202-c52a-4762-8637-6a92f6492c02",
+                  "userId": "ffe25dbe-29ea-4759-8461-ed116f6739dd",
+                  "oldComment": "helelejne",
+                  "createdAt": "2019-08-15T10:54:37.794Z",
+                  "updatedAt": "2019-08-15T10:54:37.794Z"
+                },
+                {
+                  "id": "372ed37c-2dc0-4d4a-8c11-5213346860ca",
+                  "commentId": "35dc7202-c52a-4762-8637-6a92f6492c02",
+                  "userId": "ffe25dbe-29ea-4759-8461-ed116f6739dd",
+                  "oldComment": "this article is quite interesting",
+                  "createdAt": "2019-08-15T10:53:51.084Z",
+                  "updatedAt": "2019-08-15T10:53:51.084Z"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Comment not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Comment not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed without token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No token provided"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "User not authorised",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not authorised to view comment history"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

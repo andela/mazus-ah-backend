@@ -37,7 +37,7 @@ import createUser from './admin/createUser.json';
 import updateDeleteUser from './admin/updateDeleteUser.json';
 import editComment from './comments/editComment.json';
 import getTags from './articles/getTags.json';
-
+import getCommentHistory from './admin/getCommentHistory.json';
 import getReportedArticles from './admin/getReportedArticles.json';
 import likeComment from './comments/likeComment.json';
 import banUser from './admin/banUser.json';
@@ -83,10 +83,9 @@ swagger.paths['/statistics/read'] = myReadCount;
 swagger.paths['/admin/users'] = createUser;
 swagger.paths['/admin/users/{id}'] = updateDeleteUser;
 swagger.paths['/comments/{commentId}'] = editComment;
-
+swagger.paths['/admin/comments/{commentId}'] = getCommentHistory;
 swagger.paths['/comments/likes/{commentId}'] = likeComment;
 swagger.paths['/admin/ban/{id}'] = banUser;
 swagger.paths['/admin/unban/{id}'] = unbanUser;
-
 
 export default swagger;

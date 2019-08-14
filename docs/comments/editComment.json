@@ -1,99 +1,192 @@
 {
-    "patch": {
-      "security": [
-        {
-            "Bearer": []
+  "patch": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Comments"
+    ],
+    "summary": "Edit comment on an article",
+    "description": "Edit comment on an article",
+    "parameters": [
+      {
+        "name": "commentId",
+        "in": "path",
+        "required": true,
+        "description": "id of the comment",
+        "schema": {
+          "type": "string",
+          "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
         }
-      ],
-      "tags": ["Comments"],
-      "summary": "Edit comment on an article",
-      "description": "Edit comment on an article",
-      "parameters": [
-        {
-          "name": "commentId",
-          "in": "path",
-          "required": true,
-          "description": "id of the comment",
-          "schema": {
-            "type": "string",
-            "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
-          }
-        },
-        {
-            "name": "body",
-            "in": "body",
-            "required": "true",
-            "description": "body of the comment",
-            "schema": {
-                "type": "string",
-                "example": "nice one"
-            }
+      },
+      {
+        "name": "body",
+        "in": "body",
+        "required": "true",
+        "description": "body of the comment",
+        "schema": {
+          "type": "string",
+          "example": "nice one"
         }
-      ],
-      "produces": ["application/json"],
-      "responses": {
-        "200": {
-          "description": "editedComment",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
-              },
-              "body": {
-                  "type": "string",
-                  "example": "Good job"
-              },
-              "userId": {
-                  "type": "string",
-                  "example": "6675f038-8c76-4485-9dcf-4660ac27dcd9"
-              },
-              "articleId": {
-                "type": "string",
-                "example": "6675f038-8c76-4485-9dcf-2360ac27dcd9"
-              },
-              "articleSlug": {
-                "type": "string",
-                "example": "John-Kamali-6675f038"
-              },
-              "createdAt": {
-                "type": "date",
-                "example": "2019-07-30T14:00:23.458Z"
-              },
-              "updatedAt": {
-                "type": "date",
-                "updatedAt": "2019-07-30T23:22:33.439Z"
-              }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "editedComment",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
+            },
+            "body": {
+              "type": "string",
+              "example": "Good job"
+            },
+            "userId": {
+              "type": "string",
+              "example": "6675f038-8c76-4485-9dcf-4660ac27dcd9"
+            },
+            "articleId": {
+              "type": "string",
+              "example": "6675f038-8c76-4485-9dcf-2360ac27dcd9"
+            },
+            "articleSlug": {
+              "type": "string",
+              "example": "John-Kamali-6675f038"
+            },
+            "createdAt": {
+              "type": "date",
+              "example": "2019-07-30T14:00:23.458Z"
+            },
+            "updatedAt": {
+              "type": "date",
+              "updatedAt": "2019-07-30T23:22:33.439Z"
             }
           }
-        },
-        "404": {
-          "description": "Comment not found",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "errors": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "string",
-                    "example": "Comment not found"
-                  }
+        }
+      },
+      "404": {
+        "description": "Comment not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Comment not found"
                 }
               }
             }
           }
-        },
-        "401": {
-          "description": "Route accessed without token",
-          "schema": {
+        }
+      }
+    },
+    "401": {
+      "description": "Route accessed without token",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "errors": {
             "type": "object",
             "properties": {
-              "errors": {
-                "type": "object",
-                "properties": {
-                  "message": { "type": "string", "example": "No token provided" }
+              "message": {
+                "type": "string",
+                "example": "No token provided"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "get": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": [
+      "Comments"
+    ],
+    "summary": "Get All Edited Comment History",
+    "description": "Return all edited comment history \n",
+    "parameters": [
+      {
+        "name": "commentId",
+        "in": "path",
+        "required": true,
+        "description": "id of the comment",
+        "schema": {
+          "type": "string",
+          "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
+        }
+      }
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "editedComment",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "6675f038-8c66-4485-9dcf-4660ac27ccd9"
+            },
+            "userId": {
+              "type": "string",
+              "example": "6675f038-8c76-4485-9dcf-4660ac27dcd9"
+            },
+            "createdAt": {
+              "type": "date",
+              "example": "2019-07-30T14:00:23.458Z"
+            },
+            "updatedAt": {
+              "type": "date",
+              "example": "2019-07-30T23:22:33.439Z"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Comment not found",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Comment does not have edit history"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Route accessed without token",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "No token provided"
                 }
               }
             }
@@ -102,3 +195,4 @@
       }
     }
   }
+}
