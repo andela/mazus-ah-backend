@@ -2,11 +2,11 @@
   "post": {
     "security": [
       {
-         "Bearer": []
+        "Bearer": []
       }
-   ],
-    "tags": ["Articles"],
-    "summary": "Comment on an article or respond to a comment",
+    ],
+    "tags": ["Articles", "Comments"],
+    "summary": "Comment on an article, a text in the article or respond to a comment",
     "description": "Article comment",
     "parameters": [
       {
@@ -19,6 +19,10 @@
             "body": {
               "type": "string",
               "example": "just some comment"
+            },
+            "highlightedText": {
+              "type": "string",
+              "example": "some highlighted text"
             }
           }
         }

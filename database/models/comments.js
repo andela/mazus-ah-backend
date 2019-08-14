@@ -19,6 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    containsHighlightedText: {
+      allowNull: true,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    highlightedText: {
+      allowNull: true,
+      type: DataTypes.TEXT,
+    },
   }, {});
   Comment.associate = (models) => {
     Comment.hasMany(models.Like, {

@@ -2,7 +2,7 @@ import models from '../database/models';
 import ServerResponse from '../modules';
 import Notification from '../helpers/Notification';
 
-const { successResponse, notFoundError, errorResponse } = ServerResponse;
+const { successResponse, errorResponse } = ServerResponse;
 const {
   Comment,
   Like,
@@ -26,14 +26,27 @@ export default class CommentController {
    */
   static async postComment(req, res, next) {
     try {
-      const { body } = req.body;
+      const { body, highlightedText } = req.body;
       const { slug } = req.params;
       const { id: userId, firstName, lastName } = req.user;
 
       const article = await Article.findOne({ where: { slug } });
-      if (!article) return notFoundError(req, res);
+      if (!article) return errorResponse(res, 404, { article: 'That article does not exist' });
       const { id, title, status } = article.dataValues;
       if (status !== 'published') return errorResponse(res, 405, 'cannot comment on a draft article');
+
+      if (highlightedText) {
+        const articleComment = await Comment.create({
+          body,
+          userId,
+          articleId: id,
+          articleSlug: slug,
+          highlightedText,
+          containsHighlightedText: true,
+        });
+        Notification.newComment(slug, id, title, firstName, lastName);
+        return successResponse(res, 201, 'comment', articleComment.dataValues);
+      }
 
       const articleComment = await Comment.create({
         body,
