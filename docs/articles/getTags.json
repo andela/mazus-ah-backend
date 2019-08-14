@@ -1,0 +1,30 @@
+{
+  "get": {
+    "tags": ["Articles"],
+    "summary": "Fetch all tags",
+    "description": "Return all an array of tags \n",
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "Tags returned successfully",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "articles": {
+              "type": "array",
+              "example": [
+                {
+                  "tags": [
+                    "Nodejs",
+                    "car",
+                    "mobile"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

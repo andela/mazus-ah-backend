@@ -36,6 +36,7 @@ import reportArticle from './articles/reportArticle.json';
 import createUser from './admin/createUser.json';
 import updateDeleteUser from './admin/updateDeleteUser.json';
 import editComment from './comments/editComment.json';
+import getTags from './articles/getTags.json';
 
 import getReportedArticles from './admin/getReportedArticles.json';
 import likeComment from './comments/likeComment.json';
@@ -65,6 +66,7 @@ swagger.paths['/articles/{slug}/comments'] = postComment;
 swagger.paths['/articles/{slug}/like'] = likeArticle;
 swagger.paths['/articles/{slug}/dislike'] = dislikeArticle;
 swagger.paths['/articles/{slug}/ratings'] = rateArticles;
+swagger.paths['/articles/tags'] = getTags;
 swagger.paths['/users/bookmarks'] = getAllBookmark;
 swagger.paths['/articles/{id}/bookmark'] = bookmarkArticle;
 swagger.paths['/articles/{slug}/report'] = reportArticle;

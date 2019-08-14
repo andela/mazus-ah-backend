@@ -363,4 +363,17 @@ describe('Article Routes Test', () => {
         done();
       });
   });
+  it('should get all tags', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/tags`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('tags');
+        expect(res.body.tags).to.be.to.a('array');
+        expect(res.body.tags[0]).to.eql('Nodejs');
+        expect(res.body.tags[1]).to.eql('car');
+        expect(res.body.tags[2]).to.eql('mobile');
+        done();
+      });
+  });
 });
