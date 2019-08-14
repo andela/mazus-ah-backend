@@ -8,6 +8,7 @@ import mockUsers from './mockData/mockUsers';
 chai.use(chaiHttp);
 
 const url = '/api/v1/admin/users';
+const baseUrl = '/api/v1/admin';
 const { expect } = chai;
 let verifiedUserToken;
 const userId = '356304da-50bc-4488-9c85-88874a9efb16';
@@ -63,6 +64,54 @@ describe('Admin Routes', () => {
         expect(res.status).to.eql(200);
         expect(res.body.user).to.be.a('object');
         expect(res.body.user.message).to.eql('User has been updated');
+        done();
+      });
+  });
+  it('should successfully ban a user" ', (done) => {
+    chai
+      .request(app)
+      .patch(`${baseUrl}/ban/${userId}`)
+      .set('Authorization', `Bearer ${verifiedUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body.user).to.be.a('object');
+        expect(res.body.user.message).to.eql('User has been banned successfully');
+        done();
+      });
+  });
+  it('should not successfully ban a user twice" ', (done) => {
+    chai
+      .request(app)
+      .patch(`${baseUrl}/ban/${userId}`)
+      .set('Authorization', `Bearer ${verifiedUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors.message).to.eql('User has already been banned');
+        done();
+      });
+  });
+  it('should successfully unban a user" ', (done) => {
+    chai
+      .request(app)
+      .patch(`${baseUrl}/unban/${userId}`)
+      .set('Authorization', `Bearer ${verifiedUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body.user).to.be.a('object');
+        expect(res.body.user.message).to.eql('User has been unbanned successfully');
+        done();
+      });
+  });
+  it('should not successfully unban a user twice" ', (done) => {
+    chai
+      .request(app)
+      .patch(`${baseUrl}/unban/${userId}`)
+      .set('Authorization', `Bearer ${verifiedUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.errors).to.be.a('object');
+        expect(res.body.errors.message).to.eql('User has already been unbanned');
         done();
       });
   });

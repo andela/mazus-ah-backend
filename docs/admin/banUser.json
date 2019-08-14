@@ -1,0 +1,91 @@
+{
+"patch": {
+    "security": [
+        {
+        "Bearer": []
+        }
+    ],
+    "tags": [
+        "Admin"
+    ],
+    "summary": "Ban a user",
+    "description": "Update user status to inactive. \n",
+    "parameters": [
+        {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The id of the user to be banned",
+        "schema": {
+            "type": "string",
+            "example": "588ae2cd-de3f-404a-87b3-8a6d50864833"
+        }
+        }
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "responses": {
+        "200": {
+        "description": "User banned",
+        "schema": {
+            "type": "object",
+            "properties": {
+            "status": {
+                "type": "number",
+                "example": 200
+            },
+            "method": {
+                "type": "string",
+                "example": "PATCH"
+            },
+            "message": {
+                "type": "string",
+                "example": "User has been banned successfully"
+            }
+            }
+        }
+        },
+        "400": {
+        "description": "User has been banned before",
+        "schema": {
+            "type": "object",
+            "properties": {
+            "status": {
+                "type": "number",
+                "example": 400
+            },
+            "method": {
+                "type": "string",
+                "example": "PATCH"
+            },
+            "message": {
+                "type": "string",
+                "example": "User has already been banned"
+            }
+            }
+        }
+        },
+        "404": {
+            "description": "User Id does not exist",
+            "schema": {
+                "type": "object",
+                "properties": {
+                "status": {
+                    "type": "number",
+                    "example": 404
+                },
+                "method": {
+                    "type": "string",
+                    "example": "PATCH"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "User not found"
+                }
+                }
+            }
+            }
+    }
+    }
+}

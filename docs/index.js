@@ -39,6 +39,8 @@ import editComment from './comments/editComment.json';
 
 import getReportedArticles from './admin/getReportedArticles.json';
 import likeComment from './comments/likeComment.json';
+import banUser from './admin/banUser.json';
+import unbanUser from './admin/unbanUser.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -81,6 +83,8 @@ swagger.paths['/admin/users/{id}'] = updateDeleteUser;
 swagger.paths['/comments/{commentId}'] = editComment;
 
 swagger.paths['/comments/likes/{commentId}'] = likeComment;
+swagger.paths['/admin/ban/{id}'] = banUser;
+swagger.paths['/admin/unban/{id}'] = unbanUser;
 
 
 export default swagger;

@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'user',
         allowNull: false,
       },
+      status: {
+        type: DataTypes.ENUM('active', 'inactive'),
+        values: ['active', 'inactive'],
+        defaultValue: 'active',
+        allowNull: false,
+      },
       emailNotify: {
         defaultValue: true,
         type: DataTypes.BOOLEAN,
