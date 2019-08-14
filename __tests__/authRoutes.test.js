@@ -60,6 +60,20 @@ describe('User signup tests', () => {
         done();
       });
   });
+  it('should throw a 500 status code when an error occurs on the server', (done) => {
+    const stub = sinon
+      .stub(BlacklistedToken, 'create')
+      .rejects(new Error('Foreign Key constraint'));
+    chai
+      .request(app)
+      .post(`${API_PREFIX}/logout`)
+      .set('Authorization', `${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(500);
+        stub.restore();
+        done();
+      });
+  });
 });
 
 describe('test for user login', () => {
@@ -113,6 +127,20 @@ describe('test for user login', () => {
         expect(res.status).to.eql(401);
         expect(res.body.errors).to.have.property('message');
         expect(res.body.errors.message).to.eql('You Entered an incorrect Email or Password');
+        done();
+      });
+  });
+  it('should throw a 500 status code when an error occurs on the server', (done) => {
+    const stub = sinon
+      .stub(BlacklistedToken, 'create')
+      .rejects(new Error('Foreign Key constraint'));
+    chai
+      .request(app)
+      .post(`${API_PREFIX}/logout`)
+      .set('Authorization', `${validUserToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(500);
+        stub.restore();
         done();
       });
   });

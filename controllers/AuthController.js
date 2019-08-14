@@ -7,7 +7,6 @@ import EmailVerification from '../helpers/EmailVerification';
 import ForgotPasswordEmail from '../helpers/ForgotPasswordEmail';
 import MarkUps from '../helpers/MarkUps';
 
-
 dotenv.config();
 const { successResponse, errorResponse } = ServerResponse;
 const {
@@ -31,89 +30,94 @@ export default class AuthController {
    *
    * @param {object} req express request object
    * @param {object} res express response object
+   * @param {function} next
    *
    * @returns {object} returns user data
    *
    * @memberof AuthController
    */
-  static async signUp(req, res) {
-    const {
-      firstName, lastName, email, password, confirmPassword
-    } = req.body;
-    const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
-    const genericWord = genericWordsArray.find(word => password.includes(word));
-    if (genericWord) {
-      return res.status(400).send({
-        errors: {
-          password: 'Do not use a common word as the password',
+  static async signUp(req, res, next) {
+    try {
+      const {
+        firstName, lastName, email, password, confirmPassword
+      } = req.body;
+      const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
+      const genericWord = genericWordsArray.find(word => password.includes(word));
+      if (genericWord) {
+        return res.status(400).send({
+          errors: {
+            password: 'Do not use a common word as the password',
+          }
+        });
+      }
+
+      const foundUser = await User.findOne({ where: { email } });
+      if (foundUser) {
+        return res.status(409).send({
+          message: 'This User already exist',
+        });
+      }
+
+      if (password !== confirmPassword) {
+        return res.status(400).send({
+          message: "Password doesn't match, Please check you are entering the right thing!",
+        });
+      }
+      const hashedPassword = Helper.hashPassword(password);
+      const verificationToken = Helper.hashUserData(email);
+      const user = {
+        firstName,
+        lastName,
+        email,
+        isVerified: false,
+        verificationToken,
+        password: hashedPassword,
+        type: 'user',
+      };
+
+      const registeredUser = await User.create(user);
+      const {
+        id,
+        firstName: rFirstName,
+        lastName: rLastName,
+        isVerified,
+        type,
+      } = registeredUser;
+      const token = Helper.createToken({
+        id,
+        firstName: rFirstName,
+        lastName: rLastName,
+        isVerified,
+        email,
+        type,
+      });
+      // This line sends the registered user an email
+      /* istanbul ignore next-line */
+      if (process.env.NODE_ENV !== 'test') {
+        EmailVerification.sendVerificationEmail(
+          req, email, rFirstName,
+          verificationToken
+        );
+      }
+      let avatar = gravatar.url(email, {
+        s: '200',
+        r: 'pg',
+        d: 'mm'
+      });
+      avatar = avatar.substring(2);
+      await Profile.create({
+        userId: id,
+        avatar,
+      });
+      return res.status(201).send({
+        message: 'Your Account has been created successfully!',
+        user: {
+          token,
         }
       });
+    } catch (error) {
+      return next(error);
     }
-
-    const foundUser = await User.findOne({ where: { email } });
-    if (foundUser) {
-      return res.status(409).send({
-        message: 'This User already exist',
-      });
-    }
-
-    if (password !== confirmPassword) {
-      return res.status(400).send({
-        message: "Password doesn't match, Please check you are entering the right thing!",
-      });
-    }
-    const hashedPassword = Helper.hashPassword(password);
-    const verificationToken = Helper.hashUserData(email);
-    const user = {
-      firstName,
-      lastName,
-      email,
-      isVerified: false,
-      verificationToken,
-      password: hashedPassword,
-      type: 'user',
-    };
-
-    const registeredUser = await User.create(user);
-    const {
-      id,
-      firstName: rFirstName,
-      lastName: rLastName,
-      isVerified,
-      type,
-    } = registeredUser;
-    const token = Helper.createToken({
-      id,
-      firstName: rFirstName,
-      lastName: rLastName,
-      isVerified,
-      email,
-      type,
-    });
-    // This line sends the registered user an email
-    /* istanbul ignore next-line */
-    if (process.env.NODE_ENV !== 'test') {
-      EmailVerification.sendVerificationEmail(
-        req, email, rFirstName,
-        verificationToken
-      );
-    }
-    let avatar = gravatar.url(email, {
-      s: '200',
-      r: 'pg',
-      d: 'mm'
-    });
-    avatar = avatar.substring(2);
-    await Profile.create({
-      userId: id,
-      avatar,
-    });
-    return res.status(201).send({
-      message: 'Your Account has been created successfully!',
-      user: {
-        token,
-      }
-    });
   }
 
   /**
@@ -121,40 +125,45 @@ export default class AuthController {
    * @static
    * @param {object} req express request object
    * @param {object} res express response object
+   * @param {function} next
    * @returns {object} returns user data
    * @memberof AuthController
    */
-  static async userSignin(req, res) {
-    const { email, password } = req.body;
+  static async userSignin(req, res, next) {
+    try {
+      const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { email } });
 
-    if (!user) {
-      return errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
+      if (!user) {
+        return errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
+      }
+      if (user.status === 'inactive') {
+        return errorResponse(res, 401, { message: 'You Have been banned, Please contact an admin' });
+      }
+
+      const {
+        id, firstName, lastName, email: emailAddress, isVerified, type
+      } = user.dataValues;
+
+      const token = Helper.createToken({
+        id,
+        firstName,
+        lastName,
+        emailAddress,
+        isVerified,
+        type,
+      });
+
+      const comparePassword = await Helper.comparePassword(password, user.dataValues.password);
+
+      if (!comparePassword) {
+        return errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
+      }
+      return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
+    } catch (error) {
+      return next(error);
     }
-    if (user.status === 'inactive') {
-      return errorResponse(res, 401, { message: 'You Have been banned, Please contact an admin' });
-    }
-
-    const {
-      id, firstName, lastName, email: emailAddress, isVerified, type
-    } = user.dataValues;
-
-    const token = Helper.createToken({
-      id,
-      firstName,
-      lastName,
-      emailAddress,
-      isVerified,
-      type,
-    });
-
-    const comparePassword = await Helper.comparePassword(password, user.dataValues.password);
-
-    if (!comparePassword) {
-      return errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
-    }
-    return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
   }
 
   /**
@@ -232,7 +241,7 @@ export default class AuthController {
       });
     } catch (error) {
       /* istanbul ignore next-line */
-      next(error);
+      return next(error);
     }
   }
 
@@ -258,10 +267,10 @@ export default class AuthController {
         res.send(verified);
       } else if (foundUser.verificationToken !== token) {
         res.setHeader('Content-Type', 'text/html');
-        res.send(incorrectCredentials);
+        return res.send(incorrectCredentials);
       }
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 
@@ -269,61 +278,71 @@ export default class AuthController {
    *
    * @param {*} req express request object
    * @param {*} res express response object
+   * @param {function} next
    * @returns {object} returns an object depending on the outcome
    * @memberof AuthController
    */
-  static async forgotPassword(req, res) {
-    const { email } = req.body;
-    const foundUser = await User.findOne({ where: { email } });
-    if (!foundUser) {
-      return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
+  static async forgotPassword(req, res, next) {
+    try {
+      const { email } = req.body;
+      const foundUser = await User.findOne({ where: { email } });
+      if (!foundUser) {
+        return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
+      }
+      const { id } = foundUser.dataValues;
+      const token = Helper.createToken({
+        id,
+        email
+      });
+      /* istanbul ignore next-line */
+      if (process.env.NODE_ENV !== 'test') {
+        sendResetEmail(req, email, token);
+      }
+      return successResponse(res, 200, 'auth', { email, token, message: 'Your reset link has been sent to your email' });
+    } catch (error) {
+      return next(error);
     }
-    const { id } = foundUser.dataValues;
-    const token = Helper.createToken({
-      id,
-      email
-    });
-    /* istanbul ignore next-line */
-    if (process.env.NODE_ENV !== 'test') {
-      sendResetEmail(req, email, token);
-    }
-    return successResponse(res, 200, 'auth', { email, token, message: 'Your reset link has been sent to your email' });
   }
 
   /**
    *
    * @param {*} req express request object
    * @param {*} res express response object
+   * @param {function} next
    * @returns {object} returns an object depending on the outcome
    * @memberof AuthController
    */
-  static async resetPassword(req, res) {
-    const
-      {
-        password,
-        confirmPassword
-      } = req.body;
-    const genericWordsArray = ['Password123', 'Qwerty123', 'Password', 123];
-    const genericWord = genericWordsArray.find(word => password.includes(word));
-    if (genericWord) {
-      return errorResponse(res, 400, { message: 'Do not use a common word as the password' });
+  static async resetPassword(req, res, next) {
+    try {
+      const
+        {
+          password,
+          confirmPassword
+        } = req.body;
+      const genericWordsArray = ['Password123', 'Qwerty123', 'Password', 123];
+      const genericWord = genericWordsArray.find(word => password.includes(word));
+      if (genericWord) {
+        return errorResponse(res, 400, { message: 'Do not use a common word as the password' });
+      }
+      if (password !== confirmPassword) {
+        return errorResponse(res, 400, { message: 'Password doesn\'t match, Please check you are entering the right thing!' });
+      }
+      const { token } = req.params;
+      const { id, email } = await Helper.verifyToken(token);
+      const foundUser = await User.findOne({ where: { email } });
+      if (!foundUser) {
+        return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
+      }
+      const doubleReset = await BlacklistedToken.findOne({ where: { token } });
+      if (doubleReset) {
+        return errorResponse(res, 409, { message: 'This link has already been used once, please request another link.' });
+      }
+      const hashedPassword = Helper.hashPassword(password);
+      await User.update({ password: hashedPassword }, { where: { email } });
+      await BlacklistedToken.create({ token, userId: id });
+      return successResponse(res, 200, 'auth', { message: 'Your Password has been reset successfully' });
+    } catch (error) {
+      return next(error);
     }
-    if (password !== confirmPassword) {
-      return errorResponse(res, 400, { message: 'Password doesn\'t match, Please check you are entering the right thing!' });
-    }
-    const { token } = req.params;
-    const { id, email } = await Helper.verifyToken(token);
-    const foundUser = await User.findOne({ where: { email } });
-    if (!foundUser) {
-      return errorResponse(res, 404, { message: 'You are not an existing user, please sign up' });
-    }
-    const doubleReset = await BlacklistedToken.findOne({ where: { token } });
-    if (doubleReset) {
-      return errorResponse(res, 409, { message: 'This link has already been used once, please request another link.' });
-    }
-    const hashedPassword = Helper.hashPassword(password);
-    await User.update({ password: hashedPassword }, { where: { email } });
-    await BlacklistedToken.create({ token, userId: id });
-    return successResponse(res, 200, 'auth', { message: 'Your Password has been reset successfully' });
   }
 }
