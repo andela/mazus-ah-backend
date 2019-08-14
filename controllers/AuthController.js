@@ -129,11 +129,9 @@ export default class AuthController {
 
     const user = await User.findOne({ where: { email } });
 
-    if (!user) {
-      return res.status(401).send({
-        message: 'You Entered an incorrect Email or Password',
-      });
-    }
+    if (!user) errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
+    if (user.status === 'inactive') errorResponse(res, 401, { message: 'You Have been banned, Please contact an admin' });
+
     const {
       id, firstName, lastName, email: emailAddress, isVerified, type
     } = user.dataValues;
@@ -148,17 +146,9 @@ export default class AuthController {
     });
 
     const comparePassword = await Helper.comparePassword(password, user.dataValues.password);
-    if (!comparePassword) {
-      return res.status(401).send({
-        message: 'You Entered an incorrect Email or Password',
-      });
-    }
-    return res.status(200).send({
-      message: 'You have successfully logged in',
-      user: {
-        token,
-      }
-    });
+
+    if (!comparePassword) errorResponse(res, 401, { message: 'You Entered an incorrect Email or Password' });
+    return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
   }
 
   /**

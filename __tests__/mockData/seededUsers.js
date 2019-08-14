@@ -14,7 +14,11 @@ const seededUsers = [
   {
     email: 'jamal.sabri@mail.com',
     password: 'P455w0rd'
-  }
+  },
+  {
+    email: 'bannedguy@test.com',
+    password: 'passwordHash',
+  },
 ];
 
 export default seededUsers;

@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode';
 import app from '..';
 import models from '../database/models';
 import mockUsers from './mockData/mockUsers';
+import seededUsers from './mockData/seededUsers';
+
 
 chai.use(chaiHttp);
 
@@ -70,7 +72,7 @@ describe('test for user login', () => {
         const { token } = res.body.user;
         const decoded = jwtDecode(token);
         expect(res.status).to.eql(200);
-        expect(res.body.message).to.eql('You have successfully logged in');
+        expect(res.body.user.message).to.eql('You have successfully logged in');
         expect(res.body.user).to.have.property('token');
         expect(decoded.emailAddress).to.eql(mockUsers[6].email);
         expect(decoded).to.have.property('firstName');
@@ -85,8 +87,20 @@ describe('test for user login', () => {
       .send(mockUsers[7])
       .end((err, res) => {
         expect(res.status).to.eql(401);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql('You Entered an incorrect Email or Password');
+        expect(res.body.errors).to.have.property('message');
+        expect(res.body.errors.message).to.eql('You Entered an incorrect Email or Password');
+        done();
+      });
+  });
+  it('should return an error when user is banned', (done) => {
+    chai
+      .request(app)
+      .post(`${url}/auth/signin`)
+      .send(seededUsers[4])
+      .end((err, res) => {
+        expect(res.status).to.eql(401);
+        expect(res.body.errors).to.have.property('message');
+        expect(res.body.errors.message).to.eql('You Have been banned, Please contact an admin');
         done();
       });
   });
@@ -97,8 +111,8 @@ describe('test for user login', () => {
       .send(mockUsers[8])
       .end((err, res) => {
         expect(res.status).to.eql(401);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql('You Entered an incorrect Email or Password');
+        expect(res.body.errors).to.have.property('message');
+        expect(res.body.errors.message).to.eql('You Entered an incorrect Email or Password');
         done();
       });
   });

@@ -6,7 +6,13 @@ import Validate from '../middlewares/inputValidation';
 import ArticleController from '../controllers/ArticleController';
 
 const { signUp } = AuthController;
-const { getAllUsers, deleteUser, updateUser } = AdminController;
+const {
+  getAllUsers,
+  deleteUser,
+  updateUser,
+  banUser,
+  unbanUser,
+} = AdminController;
 const { verifyToken, verifySuperAdmin, verifyAdmins } = AuthMiddleware;
 const { getReportedArticles } = ArticleController;
 
@@ -17,5 +23,7 @@ router.get('/users', verifyToken, verifySuperAdmin, getAllUsers);
 router.delete('/users/:id', verifyToken, verifySuperAdmin, deleteUser);
 router.patch('/users/:id', verifyToken, verifySuperAdmin, updateUser);
 router.get('/reportedarticles', verifyToken, verifyAdmins, getReportedArticles);
+router.patch('/ban/:id', verifyToken, verifyAdmins, banUser);
+router.patch('/unban/:id', verifyToken, verifyAdmins, unbanUser);
 
 export default router;
