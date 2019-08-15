@@ -415,25 +415,6 @@ export default class ArticleController {
         return errorResponse(res, 404, { article: 'Article not found' });
       }
 
-      const { status } = foundArticle;
-
-      if (status === 'published' || status === 'draft') {
-        await Article.update(
-          {
-            status: 'trash'
-          },
-          {
-            where: {
-              slug,
-              userId: id
-            },
-            returning: true
-          }
-        );
-
-        return successResponse(res, 200, 'article', { message: 'Article has been moved to your trash' });
-      }
-
       await Article.destroy({
         where: {
           slug,

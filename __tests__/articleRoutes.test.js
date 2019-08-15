@@ -282,21 +282,7 @@ describe('Article Routes Test', () => {
       });
   });
 
-  it('should send a published article to the trash can when it\'s deleted', (done) => {
-    chai.request(app)
-      .delete(`${API_PREFIX}/${seededArticles[0].slug}`)
-      .set('Authorization', `Bearer ${validUserToken}`)
-      .end((err, res) => {
-        expect(res.status).to.be.eql(200);
-        expect(res.body).to.have.property('article');
-        expect(res.body.article).to.be.to.a('object');
-        expect(res.body.article).to.have.property('message');
-        expect(res.body.article.message).to.eql('Article has been moved to your trash');
-        done();
-      });
-  });
-
-  it('should delete an article permanently, when it\'s already in the drafts', (done) => {
+  it('should delete an article', (done) => {
     chai.request(app)
       .delete(`${API_PREFIX}/${seededArticles[0].slug}`)
       .set('Authorization', `Bearer ${validUserToken}`)
@@ -309,6 +295,7 @@ describe('Article Routes Test', () => {
         done();
       });
   });
+
   it('should not bookmark if article id does not exist', (done) => {
     chai.request(app)
       .post(`${API_PREFIX}/cf67650f-5b74-416e-9050-89f92f147ecb/bookmark`)
