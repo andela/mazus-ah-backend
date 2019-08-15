@@ -19,7 +19,6 @@ const {
   bookmarkArticle,
   shareArticle,
   reportArticle,
-  getReportedArticles,
 } = ArticleController;
 
 const { postComment } = CommentController;
@@ -30,7 +29,6 @@ const {
   verifyToken,
   verifiedUserOnly,
   fetchRequester,
-  verifyAdmins
 } = AuthMiddleware;
 
 
@@ -40,7 +38,6 @@ router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUse
 
 router.get('/trends', trend);
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
-router.get('/reportedarticles', verifyToken, verifyAdmins, getReportedArticles);
 router.get('/:slug', fetchRequester, getSingleArticleBySlug);
 router.get('/:slug', getSingleArticleBySlug);
 router.get('/author/:id', validateId, getArticlesByAuthor);
