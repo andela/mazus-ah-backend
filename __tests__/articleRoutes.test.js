@@ -339,10 +339,31 @@ describe('Article Routes Test', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.property('trends');
-        expect(res.body.trends).to.be.to.a('array');
+        expect(res.body.trends).to.be.to.a('object');
+        expect(res.body.trends).to.have.property('articles');
+        expect(res.body.trends).to.have.property('articleCount');
+        expect(res.body.trends.articles).to.be.to.a('array');
+        expect(res.body.trends.articleCount).to.be.to.a('number');
+        expect(res.body.trends.articleCount).to.be.eql(10);
         done();
       });
   });
+
+  it('should return trending articles by a tag when the endpoint is hit', (done) => {
+    chai.request(app)
+      .get(`${API_PREFIX}/trends?tag=mobile`)
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('trends');
+        expect(res.body.trends).to.be.to.a('object');
+        expect(res.body.trends).to.have.property('articles');
+        expect(res.body.trends).to.have.property('articleCount');
+        expect(res.body.trends.articles).to.be.to.a('array');
+        expect(res.body.trends.articleCount).to.be.to.a('number');
+        done();
+      });
+  });
+
   it('should return an error response when a blacklisted token is provided', (done) => {
     chai.request(app)
       .get(`${API_PREFIX}/${articleSlug}`)
