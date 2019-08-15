@@ -2,6 +2,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
+import jwtDecode from 'jwt-decode';
 import app from '..';
 import seededUsers from './mockData/seededUsers';
 import mockUsers from './mockData/mockUsers';
@@ -45,16 +46,20 @@ describe('Admin Routes', () => {
         done();
       });
   });
-  it('should successfully create a user', (done) => {
+  it('should successfully create an admin', (done) => {
     chai
       .request(app)
-      .post(`${url}`)
+      .post(`${baseUrl}/createuser`)
       .set('Authorization', `Bearer ${verifiedUserToken}`)
       .send(mockUsers[17])
       .end((err, res) => {
+        const { token } = res.body.user;
+        const decoded = jwtDecode(token);
         expect(res.status).to.eql(201);
-        expect(res.body.message).to.eql('Your Account has been created successfully!');
+        expect(res.body.user.message).to.eql('Account has been created successfully!');
         expect(res.body.user).to.have.property('token');
+        expect(decoded.type).to.eql('admin');
+
         done();
       });
   });
@@ -172,7 +177,7 @@ describe('Admin Routes', () => {
   });
 });
 
-describe('Testing admin routes for articles and comments', () => { 
+describe('Testing admin routes for articles and comments', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/signin')

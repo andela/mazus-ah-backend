@@ -29,7 +29,7 @@ describe('User signup tests', () => {
           const { token } = res.body.user;
           const decoded = jwtDecode(token);
           expect(res.status).to.eql(201);
-          expect(res.body.message).to.eql('Your Account has been created successfully!');
+          expect(res.body.user.message).to.eql('Account has been created successfully!');
           expect(res.body.user).to.have.property('token');
           expect(decoded.email).to.eql(mockUsers[5].email);
           expect(decoded.firstName).to.eql(mockUsers[5].firstName);
@@ -44,7 +44,7 @@ describe('User signup tests', () => {
         .send(mockUsers[5])
         .end((err, res) => {
           expect(res.status).to.eql(409);
-          expect(res.body.message).to.eql('This User already exist');
+          expect(res.body.errors.message).to.eql('This User already exist');
           done();
         });
     });
