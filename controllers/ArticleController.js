@@ -147,7 +147,7 @@ export default class ArticleController {
       const { tag, page, limit } = req.query;
       const pageNumber = pagination(page, limit);
       if (tag) {
-        articles = await Article.findAll({
+        articles = await Article.findAndCountAll({
           offset: pageNumber.offset,
           limit: pageNumber.limit,
           subQuery: false,
@@ -181,10 +181,11 @@ export default class ArticleController {
             },
           ],
         });
-        return successResponse(res, 200, 'articles', articles);
+        const { rows: allArticles, count: articlesCount } = articles;
+        return successResponse(res, 200, 'articles', { articlesCount, allArticles });
       }
 
-      articles = await Article.findAll({
+      articles = await Article.findAndCountAll({
         offset: pageNumber.offset,
         limit: pageNumber.limit,
         subQuery: false,
@@ -215,8 +216,8 @@ export default class ArticleController {
           },
         ],
       });
-
-      return successResponse(res, 200, 'articles', articles);
+      const { rows: allArticles, count: articlesCount } = articles;
+      return successResponse(res, 200, 'articles', { articlesCount, allArticles });
     } catch (err) {
       return next(err);
     }

@@ -250,8 +250,8 @@ describe('Article Routes Test', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.property('articles');
-        expect(res.body.articles).to.be.to.a('array');
-        expect(res.body.articles.length).to.eql(1);
+        expect(res.body.articles.allArticles).to.be.a('array');
+        expect(res.body.articles.allArticles.length).to.eql(1);
         done();
       });
   });

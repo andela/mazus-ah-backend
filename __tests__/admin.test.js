@@ -34,9 +34,9 @@ describe('Admin Routes', () => {
       .set('Authorization', `Bearer ${verifiedUserToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.users[0]).to.have.property('id');
-        expect(res.body.users[0]).to.have.property('firstName');
-        expect(res.body.users[0]).to.have.property('lastName');
+        expect(res.body.allUsers.users[0]).to.have.property('id');
+        expect(res.body.allUsers.users[0]).to.have.property('firstName');
+        expect(res.body.allUsers.users[0]).to.have.property('lastName');
         done();
       });
   });

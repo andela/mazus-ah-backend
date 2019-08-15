@@ -27,12 +27,13 @@ export default class AdminController {
     try {
       const { page, limit } = req.query;
       const pageNumber = pagination(page, limit);
-      const allUsers = await User.findAll({
+      const allUsers = await User.findAndCountAll({
         offset: pageNumber.offset,
         limit: pageNumber.limit,
         attributes: ['id', 'email', 'firstName', 'lastName', 'type', 'createdAt']
       });
-      return successResponse(res, 200, 'users', allUsers);
+      const { rows: users, count: usersCount } = allUsers;
+      return successResponse(res, 200, 'allUsers', { usersCount, users });
     } catch (err) {
       return next(err);
     }
