@@ -98,6 +98,7 @@ const users = [
     lastName: 'Stark',
     password: 'Pasusword1',
     confirmPassword: 'Pasusword1',
+    type: 'admin',
   },
   {
     email: 'sansasnow@mail.com',
