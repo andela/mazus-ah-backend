@@ -114,12 +114,21 @@ export default class ArticleController {
                 }]
               },
               { // Comment Thread
+<<<<<<< HEAD
                 model: Comment,
                 as: 'childComments',
                 attributes: ['id', 'body', 'likes', 'createdAt', 'updatedAt'],
                 include: [
                   { // user
                     model: User,
+=======
+                model: models.Comment,
+                as: 'childComments',
+                attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
+                include: [
+                  { // user
+                    model: models.User,
+>>>>>>> bug(comments): enable threaded comments
                     as: 'user',
                     attributes: ['firstName', 'lastName', 'email', 'id'],
                     include: [{
