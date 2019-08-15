@@ -68,6 +68,7 @@ describe('Check ratings', () => {
         expect(res.body.article[0]).to.have.property('userdetails');
         expect(res.body.article[0].userdetails).to.have.property('firstName');
         expect(res.body.article[0].userdetails).to.have.property('lastName');
+        expect(res.body.article[0].userdetails).to.have.property('profile');
         done();
       });
   });

@@ -14,6 +14,7 @@ const {
   Rating,
   Article,
   User,
+  Profile,
 } = models;
 
 
@@ -58,11 +59,20 @@ export default class RatingController {
             where: { articleId: article.dataValues.id },
             attributes: ['rate'],
 
-            include: [{
-              model: User,
-              as: 'userdetails',
-              attributes: ['firstName', 'lastName'],
-            }],
+            include: [
+              {
+                model: User,
+                as: 'userdetails',
+                attributes: ['firstName', 'lastName'],
+                include: [
+                  {
+                    model: Profile,
+                    as: 'profile',
+                    attributes: ['bio', 'avatar']
+                  }
+                ]
+              }
+            ],
             order: [
               [Rating, User, 'firstName', 'DESC']
             ]

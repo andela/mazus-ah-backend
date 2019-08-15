@@ -2,7 +2,7 @@ import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import pagination from '../helpers/Pagination';
 
-const { User } = models;
+const { User, Profile } = models;
 const { successResponse, errorResponse } = ServerResponse;
 
 /**
@@ -30,7 +30,15 @@ export default class AdminController {
       const allUsers = await User.findAll({
         offset: pageNumber.offset,
         limit: pageNumber.limit,
-        attributes: ['id', 'email', 'firstName', 'lastName', 'type', 'createdAt']
+        attributes: ['id', 'email', 'firstName', 'lastName', 'type', 'createdAt'],
+        include: [
+          {
+            model: Profile,
+            as: 'profile',
+            attributes: ['bio', 'avatar']
+
+          }
+        ]
       });
       return successResponse(res, 200, 'users', allUsers);
     } catch (err) {
