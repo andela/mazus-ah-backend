@@ -32,8 +32,7 @@ export default class ProfileController {
       }
       const { avatar, bio } = req.body;
       const profile = await Profile.findOne({ where: { userId: id } });
-      const profileExist = profile ? profile.dataValues.bio : null;
-      if (profileExist) {
+      if (profile.dataValues.bio) {
         return errorResponse(res, 409, 'Profile already exists');
       }
       await Profile.update(
