@@ -37,6 +37,11 @@ module.exports = {
       articleSlug: {
         type: Sequelize.STRING,
       },
+      type: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'parent',
+      },
       likes: {
         type: Sequelize.INTEGER,
         defaultValue: 0,

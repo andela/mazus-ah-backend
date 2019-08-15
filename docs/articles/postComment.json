@@ -36,6 +36,14 @@
           "type": "string",
           "example": "3-bad-guys"
         }
+      },
+      {
+        "name": "commtId",
+        "in": "query",
+        "description": "The id of the comment being replied to",
+        "schema": {
+          "type": "string"
+        }
       }
     ],
     "produces": ["application/json"],
