@@ -23,6 +23,12 @@ module.exports = {
           userId: 'ffe25dbe-29ea-4759-8461-ed116f6739dd',
           articleId: '3eab3b9c-9782-4cc8-95c4-31c3fe5df09e',
         },
+        {
+          id: '6675f038-8c66-4485-9dcf-4660ac27ccd9',
+          body: 'Nice one',
+          userId: '6675f038-8c66-4485-9dcf-4660ac27ccd1',
+          articleId: 'a2cda7e8-28ba-4507-9563-3e4ea280efb6',
+        },
       ],
       {},
     );

@@ -35,6 +35,7 @@ import myReadCount from './statistics/myReadCount.json';
 import reportArticle from './articles/reportArticle.json';
 import createUser from './admin/createUser.json';
 import updateDeleteUser from './admin/updateDeleteUser.json';
+import editComment from './comments/editComment.json';
 
 import getReportedArticles from './articles/getReportedArticles.json';
 import likeComment from './comments/likeComment.json';
@@ -77,6 +78,7 @@ swagger.paths['/statistics/read'] = myReadCount;
 
 swagger.paths['/admin/users'] = createUser;
 swagger.paths['/admin/users/{id}'] = updateDeleteUser;
+swagger.paths['/comments/{commentId}'] = editComment;
 
 swagger.paths['/comments/likes/{commentId}'] = likeComment;
 

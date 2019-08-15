@@ -137,4 +137,41 @@ export default class CommentController {
       return next(err);
     }
   }
+
+  /**
+   * Method to edit a comment
+   *
+   * @static
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {object} details of the edited comment
+   * @memberof CommentController
+   */
+  static async editComment(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { commentId } = req.params;
+      const { body } = req.body;
+      const comment = await Comment.findOne({ where: { id: commentId } });
+      if (!comment) {
+        return errorResponse(res, 404, 'That comment does not exist');
+      }
+      if (comment.dataValues.userId !== id) {
+        return errorResponse(res, 403, 'You are not allowed to edit another user\'s comment');
+      }
+      const editedComment = await Comment.update(
+        {
+          body
+        },
+        {
+          where: { id: commentId },
+          returning: true
+        }
+      );
+      return successResponse(res, 200, 'comment', editedComment[1][0]);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
