@@ -2,7 +2,12 @@ import { Op } from 'sequelize';
 import ServerResponse from '../modules';
 import models from '../database/models';
 
-const { User, Article, Tag } = models;
+const {
+  User,
+  Article,
+  Tag,
+  Profile
+} = models;
 const { successResponse, errorResponse } = ServerResponse;
 
 /**
@@ -114,6 +119,11 @@ class SearchController {
                   attributes: ['name'],
                 }
               ]
+            },
+            {
+              model: Profile,
+              as: 'profile',
+              attributes: ['bio', 'avatar']
             }
           ]
         });
@@ -134,7 +144,14 @@ class SearchController {
             model: User,
             as: 'author',
             attributes: ['firstName', 'lastName'],
-          }
+            include: [
+              {
+                model: Profile,
+                as: 'profile',
+                attributes: ['bio', 'avatar']
+              }
+            ]
+          },
         ]
       });
 
@@ -155,6 +172,11 @@ class SearchController {
           ]
         },
         include: [
+          {
+            model: Profile,
+            as: 'profile',
+            attributes: ['bio', 'avatar']
+          },
           {
             model: Article,
             as: 'articles',

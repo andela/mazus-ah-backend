@@ -2,7 +2,7 @@ import models from '../database/models';
 import ServerResponse from '../modules';
 
 
-const { User, Follower } = models;
+const { User, Follower, Profile } = models;
 const { successResponse, errorResponse } = ServerResponse;
 
 
@@ -107,7 +107,14 @@ export default class Followership {
         {
           model: User,
           as: 'followings',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'firstName', 'lastName'],
+          include: [
+            {
+              model: Profile,
+              as: 'profile',
+              attributes: ['bio', 'avatar']
+            }
+          ]
         }
       ]
     });
@@ -139,7 +146,14 @@ export default class Followership {
         {
           model: User,
           as: 'followings',
-          attributes: ['id', 'firstName', 'lastName']
+          attributes: ['id', 'firstName', 'lastName'],
+          include: [
+            {
+              model: Profile,
+              as: 'profile',
+              attributes: ['bio', 'avatar']
+            }
+          ]
         }
       ]
     });
