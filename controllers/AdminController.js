@@ -137,7 +137,7 @@ export default class AdminController {
         return errorResponse(res, 404, { message: 'User not found' });
       }
       if (findUser.status === 'inactive') {
-        return errorResponse(res, 400, { message: 'User has already been banned' });
+        return successResponse(res, 200, 'user', { message: 'User has already been banned' });
       }
       await User.update({ status: 'inactive' }, { where: { id } });
       return successResponse(res, 200, 'user', { message: 'User has been banned successfully' });
@@ -165,7 +165,7 @@ export default class AdminController {
         return errorResponse(res, 404, { message: 'User not found' });
       }
       if (findUser.status === 'active') {
-        return errorResponse(res, 400, { message: 'User has already been unbanned' });
+        return successResponse(res, 200, 'user', { message: 'User has already been unbanned' });
       }
       await User.update({ status: 'active' }, { where: { id } });
       return successResponse(res, 200, 'user', { message: 'User has been unbanned successfully' });
