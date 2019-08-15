@@ -85,9 +85,9 @@ describe('Admin Routes', () => {
       .patch(`${baseUrl}/ban/${userId}`)
       .set('Authorization', `Bearer ${verifiedUserToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(400);
-        expect(res.body.errors).to.be.a('object');
-        expect(res.body.errors.message).to.eql('User has already been banned');
+        expect(res.status).to.eql(200);
+        expect(res.body.user).to.be.a('object');
+        expect(res.body.user.message).to.eql('User has already been banned');
         done();
       });
   });
@@ -109,9 +109,9 @@ describe('Admin Routes', () => {
       .patch(`${baseUrl}/unban/${userId}`)
       .set('Authorization', `Bearer ${verifiedUserToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(400);
-        expect(res.body.errors).to.be.a('object');
-        expect(res.body.errors.message).to.eql('User has already been unbanned');
+        expect(res.status).to.eql(200);
+        expect(res.body.user).to.be.a('object');
+        expect(res.body.user.message).to.eql('User has already been unbanned');
         done();
       });
   });
