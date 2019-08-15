@@ -55,7 +55,9 @@ export default class AdminController {
       const findUser = await User.findOne({
         where: { id }
       });
-      if (!findUser) errorResponse(res, 404, { user: 'User not found' });
+      if (!findUser) {
+        return errorResponse(res, 404, { user: 'User not found' });
+      }
       await User.destroy({ where: { id: findUser.id } });
       return successResponse(res, 200, 'user', { message: 'User has been deleted' });
     } catch (err) {
@@ -85,7 +87,9 @@ export default class AdminController {
       } = req.body;
 
       const findUser = await User.findOne({ where: { id } });
-      if (!findUser) errorResponse(res, 404, { user: 'User not found' });
+      if (!findUser) {
+        return errorResponse(res, 404, { user: 'User not found' });
+      }
       await User.update({
         email,
         firstName,
@@ -129,8 +133,12 @@ export default class AdminController {
     try {
       const { id } = req.params;
       const findUser = await User.findOne({ where: { id } });
-      if (!findUser) errorResponse(res, 404, { message: 'User not found' });
-      if (findUser.status === 'inactive') errorResponse(res, 400, { message: 'User has already been banned' });
+      if (!findUser) {
+        return errorResponse(res, 404, { message: 'User not found' });
+      }
+      if (findUser.status === 'inactive') {
+        return errorResponse(res, 400, { message: 'User has already been banned' });
+      }
       await User.update({ status: 'inactive' }, { where: { id } });
       return successResponse(res, 200, 'user', { message: 'User has been banned successfully' });
     } catch (err) {
@@ -153,8 +161,12 @@ export default class AdminController {
     try {
       const { id } = req.params;
       const findUser = await User.findOne({ where: { id } });
-      if (!findUser) errorResponse(res, 404, { message: 'User not found' });
-      if (findUser.status === 'active') errorResponse(res, 400, { message: 'User has already been unbanned' });
+      if (!findUser) {
+        return errorResponse(res, 404, { message: 'User not found' });
+      }
+      if (findUser.status === 'active') {
+        return errorResponse(res, 400, { message: 'User has already been unbanned' });
+      }
       await User.update({ status: 'active' }, { where: { id } });
       return successResponse(res, 200, 'user', { message: 'User has been unbanned successfully' });
     } catch (err) {
