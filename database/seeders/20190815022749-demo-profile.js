@@ -13,6 +13,11 @@ module.exports = {
           avatar: 'url.avatar.472.com'
         },
         {
+          id: '588ae2cd-de3f-404a-87b3-8a6d50864832',
+          userId: '588ae2cd-de3f-404a-87b3-8a6d50864833',
+          avatar: 'url.avatar.472.com'
+        },
+        {
           id: '8a9589fb-6b25-4df9-92ee-2b20ba4f9407',
           userId: '1a9589fb-5b25-4df9-92ee-2b20ba4f9407',
           bio: 'i think we all loving coding and little faffing',

@@ -44,7 +44,7 @@ describe('Profile test', () => {
   describe('Create profile', () => {
     it('should throw a 500 when an error occurs on the server', (done) => {
       const stub = sinon
-        .stub(Profile, 'create')
+        .stub(Profile, 'update')
         .rejects(new Error('Foreign Key constraint'));
       chai
         .request(app)
