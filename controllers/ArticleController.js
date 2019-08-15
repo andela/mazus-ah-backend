@@ -99,12 +99,34 @@ export default class ArticleController {
           { // Article Comments
             model: Comment,
             as: 'articlecomment',
+            where: { type: 'parent' },
             attributes: ['body', 'likes', 'highlightedText', 'containsHighlightedText', 'createdAt', 'updatedAt'],
+            required: false,
             include: [
               { // user
                 model: User,
                 as: 'user',
                 attributes: ['firstName', 'lastName', 'email', 'id'],
+                include: [{
+                  model: Profile,
+                  as: 'profile',
+                }]
+              },
+              { // Comment Thread
+                model: models.Comment,
+                as: 'childComments',
+                attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
+                include: [
+                  { // user
+                    model: models.User,
+                    as: 'user',
+                    attributes: ['firstName', 'lastName', 'email', 'id'],
+                    include: [{
+                      model: Profile,
+                      as: 'profile',
+                    }]
+                  }
+                ]
               }
             ]
           },
@@ -167,18 +189,6 @@ export default class ArticleController {
                 as: 'profile',
               }]
             },
-            { // Article Comments
-              model: Comment,
-              as: 'articlecomment',
-              attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
-              include: [
-                { // user
-                  model: User,
-                  as: 'user',
-                  attributes: ['firstName', 'lastName', 'email', 'id'],
-                }
-              ]
-            },
           ],
         });
         return successResponse(res, 200, 'articles', articles);
@@ -200,18 +210,6 @@ export default class ArticleController {
               model: Profile,
               as: 'profile',
             }]
-          },
-          { // Article Comments
-            model: Comment,
-            as: 'articlecomment',
-            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
-            include: [
-              { // user
-                model: User,
-                as: 'user',
-                attributes: ['firstName', 'lastName', 'email', 'id'],
-              }
-            ]
           },
         ],
       });
@@ -260,18 +258,6 @@ export default class ArticleController {
               as: 'profile',
             }]
           },
-          { // Article Comments
-            model: Comment,
-            as: 'articlecomment',
-            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
-            include: [
-              { // user
-                model: User,
-                as: 'user',
-                attributes: ['firstName', 'lastName', 'email', 'id'],
-              }
-            ]
-          },
         ],
       });
 
@@ -311,18 +297,6 @@ export default class ArticleController {
               model: Profile,
               as: 'profile',
             }]
-          },
-          { // Article Comments
-            model: Comment,
-            as: 'articlecomment',
-            attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
-            include: [
-              { // user
-                model: User,
-                as: 'user',
-                attributes: ['firstName', 'lastName', 'email', 'id'],
-              }
-            ]
           },
         ],
         order: [['updatedAt', 'DESC']],

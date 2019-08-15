@@ -48,6 +48,28 @@ export default class CommentController {
         return successResponse(res, 201, 'comment', articleComment.dataValues);
       }
 
+      // Threaded comments
+      if (req.query.commtId) {
+        const parentCommentId = req.query.commtId;
+
+        // get parent comment
+        const parentComment = await models.Comment.findByPk(parentCommentId);
+
+        // create new child comment
+        const newChildComment = await models.Comment.create({
+          body,
+          userId,
+          articleId: id,
+          articleSlug: slug,
+          type: 'child'
+        });
+
+        // Create relationship
+        await parentComment.addChildComments(newChildComment);
+
+        return successResponse(res, 201, 'comment', newChildComment.dataValues);
+      }
+
       const articleComment = await Comment.create({
         body,
         userId,
