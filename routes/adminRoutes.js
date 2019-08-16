@@ -12,8 +12,12 @@ const {
   banUser,
   unbanUser,
   deleteArticle,
+<<<<<<< HEAD
   deleteComment,
   signUpAdmin
+=======
+  deleteComment
+>>>>>>> feature(admin):admin can delete article and comment
 } = AdminController;
 const { verifyToken, verifySuperAdmin, verifyAdmins } = AuthMiddleware;
 const { getReportedArticles } = ArticleController;

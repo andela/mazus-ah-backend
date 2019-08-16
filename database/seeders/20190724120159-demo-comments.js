@@ -30,6 +30,9 @@ module.exports = {
           articleId: 'a2cda7e8-28ba-4507-9563-3e4ea280efb6',
         },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature(admin):admin can delete article and comment
         {
           id: '6675f038-8c66-4485-9dcf-4660ac27ccd5',
           body: 'Nice one',
@@ -42,8 +45,11 @@ module.exports = {
           userId: '6675f038-8c66-4485-9dcf-4660ac27ccd1',
           articleId: 'a2cda7e8-28ba-4507-9563-3e4ea280efb6',
         },
+<<<<<<< HEAD
 =======
 >>>>>>> feature(comment) user can edit comment
+=======
+>>>>>>> feature(admin):admin can delete article and comment
       ],
       {},
     );
