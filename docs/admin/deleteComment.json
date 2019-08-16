@@ -1,0 +1,93 @@
+{
+    "delete": {
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "tags": ["Admin"],
+      "summary": "Delete Comment",
+      "description": "Admin can delete any comment \n",
+      "parameters": [
+        {
+          "name": "commentId",
+          "in": "path",
+          "required": true,
+          "description": "The id of the comment to be deleted",
+          "schema": {
+            "type": "string",
+            "example": "27e3a084-fbe6-4048-a2af-e7af88d3d3df"
+          }
+        }
+      ],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "Comment deleted successfully",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "comment": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Comment deleted successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "When the comment doesn't exist",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Comment not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "When a non-admn tries to delete a comment",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "User not authorized"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Route accessed with an invalid token",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string", "example": "Invalid token" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

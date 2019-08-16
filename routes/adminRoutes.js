@@ -13,6 +13,8 @@ const {
   updateUser,
   banUser,
   unbanUser,
+  deleteArticle,
+  deleteComment
 } = AdminController;
 const { verifyToken, verifySuperAdmin, verifyAdmins } = AuthMiddleware;
 const { getReportedArticles } = ArticleController;
@@ -26,6 +28,8 @@ router.patch('/users/:id', verifyToken, verifySuperAdmin, updateUser);
 router.get('/reportedarticles', verifyToken, verifyAdmins, getReportedArticles);
 router.patch('/ban/:id', verifyToken, verifyAdmins, banUser);
 router.patch('/unban/:id', verifyToken, verifyAdmins, unbanUser);
+router.delete('/articles/:slug', verifyToken, verifyAdmins, deleteArticle);
+router.delete('/comments/:commentId', verifyToken, verifyAdmins, deleteComment);
 
 router.get('/comments/:commentId', verifyToken, verifyAdmins, getEditCommentHistory);
 export default router;

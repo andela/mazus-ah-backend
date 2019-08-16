@@ -2,7 +2,12 @@ import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import pagination from '../helpers/Pagination';
 
-const { User, Profile } = models;
+const {
+  User,
+  Profile,
+  Article,
+  Comment
+} = models;
 const { successResponse, errorResponse } = ServerResponse;
 
 /**
@@ -178,6 +183,83 @@ export default class AdminController {
       }
       await User.update({ status: 'active' }, { where: { id } });
       return successResponse(res, 200, 'user', { message: 'User has been unbanned successfully' });
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  /**
+   * Admin can delete an article
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} object with message stating admin has deleted an article
+   *
+   * @memberof AdminController
+   */
+  static async deleteArticle(req, res, next) {
+    try {
+      const { slug } = req.params;
+
+      const foundArticle = await Article.findOne({
+        where: {
+          slug
+        }
+      });
+
+      if (!foundArticle) {
+        return errorResponse(res, 404, { article: 'Article not found' });
+      }
+
+      await Article.destroy({
+        where: {
+          slug
+        }
+      });
+
+      return successResponse(res, 200, 'article', { message: 'Article has been deleted' });
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  /**
+   * Admin can delete any comment
+   *
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} object with message stating admin has deleted a comment
+   *
+   * @memberof AdminController
+   */
+  static async deleteComment(req, res, next) {
+    try {
+      const { commentId } = req.params;
+
+      const foundComment = await Comment.findOne({
+        where: {
+          id: commentId
+        }
+      });
+
+      if (!foundComment) {
+        return errorResponse(res, 404, { comment: 'Comment not found' });
+      }
+
+      await Comment.destroy({
+        where: {
+          id: commentId
+        }
+      });
+      return successResponse(res, 200, 'comment', { message: 'Comment has been deleted' });
     } catch (err) {
       return next(err);
     }
