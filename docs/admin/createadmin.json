@@ -1,0 +1,104 @@
+{
+    "post": {
+    "security": [
+        {
+            "Bearer": []
+        }
+        ],
+      "tags": [
+        "Admin"
+      ],
+      "summary": "signup admin",
+      "description": "Signup admin. \n",
+      "parameters": [
+        {
+          "name": "Create Account",
+          "in": "body",
+          "description": "request payload",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "tunjiabioye@gmail.com"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "Tunji"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Abioye"
+              },
+              "password": {
+                "type": "string",
+                "example": "pa55w0rd"
+              },
+              "type": {
+                "type": "string",
+                "example": "admin"
+              }
+            }
+          }
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "User Created",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 200
+              },
+              "method": {
+                "type": "string",
+                "example": "POST"
+              },
+              "message": {
+                "type": "string",
+                "example": "Your Account has been created successfully!"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjA0ZWRiMDZiZDc2MTQwMzgyOWNkMzkiLCJuYW1lIjoiQW1vcyBUb2JpIiwiZW1haWwiOiJ0b2JpQGdva2FkYS5uZyIsImlhdCI6MTUyNzA0OTY0OSwiZXhwIjoxNTI3MTM2MDQ5fQ.-mrtcyVbcCmfyP7HovesvPLT4CFD3kCLzmY24BbKPcU"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Email is required",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 400
+              },
+              "method": {
+                "type": "string",
+                "example": "POST"
+              },
+              "message": {
+                "type": "string",
+                "example": "Please input a valid email address"
+              },
+              "data": {
+                "type": "string",
+                "example": null
+              }
+            }
+          }
+        }
+      }
+    }
+  }

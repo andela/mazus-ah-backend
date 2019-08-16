@@ -44,6 +44,7 @@ import banUser from './admin/banUser.json';
 import unbanUser from './admin/unbanUser.json';
 import deleteArticle from './admin/deleteArticle.json';
 import deleteComment from './admin/deleteComment.json';
+import createAdmin from './admin/createadmin.json';
 
 swagger.paths['/auth/signup'] = signup;
 swagger.paths['/auth/signin'] = login;
@@ -81,7 +82,7 @@ swagger.paths['/search?keyword'] = searchArticle;
 swagger.paths['/articles/{slug}/share/mail'] = shareArticle;
 swagger.paths['/statistics/published'] = articlesReadCount;
 swagger.paths['/statistics/read'] = myReadCount;
-
+swagger.paths['/admin/createuser'] = createAdmin;
 swagger.paths['/admin/users'] = createUser;
 swagger.paths['/admin/users/{id}'] = updateDeleteUser;
 swagger.paths['/comments/{commentId}'] = editComment;
