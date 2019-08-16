@@ -242,6 +242,16 @@ module.exports = {
           status: 'inactive',
           password: `${password}`,
         },
+        {
+          id: '7b76954f-80df-413f-809f-66b5968d03fb',
+          firstName: 'Alex',
+          lastName: 'Kamali',
+          email: 'alex.kamali@outlook.com',
+          password: Helper.hashPassword('P455w0rd'),
+          isVerified: true,
+          type: 'admin',
+          verificationToken: '#alex.kamali@outlook.com#'
+        },
       ],
       {},
     );

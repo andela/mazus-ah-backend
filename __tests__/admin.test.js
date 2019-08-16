@@ -1,16 +1,20 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import sinon from 'sinon';
 import app from '..';
 import seededUsers from './mockData/seededUsers';
 import mockUsers from './mockData/mockUsers';
+import models from '../database/models';
 
 chai.use(chaiHttp);
 
 const url = '/api/v1/admin/users';
 const baseUrl = '/api/v1/admin';
 const { expect } = chai;
+const { Comment } = models;
 let verifiedUserToken;
+let adminToken;
 const userId = '356304da-50bc-4488-9c85-88874a9efb16';
 
 describe('Admin Routes', () => {
@@ -163,6 +167,80 @@ describe('Admin Routes', () => {
         expect(res.status).to.eql(404);
         expect(res.body.errors).to.be.a('object');
         expect(res.body.errors.user).to.eql('User not found');
+        done();
+      });
+  });
+});
+
+describe('Testing admin routes for articles and comments', () => { 
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send({ email: 'alex.kamali@outlook.com', password: 'P455w0rd' })
+      .end((err, res) => {
+        const { token } = res.body.user;
+        adminToken = token;
+        done();
+      });
+  });
+  it('should return a success response for deleting an article', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/admin/articles/Skull-is-9563-3e4ea280efb9')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body.article.message).to.eql('Article has been deleted');
+        done();
+      });
+  });
+  it('should return an error message for attempting to delete an article again', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/admin/articles/Skull-is-9563-3e4ea280efb9')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.errors.article).to.eql('Article not found');
+        done();
+      });
+  });
+
+  it('should return a success response for deleting a comment', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/admin/comments/6675f038-8c66-4485-9dcf-4660ac27ccd5')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body.comment.message).to.eql('Comment has been deleted');
+        done();
+      });
+  });
+  it('should return an error message for attempting to delete a comment again', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/admin/comments/6675f038-8c66-4485-9dcf-4660ac27ccd5')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.errors.comment).to.eql('Comment not found');
+        done();
+      });
+  });
+  it('should throw a server error', (done) => {
+    const stub = sinon.stub(Comment, 'destroy');
+    const error = new Error('Something went wrong');
+    stub.yields(error);
+    chai.request(app)
+      .delete('/api/v1/admin/comments/6675f038-8c66-4485-9dcf-4660ac27ccd0')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        expect(res.status).to.eql(500);
         done();
       });
   });

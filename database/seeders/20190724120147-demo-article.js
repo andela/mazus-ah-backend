@@ -351,6 +351,16 @@ module.exports = {
           userId: 'e89695aa-1f7e-468c-89dd-5fc2332e31f1',
           readTime: 5,
         },
+        {
+          id: 'a2cda7e8-28ba-4507-9563-3e4ea280efb9',
+          title: 'Skull is coming',
+          slug: 'Skull-is-9563-3e4ea280efb9',
+          body: 'John Kamali to face Skull in',
+          status: 'published',
+          description: 'Son of Kamali',
+          userId: 'e89695aa-1f7e-468c-89dd-5fc2332e31f1',
+          readTime: 8,
+        },
       ],
       {},
     );
