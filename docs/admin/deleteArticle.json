@@ -1,0 +1,93 @@
+{
+    "delete": {
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "tags": ["Admin"],
+      "summary": "Delete Article",
+      "description": "Admin can delete any article \n",
+      "parameters": [
+        {
+          "name": "slug",
+          "in": "path",
+          "required": true,
+          "description": "The slug of the article to be deleted",
+          "schema": {
+            "type": "string",
+            "example": "getting-started-with-nodejs-&-express-1564498223366-74536"
+          }
+        }
+      ],
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "Article deleted successfully",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "article": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Article deleted successfully"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "When the article doesn't exist",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "Article not found"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "When a non-admn tries to delete an article",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "example": "User not authorized"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Route accessed with an invalid token",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string", "example": "Invalid token" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
