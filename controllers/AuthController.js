@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import gravatar from 'gravatar';
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
@@ -12,6 +13,7 @@ const { successResponse, errorResponse } = ServerResponse;
 const {
   BlacklistedToken,
   User,
+  Profile,
 } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
 const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
@@ -73,22 +75,39 @@ export default class AuthController {
     };
 
     const registeredUser = await User.create(user);
+    const {
+      id,
+      firstName: rFirstName,
+      lastName: rLastName,
+      isVerified,
+      type,
+    } = registeredUser;
     const token = Helper.createToken({
-      id: registeredUser.id,
-      firstName: registeredUser.firstName,
-      lastName: registeredUser.lastName,
-      isVerified: registeredUser.isVerified,
+      id,
+      firstName: rFirstName,
+      lastName: rLastName,
+      isVerified,
       email,
-      type: registeredUser.type,
+      type,
     });
     // This line sends the registered user an email
     /* istanbul ignore next-line */
     if (process.env.NODE_ENV !== 'test') {
       EmailVerification.sendVerificationEmail(
-        req, registeredUser.email, registeredUser.firstName,
+        req, email, rFirstName,
         verificationToken
       );
     }
+    let avatar = gravatar.url(email, {
+      s: '200',
+      r: 'pg',
+      d: 'mm'
+    });
+    avatar = avatar.substring(2);
+    await Profile.create({
+      userId: id,
+      avatar,
+    });
     return res.status(201).send({
       message: 'Your Account has been created successfully!',
       user: {

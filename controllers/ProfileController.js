@@ -31,15 +31,19 @@ export default class ProfileController {
         return errorResponse(res, 401, 'You need to verify your account first');
       }
       const { avatar, bio } = req.body;
-      const profileExist = await Profile.findOne({ where: { userId: id } });
-      if (profileExist) {
+      const profile = await Profile.findOne({ where: { userId: id } });
+      if (profile.dataValues.bio) {
         return errorResponse(res, 409, 'Profile already exists');
       }
-      await Profile.create({
-        userId: id,
-        avatar,
-        bio,
-      });
+      await Profile.update(
+        {
+          avatar,
+          bio,
+        },
+        {
+          where: { userId: id }
+        }
+      );
       const { firstName, lastName } = req.user;
       const resData = {
         message: 'Your profile has been created successfully',
