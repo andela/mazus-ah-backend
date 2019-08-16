@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     articleSlug: {
       type: DataTypes.STRING,
     },
+    type: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      defaultValue: 'parent',
+    },
     likes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
@@ -45,6 +50,20 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.User, {
       foreignKey: 'userId',
       as: 'user'
+    });
+    Comment.belongsToMany(models.Comment, {
+      foreignKey: 'commentId',
+      otherKey: 'subcommentId',
+      as: 'childComments',
+      through: 'CommentThread',
+      timestamps: false,
+    });
+    Comment.belongsToMany(models.Comment, {
+      foreignKey: 'subcommentId',
+      otherKey: 'commentId',
+      as: 'parentComments',
+      through: 'CommentThread',
+      timestamps: false,
     });
   };
   return Comment;
