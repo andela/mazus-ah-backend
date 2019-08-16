@@ -17,6 +17,7 @@ const { Comment } = models;
 let verifiedUserToken;
 let adminToken;
 const userId = '356304da-50bc-4488-9c85-88874a9efb16';
+let unverifiedUserToken;
 
 describe('Admin Routes', () => {
   before((done) => {
@@ -30,6 +31,16 @@ describe('Admin Routes', () => {
       .end((err, res) => {
         const { token } = res.body.user;
         verifiedUserToken = token;
+        done();
+      });
+  });
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(seededUsers[0])
+      .end((err, res) => {
+        const { token } = res.body.user;
+        unverifiedUserToken = token;
         done();
       });
   });
@@ -60,6 +71,18 @@ describe('Admin Routes', () => {
         expect(res.body.user).to.have.property('token');
         expect(decoded.type).to.eql('admin');
 
+        done();
+      });
+  });
+  it('should not successfully create an admin when using a normal user token', (done) => {
+    chai
+      .request(app)
+      .post(`${baseUrl}/createuser`)
+      .set('Authorization', `Bearer ${unverifiedUserToken}`)
+      .send(mockUsers[17])
+      .end((err, res) => {
+        expect(res.status).to.eql(403);
+        expect(res.body.errors.message).to.eql('User not authorized');
         done();
       });
   });
