@@ -553,7 +553,16 @@ export default class ArticleController {
       const userId = req.user.id;
       const { reportTitle, reportBody } = req.body;
 
-      const article = await Article.findOne({ where: { slug } });
+      const article = await Article.findOne({
+        where: { slug },
+        include: [
+          { // Author
+            model: User,
+            as: 'author',
+            attributes: ['id', 'email', 'firstName'],
+          }
+        ]
+      });
       if (!article) return errorResponse(res, 404, { message: 'Article not found' });
 
       const articleId = article.dataValues.id;
@@ -575,7 +584,7 @@ export default class ArticleController {
           { where: { slug } },
         );
       }
-
+      Notification.reportedArticle(req, article, report);
       return successResponse(res, 201, 'report', report.dataValues);
     } catch (error) {
       return next(error);

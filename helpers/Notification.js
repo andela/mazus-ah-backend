@@ -122,6 +122,32 @@ class Notification {
       });
     }
   }
+
+  /**
+   *
+   * @method reportedArticle
+   * @param {object} requestInfo request object
+   * @param {object} article the article object
+   * @param {object} reportDetails
+   * @returns {null} null
+   */
+  static async reportedArticle(requestInfo, article, reportDetails) {
+    const { reportTitle, reportBody, createdAt } = reportDetails;
+    const { title, slug } = article.dataValues;
+    const { email, firstName, id } = article.dataValues.author.dataValues;
+    const payload = {
+      articleTitle: title,
+      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${slug}`,
+      titleOfReport: reportTitle,
+      bodyOfReport: reportBody,
+      time: createdAt,
+    };
+    await this.inAppNotification(payload, id, false, 'reported article');
+    await this.pushNotification(id, payload);
+    if (process.env.NODE_ENV !== 'test') {
+      EmailNotification.sendEmailForReportedArticle(email, firstName, payload);
+    }
+  }
 }
 
 export default Notification;
