@@ -230,7 +230,18 @@ module.exports = {
           isVerified: true,
           verificationToken: 'jamal.sabri@outlook.com#',
           type: 'super-admin'
-        }
+        },
+        {
+          id: '72c4f1fe-d442-4043-a2d1-53cf7ee273c7',
+          firstName: 'banned ',
+          lastName: 'guy',
+          email: 'bannedguy@test.com',
+          isVerified: true,
+          verificationToken: 'bannedguy@test.com#',
+          type: 'user',
+          status: 'inactive',
+          password: `${password}`,
+        },
       ],
       {},
     );

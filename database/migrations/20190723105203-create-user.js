@@ -37,6 +37,10 @@ module.exports = {
         type: Sequelize.ENUM('admin', 'user', 'super-admin'),
         defaultValue: 'user',
       },
+      status: {
+        type: Sequelize.ENUM('active', 'inactive'),
+        defaultValue: 'active',
+      },
       emailNotify: {
         defaultValue: true,
         type: Sequelize.BOOLEAN,
