@@ -40,7 +40,7 @@ export default class AuthController {
       const {
         firstName, lastName, email, password, confirmPassword
       } = req.body;
-      await signUpUser(req, res, firstName, lastName, email, password, confirmPassword,);
+      await signUpUser(req, res, firstName, lastName, email, password, confirmPassword);
     } catch (err) {
       return next(err);
     }
