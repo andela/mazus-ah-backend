@@ -53,13 +53,13 @@ export default class AuthController {
 
       const foundUser = await User.findOne({ where: { email } });
       if (foundUser) {
-        return res.status(409).send({
+        return errorResponse(res, 409, {
           message: 'This User already exist',
         });
       }
 
       if (password !== confirmPassword) {
-        return res.status(400).send({
+        return errorResponse(res, 400, {
           message: "Password doesn't match, Please check you are entering the right thing!",
         });
       }

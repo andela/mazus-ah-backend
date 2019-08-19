@@ -37,14 +37,14 @@ describe('User signup tests', () => {
           done();
         });
     });
-    it('should return an error when an email already exist', (done) => {
+    it('should return an error when email already exist', (done) => {
       chai
         .request(app)
         .post(`${url}/auth/signup`)
         .send(mockUsers[5])
         .end((err, res) => {
           expect(res.status).to.eql(409);
-          expect(res.body.message).to.eql('This User already exist');
+          expect(res.body.errors.message).to.eql('This User already exist');
           done();
         });
     });
