@@ -22,6 +22,7 @@
     "migrate": "cross-env NODE_ENV=test && sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seedall": "sequelize db:seed:all",
+    "reset:db": "npm run migrate:undo && npm run migrate && npm run seedall",
     "heroku-postbuild": "npm run migrate",
     "dev:migrate": "sequelize db:migrate"
   },
