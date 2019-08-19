@@ -29,11 +29,14 @@ describe('Reading statistics for articles published by an author', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(200);
-        expect(res.body.allArticlesStatistics[1].id).to.eql('a2cda7e8-28ba-4507-9563-3e4ea280efb6');
-        expect(res.body.allArticlesStatistics[1].title).to.eql('Skull is coming to town');
-        expect(res.body.allArticlesStatistics[1].slug).to.eql('Skull-is-9563-3e4ea280efb6');
-        expect(res.body.allArticlesStatistics[1].userId).to.eql('e89695aa-1f7e-468c-89dd-5fc2332e31f1');
-        expect(res.body.allArticlesStatistics[1].readCount).to.eql(0);
+        expect(res.body).to.have.property('statistics');
+        expect(res.body.statistics).to.be.a('object');
+        expect(res.body.statistics).to.have.property('articles').to.be.a('array');
+        expect(res.body.statistics.articles[1].id).to.eql('a2cda7e8-28ba-4507-9563-3e4ea280efb6');
+        expect(res.body.statistics.articles[1].title).to.eql('Skull is coming to town');
+        expect(res.body.statistics.articles[1].slug).to.eql('Skull-is-9563-3e4ea280efb6');
+        expect(res.body.statistics.articles[1].userId).to.eql('e89695aa-1f7e-468c-89dd-5fc2332e31f1');
+        expect(res.body.statistics.articles[1].readCount).to.eql(0);
         done();
       });
   });
@@ -127,7 +130,11 @@ describe('Reading statistics for articles an author or user has read', () => {
       .get(`${url}/statistics/read`)
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
-        expect(res.body.articlesRead).to.eql(0);
+        expect(res.body).to.have.property('statistics');
+        expect(res.body.statistics).to.be.a('object');
+        expect(res.body.statistics).to.have.property('articlesRead');
+        expect(res.body.statistics.articlesRead).to.be.a('number');
+        expect(res.body.statistics.articlesRead).to.eql(0);
         done();
       });
   });
