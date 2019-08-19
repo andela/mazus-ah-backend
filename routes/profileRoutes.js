@@ -5,11 +5,10 @@ import ProfileController from '../controllers/ProfileController';
 import Validate from '../middlewares/inputValidation';
 import Followership from '../controllers/followershipController';
 
-const { createProfile, editProfile, viewProfile } = ProfileController;
+const { editProfile, viewProfile } = ProfileController;
 const {
   validateId,
   editProfileValidate,
-  createProfileValidate,
   validateParamsId,
 } = Validate;
 const {
@@ -22,7 +21,6 @@ const {
 const { verifyToken } = AuthMiddlewware;
 const router = Router();
 
-router.post('/', verifyToken, createProfileValidate, createProfile);
 router.patch('/:id', verifyToken, editProfileValidate, editProfile);
 router.get('/:id', verifyToken, validateId, viewProfile);
 router.post('/follow/:id', verifyToken, validateParamsId, follow);

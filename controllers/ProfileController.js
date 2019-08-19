@@ -15,52 +15,6 @@ const { successResponse, errorResponse } = ServerResponse;
 export default class ProfileController {
   /**
    *
-   * @method createProfile
-   * @description Create a profile for registered user
-   * @param {object} req express request object
-   * @param {object} res express response object
-   * @param {function} next
-   * @returns {object} returns profile info
-   * @memberof ProfileController
-   */
-  static async createProfile(req, res, next) {
-    try {
-      const { id } = req.user;
-      const { dataValues } = await User.findOne({ where: { id } });
-      if (!dataValues.isVerified) {
-        return errorResponse(res, 401, 'You need to verify your account first');
-      }
-      const { avatar, bio } = req.body;
-      const profile = await Profile.findOne({ where: { userId: id } });
-      if (profile.dataValues.bio) {
-        return errorResponse(res, 409, 'Profile already exists');
-      }
-      await Profile.update(
-        {
-          avatar,
-          bio,
-        },
-        {
-          where: { userId: id }
-        }
-      );
-      const { firstName, lastName } = req.user;
-      const resData = {
-        message: 'Your profile has been created successfully',
-        profile: {
-          name: `${firstName} ${lastName}`,
-          bio,
-          avatar,
-        },
-      };
-      return successResponse(res, 201, 'user', resData);
-    } catch (error) {
-      return next(error);
-    }
-  }
-
-  /**
-   *
    * @method editProfile
    * @param {object} req express request object
    * @param {object} res express response object
