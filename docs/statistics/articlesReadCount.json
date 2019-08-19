@@ -1,46 +1,51 @@
 {
-    "get": {
-        "security": [
-            {
-                "Bearer": []
-            }
-        ],
-        "tags": ["Statistics"],
-        "summary": "Get articles by author and their read count",
-        "description": "Return all articles by an author and their read count \n",
-        "produces": ["application/json"],
-        "responses": {
-            "200": {
-            "description": "articles and their readcount",
-            "schema": {
-                "type": "object",
-                "properties": {
-                "allArticlesStatistics": {
-                    "type": "array",
-                    "example": [
+  "get": {
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "tags": ["Statistics"],
+    "summary": "Get articles by author and their read count",
+    "description": "Return all articles by an author and their read count \n",
+    "produces": ["application/json"],
+    "responses": {
+      "200": {
+        "description": "articles and their readcount",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "statistics": {
+              "type": "object",
+              "properties": {
+                "articles": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "allArticlesStatistics": [
                         {
-                            "allArticlesStatistics": [
-                                {
-                                    "title": "Bond 25",
-                                    "id": "5b7ab9cb-054e-40dd-990a-7d0edb56bb97",
-                                    "readCount": 0,
-                                    "slug": "Bond-25-7d0edb56bb97",
-                                    "userId": "e89695aa-1f7e-468c-89dd-5fc2332e31f1"
-                                },
-                                {
-                                    "title": "Skull is coming to town",
-                                    "id": "a2cda7e8-28ba-4507-9563-3e4ea280efb6",
-                                    "readCount": 5,
-                                    "slug": "Skull-is-9563-3e4ea280efb6",
-                                    "userId": "e89695aa-1f7e-468c-89dd-5fc2332e31f1"
-                                }
-                            ]
+                          "title": "Bond 25",
+                          "id": "5b7ab9cb-054e-40dd-990a-7d0edb56bb97",
+                          "readCount": 0,
+                          "slug": "Bond-25-7d0edb56bb97",
+                          "userId": "e89695aa-1f7e-468c-89dd-5fc2332e31f1"
+                        },
+                        {
+                          "title": "Skull is coming to town",
+                          "id": "a2cda7e8-28ba-4507-9563-3e4ea280efb6",
+                          "readCount": 5,
+                          "slug": "Skull-is-9563-3e4ea280efb6",
+                          "userId": "e89695aa-1f7e-468c-89dd-5fc2332e31f1"
                         }
-                    ]
+                      ]
+                    }
+                  ]
                 }
-                }
+              }
             }
-            }
+          }
         }
       }
     }
+  }
+}

@@ -44,6 +44,7 @@ app.use(notFoundError);
 
 // development error handler
 // will print stacktrace
+/* istanbul ignore next-line */
 if (!isProduction) {
   app.use(developmentServerErrorResponse);
 }
