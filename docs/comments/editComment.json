@@ -115,7 +115,7 @@
       }
     ],
     "tags": [
-      "Comments"
+      "Admin"
     ],
     "summary": "Get All Edited Comment History",
     "description": "Return all edited comment history \n",

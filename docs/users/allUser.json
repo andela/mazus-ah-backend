@@ -6,10 +6,10 @@
       }
    ],
     "tags": [
-      "Profile"
+      "Users"
     ],
-    "summary": "Get all article",
-    "description": "Get all articles \n",
+    "summary": "Get all users",
+    "description": "Get all users \n",
     "parameters": [],
     "produces": [
       "application/json"
