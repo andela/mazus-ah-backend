@@ -2,6 +2,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
+import jwtDecode from 'jwt-decode';
 import app from '..';
 import seededUsers from './mockData/seededUsers';
 import mockUsers from './mockData/mockUsers';
@@ -16,6 +17,7 @@ const { Comment } = models;
 let verifiedUserToken;
 let adminToken;
 const userId = '356304da-50bc-4488-9c85-88874a9efb16';
+let unverifiedUserToken;
 
 describe('Admin Routes', () => {
   before((done) => {
@@ -32,6 +34,16 @@ describe('Admin Routes', () => {
         done();
       });
   });
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(seededUsers[0])
+      .end((err, res) => {
+        const { token } = res.body.user;
+        unverifiedUserToken = token;
+        done();
+      });
+  });
   it('should successfully get all users', (done) => {
     chai
       .request(app)
@@ -45,16 +57,32 @@ describe('Admin Routes', () => {
         done();
       });
   });
-  it('should successfully create a user', (done) => {
+  it('should successfully create an admin', (done) => {
     chai
       .request(app)
-      .post(`${url}`)
+      .post(`${baseUrl}/createuser`)
       .set('Authorization', `Bearer ${verifiedUserToken}`)
       .send(mockUsers[17])
       .end((err, res) => {
+        const { token } = res.body.user;
+        const decoded = jwtDecode(token);
         expect(res.status).to.eql(201);
-        expect(res.body.message).to.eql('Your Account has been created successfully!');
+        expect(res.body.user.message).to.eql('Account has been created successfully!');
         expect(res.body.user).to.have.property('token');
+        expect(decoded.type).to.eql('admin');
+
+        done();
+      });
+  });
+  it('should not successfully create an admin when using a normal user token', (done) => {
+    chai
+      .request(app)
+      .post(`${baseUrl}/createuser`)
+      .set('Authorization', `Bearer ${unverifiedUserToken}`)
+      .send(mockUsers[17])
+      .end((err, res) => {
+        expect(res.status).to.eql(403);
+        expect(res.body.errors.message).to.eql('User not authorized');
         done();
       });
   });
@@ -172,7 +200,7 @@ describe('Admin Routes', () => {
   });
 });
 
-describe('Testing admin routes for articles and comments', () => { 
+describe('Testing admin routes for articles and comments', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/signin')

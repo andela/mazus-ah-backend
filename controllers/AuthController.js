@@ -1,21 +1,20 @@
 import dotenv from 'dotenv';
-import gravatar from 'gravatar';
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
-import EmailVerification from '../helpers/EmailVerification';
 import ForgotPasswordEmail from '../helpers/ForgotPasswordEmail';
 import MarkUps from '../helpers/MarkUps';
+import SignUserUp from '../helpers/signUpHelper';
 
 dotenv.config();
 const { successResponse, errorResponse } = ServerResponse;
 const {
   BlacklistedToken,
   User,
-  Profile,
 } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
 const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
+const { signUpUser } = SignUserUp;
 
 /**
  *
@@ -41,82 +40,9 @@ export default class AuthController {
       const {
         firstName, lastName, email, password, confirmPassword
       } = req.body;
-      const genericWordsArray = [firstName, lastName, 'Password', 'password', 123];
-      const genericWord = genericWordsArray.find(word => password.includes(word));
-      if (genericWord) {
-        return res.status(400).send({
-          errors: {
-            password: 'Do not use a common word as the password',
-          }
-        });
-      }
-
-      const foundUser = await User.findOne({ where: { email } });
-      if (foundUser) {
-        return res.status(409).send({
-          message: 'This User already exist',
-        });
-      }
-
-      if (password !== confirmPassword) {
-        return res.status(400).send({
-          message: "Password doesn't match, Please check you are entering the right thing!",
-        });
-      }
-      const hashedPassword = Helper.hashPassword(password);
-      const verificationToken = Helper.hashUserData(email);
-      const user = {
-        firstName,
-        lastName,
-        email,
-        isVerified: false,
-        verificationToken,
-        password: hashedPassword,
-        type: 'user',
-      };
-
-      const registeredUser = await User.create(user);
-      const {
-        id,
-        firstName: rFirstName,
-        lastName: rLastName,
-        isVerified,
-        type,
-      } = registeredUser;
-      const token = Helper.createToken({
-        id,
-        firstName: rFirstName,
-        lastName: rLastName,
-        isVerified,
-        email,
-        type,
-      });
-      // This line sends the registered user an email
-      /* istanbul ignore next-line */
-      if (process.env.NODE_ENV !== 'test') {
-        EmailVerification.sendVerificationEmail(
-          req, email, rFirstName,
-          verificationToken
-        );
-      }
-      let avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      });
-      avatar = avatar.substring(2);
-      await Profile.create({
-        userId: id,
-        avatar,
-      });
-      return res.status(201).send({
-        message: 'Your Account has been created successfully!',
-        user: {
-          token,
-        }
-      });
-    } catch (error) {
-      return next(error);
+      await signUpUser(req, res, firstName, lastName, email, password, confirmPassword);
+    } catch (err) {
+      return next(err);
     }
   }
 

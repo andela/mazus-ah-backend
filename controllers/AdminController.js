@@ -1,6 +1,8 @@
 import models from '../database/models';
 import ServerResponse from '../modules/ServerResponse';
 import pagination from '../helpers/Pagination';
+import SignUserUp from '../helpers/signUpHelper';
+
 
 const {
   User,
@@ -9,7 +11,7 @@ const {
   Comment
 } = models;
 const { successResponse, errorResponse } = ServerResponse;
-
+const { signUpUser } = SignUserUp;
 /**
 *
 *
@@ -260,6 +262,29 @@ export default class AdminController {
         }
       });
       return successResponse(res, 200, 'comment', { message: 'Comment has been deleted' });
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  /**
+   *
+   * @static
+   *
+   * @param {object} req express request object
+   * @param {object} res express response object
+   * @param {function} next
+   *
+   * @returns {object} returns user data
+   *
+   * @memberof AuthController
+   */
+  static async signUpAdmin(req, res, next) {
+    try {
+      const {
+        firstName, lastName, email, password, confirmPassword, type
+      } = req.body;
+      await signUpUser(req, res, firstName, lastName, email, password, confirmPassword, type);
     } catch (err) {
       return next(err);
     }
