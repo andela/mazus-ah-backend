@@ -43,8 +43,8 @@ export default class likeController {
         );
 
         return successResponse(
-          res, 201, 'message',
-          `Your like on '${article.dataValues.title}' has been removed`
+          res, 200, 'article',
+          { message: `Your like on '${article.dataValues.title}' has been removed` }
         );
       }
       // Check if user previously disliked article (change dislike to like if true)
@@ -63,8 +63,8 @@ export default class likeController {
           { where: { slug } },
         );
         return successResponse(
-          res, 201, 'message',
-          `You just liked '${article.dataValues.title}'`,
+          res, 201, 'article',
+          { message: `You just liked '${article.dataValues.title}'` }
         );
       }
 
@@ -82,8 +82,8 @@ export default class likeController {
       );
 
       return successResponse(
-        res, 201, 'message',
-        `You just liked '${article.dataValues.title}'`,
+        res, 201, 'article',
+        { message: `You just liked '${article.dataValues.title}'` }
       );
     } catch (error) {
       return next(error);
@@ -120,8 +120,8 @@ export default class likeController {
         );
 
         return successResponse(
-          res, 201, 'message',
-          `Your dislike on '${article.dataValues.title}' has been removed`
+          res, 200, 'article',
+          { message: `Your dislike on '${article.dataValues.title}' has been removed` }
         );
       }
       // Check if user previously liked article (change like to dislike if true)
@@ -140,8 +140,8 @@ export default class likeController {
         );
 
         return successResponse(
-          res, 201, 'message',
-          `You just disliked '${article.dataValues.title}'`
+          res, 201, 'article',
+          { message: `You just disliked '${article.dataValues.title}'` }
         );
       }
 
@@ -159,8 +159,8 @@ export default class likeController {
       );
 
       return successResponse(
-        res, 201, 'message',
-        `You just disliked '${article.dataValues.title}'`
+        res, 201, 'article',
+        { message: `You just disliked '${article.dataValues.title}'` }
       );
     } catch (error) {
       return next(error);

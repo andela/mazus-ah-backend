@@ -35,8 +35,9 @@ describe('Testing /like & /dislike endpoints', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("You just liked 'Building APIs with Nodejs'");
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("You just liked 'Building APIs with Nodejs'");
         done();
       });
   });
@@ -46,9 +47,10 @@ describe('Testing /like & /dislike endpoints', () => {
       .post(`${url}/building-apis-with-nodejs-48458493/like`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("Your like on 'Building APIs with Nodejs' has been removed");
+        expect(res.status).to.eql(200);
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("Your like on 'Building APIs with Nodejs' has been removed");
         done();
       });
   });
@@ -58,9 +60,9 @@ describe('Testing /like & /dislike endpoints', () => {
       .post(`${url}/building-apis-with-nodejs-48458493/dislike`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("You just disliked 'Building APIs with Nodejs'");
+        expect(res.status).to.eql(201); expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("You just disliked 'Building APIs with Nodejs'");
         done();
       });
   });
@@ -71,8 +73,9 @@ describe('Testing /like & /dislike endpoints', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("You just liked 'Building APIs with Nodejs'");
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("You just liked 'Building APIs with Nodejs'");
         done();
       });
   });
@@ -83,8 +86,9 @@ describe('Testing /like & /dislike endpoints', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("You just disliked 'Building APIs with Nodejs'");
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("You just disliked 'Building APIs with Nodejs'");
         done();
       });
   });
@@ -96,8 +100,9 @@ describe('Testing /like & /dislike endpoints', () => {
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
         expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("You just disliked 'Some title'");
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("You just disliked 'Some title'");
         done();
       });
   });
@@ -107,9 +112,10 @@ describe('Testing /like & /dislike endpoints', () => {
       .post(`${url}/some-slug/dislike`)
       .set('Authorization', `Bearer ${validToken}`)
       .end((err, res) => {
-        expect(res.status).to.eql(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.eql("Your dislike on 'Some title' has been removed");
+        expect(res.status).to.eql(200);
+        expect(res.body).to.have.property('article');
+        expect(res.body.article).to.have.property('message');
+        expect(res.body.article.message).to.eql("Your dislike on 'Some title' has been removed");
         done();
       });
   });
