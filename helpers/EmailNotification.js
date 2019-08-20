@@ -20,7 +20,7 @@ export default class EmailNotification {
   static sendNotificationEmail(recipient, name, payloadDetails) {
     const { articleBy, articleTitle, articleUrl } = payloadDetails;
 
-    const content = `<img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564047885/assets/logo_hjqgbb.png'>
+    const content = `<img src = ${process.env.APP_LOGO}>
                     <br><h1>Hello ${name}</h1><br>
                     <h2>${articleBy} just posted a new article</h2><br>
                     <h2><a href = ${articleUrl}>${articleTitle}</a></h2>
@@ -29,7 +29,7 @@ export default class EmailNotification {
     Postals.sendEmail(
       recipient,
       'mazus.ah@gmail.com',
-      'Welcome to Authors Haven',
+      'New Article: Authors\' Haven',
       content
     );
   }
@@ -51,7 +51,7 @@ export default class EmailNotification {
       bodyOfReport,
       time
     } = payloadDetails;
-    const content = `<img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1565811732/Screen_Shot_2019-08-14_at_8.41.34_PM_ssj6ej.png'>
+    const content = `<img src = ${process.env.APP_LOGO}>
                     <div>
                     <h2>Hello ${name},</h2>
                     <h2>
@@ -70,7 +70,7 @@ export default class EmailNotification {
     Postals.sendEmail(
       recipient,
       'mazus.ah@gmail.com',
-      'Your article was reported',
+      'Your article was reported: Authors\' Haven',
       content
     );
   }

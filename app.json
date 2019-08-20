@@ -45,6 +45,15 @@
     },
     "PUSHER_APP_CLUSTER": {
       "required": true
+    },
+    "FRONTEND_URL_ARTICLES": {
+      "required": true
+    },
+    "FRONTEND_URL_EMAIL_VERIFICATION": {
+      "required":true
+    },
+    "APP_LOGO": {
+      "required": true
     }
   },
   "formation": {},

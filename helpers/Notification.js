@@ -80,7 +80,7 @@ class Notification {
    *
    * @method newArticle
    * @param {object} requestInfo request object
-   * @param {uuid} articleSlug the id of the article
+   * @param {string} articleSlug the slug of the article
    * @param {string} title the article's title
    * @param {string} firstName  the publisher's first Name
    * @param {string} lastName the publish's last name
@@ -103,7 +103,7 @@ class Notification {
     const payload = {
       articleBy: `${firstName} ${lastName}`,
       articleTitle: title,
-      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${userId}/${articleSlug}`,
+      articleUrl: `${process.env.FRONTEND_URL_ARTICLES}/${articleSlug}`,
     };
     followers.map(async (follower) => {
       const { followerId } = follower;
@@ -111,10 +111,10 @@ class Notification {
       await this.pushNotification(followerId, payload);
     });
     if (process.env.NODE_ENV !== 'test') {
-      subscribers.map(async (subscribedFollower) => {
+      subscribers.map((subscribedFollower) => {
         const subscribedFollowerEmail = subscribedFollower['followings.email'];
         const subscribedFollowerName = subscribedFollower['followings.firstName'];
-        EmailNotification.sendNotificationEmail(
+        return EmailNotification.sendNotificationEmail(
           subscribedFollowerEmail,
           subscribedFollowerName,
           payload
@@ -137,7 +137,7 @@ class Notification {
     const { email, firstName, id } = article.dataValues.author.dataValues;
     const payload = {
       articleTitle: title,
-      articleUrl: `${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/articles/${slug}`,
+      articleUrl: `${process.env.FRONTEND_URL_ARTICLES}/${slug}`,
       titleOfReport: reportTitle,
       bodyOfReport: reportBody,
       time: createdAt,
