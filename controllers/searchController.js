@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import ServerResponse from '../modules';
 import models from '../database/models';
 
@@ -30,6 +30,7 @@ class SearchController {
       const {
         keyword, customFilter,
       } = req.query;
+      const tagsListToString = Sequelize.fn('lower', Sequelize.fn('array_to_string', Sequelize.col('tagsList'), '|'));
       if (keyword === '') {
         return errorResponse(res, 400, { message: 'Please input a search parameter' });
       }
@@ -47,91 +48,6 @@ class SearchController {
 
       // search by custom filter
       // custom filter is either Author, Tag, Title
-      if (customFilter === 'title') {
-        const articles = await Article.findAll({
-          attributes: articleAttributes,
-          where: {
-            title: {
-              [Op.iLike]: `%${keyword}%`,
-            }
-          },
-          include: [
-            {
-              model: User,
-              as: 'author',
-              attributes: ['firstName', 'lastName'],
-            }
-          ]
-        });
-        return successResponse(res, 200, 'matches', {
-          articles,
-        });
-      }
-
-      if (customFilter === 'tag') {
-        const tags = await Article.findAll({
-          attributes: articleAttributes,
-          where: {
-            tagsList: {
-              [Op.contains]: [`${keyword}`],
-            },
-          },
-          include: [
-            {
-              model: User,
-              as: 'author',
-              attributes: ['firstName', 'lastName'],
-            }
-          ]
-        });
-        return successResponse(res, 200, 'matches', {
-          tags,
-        });
-      }
-
-      if (customFilter === 'author') {
-        const authors = await User.findAll({
-          attributes: userAttributes,
-          where: {
-            [Op.or]: [
-              {
-                firstName: {
-                  [Op.iLike]: `%${keyword}%`,
-                }
-              },
-              {
-                lastName: {
-                  [Op.iLike]: `%${keyword}%`
-                }
-              }
-            ]
-          },
-          include: [
-            {
-              model: Article,
-              as: 'articles',
-              attributes: ['slug', 'title', 'description', 'body', 'tagsList', 'readTime'],
-              include: [
-                {
-                  // tag
-                  model: Tag,
-                  as: 'tags',
-                  attributes: ['name'],
-                }
-              ]
-            },
-            {
-              model: Profile,
-              as: 'profile',
-              attributes: ['bio', 'avatar']
-            }
-          ]
-        });
-        return successResponse(res, 200, 'matches', {
-          authors,
-        });
-      }
-
       const articles = await Article.findAll({
         attributes: articleAttributes,
         where: {
@@ -144,17 +60,26 @@ class SearchController {
             model: User,
             as: 'author',
             attributes: ['firstName', 'lastName'],
-            include: [
-              {
-                model: Profile,
-                as: 'profile',
-                attributes: ['bio', 'avatar']
-              }
-            ]
-          },
-        ]
+          }
+        ],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
       });
-
+      const tags = await Article.findAll({
+        attributes: articleAttributes,
+        where: Sequelize.where(tagsListToString, { [Op.iLike]: `%${keyword.toLowerCase()}%` }),
+        include: [
+          {
+            model: User,
+            as: 'author',
+            attributes: ['firstName', 'lastName'],
+          }
+        ],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
+      });
       const authors = await User.findAll({
         attributes: userAttributes,
         where: {
@@ -173,11 +98,6 @@ class SearchController {
         },
         include: [
           {
-            model: Profile,
-            as: 'profile',
-            attributes: ['bio', 'avatar']
-          },
-          {
             model: Article,
             as: 'articles',
             attributes: ['slug', 'title', 'description', 'body', 'tagsList', 'readTime'],
@@ -189,26 +109,34 @@ class SearchController {
                 attributes: ['name'],
               }
             ]
-          }
-        ]
-      });
-
-      const tags = await Article.findAll({
-        attributes: articleAttributes,
-        where: {
-          tagsList: {
-            [Op.contains]: [`${keyword}`],
           },
-        },
-        include: [
           {
-            model: User,
-            as: 'author',
-            attributes: ['firstName', 'lastName'],
+            model: Profile,
+            as: 'profile',
+            attributes: ['bio', 'avatar']
           }
-        ]
+        ],
+        order: [
+          ['createdAt', 'DESC'],
+        ],
       });
+      if (customFilter === 'title') {
+        return successResponse(res, 200, 'matches', {
+          articles,
+        });
+      }
 
+      if (customFilter === 'tag') {
+        return successResponse(res, 200, 'matches', {
+          tags,
+        });
+      }
+
+      if (customFilter === 'author') {
+        return successResponse(res, 200, 'matches', {
+          authors,
+        });
+      }
       return successResponse(res, 200, 'matches', {
         articles,
         authors,

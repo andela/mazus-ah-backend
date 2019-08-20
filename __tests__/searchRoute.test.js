@@ -63,7 +63,7 @@ describe('Custom search', () => {
         expect(res.status).to.be.eql(200);
         expect(res.body).to.have.keys('matches');
         expect(matches.authors).to.be.a('array');
-        expect(matches.authors[0].firstName).to.eql('John');
+        expect(matches.authors[0].firstName || matches.authors[0].lastName).to.include('John');
         expect(res.body.matches.authors.length).to.be.greaterThan(0);
         done();
       });
