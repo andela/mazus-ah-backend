@@ -86,34 +86,6 @@ const validate = {
       return next();
     }
   ],
-  createProfileValidate: [
-    check('avatar')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Avatar is required')
-      .isURL()
-      .withMessage('Avatar is not a valid URL, please input a valid URL'),
-    check('bio')
-      .not()
-      .isEmpty({ ignore_whitespace: true })
-      .withMessage('Bio is required')
-      .not()
-      .isInt()
-      .withMessage('Bio is not a valid string, please input a valid string'),
-    (req, res, next) => {
-      const errors = validationResult(req);
-      const errorMessage = {};
-      if (!errors.isEmpty()) {
-        errors.array({ onlyFirstError: true }).forEach((error) => {
-          errorMessage[error.param] = error.msg;
-        });
-        return res.status(400).json({
-          errors: errorMessage
-        });
-      }
-      return next();
-    }
-  ],
   editProfileValidate: [
     check('avatar')
       .optional()
@@ -152,6 +124,7 @@ const validate = {
     param('id')
       .matches((/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))
       .withMessage('id is not valid')
+    /* istanbul ignore next-line */
       .custom(async (id) => {
         const isExist = await models.Profile.findOne({ where: { userId: id } });
         if (!isExist) {
