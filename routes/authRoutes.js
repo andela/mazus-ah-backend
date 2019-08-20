@@ -16,7 +16,7 @@ const {
 } = AuthController;
 
 const { verifyToken } = AuthMiddleware;
-const { resetforgotPassword, resetemail } = Validate;
+const { resetforgotPassword, validateEmail } = Validate;
 
 const router = Router();
 
@@ -32,6 +32,6 @@ router.get('/facebook/callback', passport.authenticate('facebook', { session: fa
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/google/callback', passport.authenticate('google', { session: false }), socialLogin);
 
-router.post('/forgotpassword', resetemail, forgotPassword);
+router.post('/forgotpassword', validateEmail, forgotPassword);
 router.patch('/resetpassword/:token', resetforgotPassword, resetPassword);
 export default router;

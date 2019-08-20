@@ -100,7 +100,7 @@ export default class ArticleController {
             model: Comment,
             as: 'articlecomment',
             where: { type: 'parent' },
-            attributes: ['body', 'likes', 'highlightedText', 'containsHighlightedText', 'createdAt', 'updatedAt'],
+            attributes: ['id', 'body', 'likes', 'highlightedText', 'containsHighlightedText', 'createdAt', 'updatedAt'],
             required: false,
             include: [
               { // user
@@ -115,7 +115,7 @@ export default class ArticleController {
               { // Comment Thread
                 model: models.Comment,
                 as: 'childComments',
-                attributes: ['body', 'likes', 'createdAt', 'updatedAt'],
+                attributes: ['id', 'body', 'likes', 'createdAt', 'updatedAt'],
                 include: [
                   { // user
                     model: models.User,
@@ -498,7 +498,7 @@ export default class ArticleController {
 
       if (req.url.search(/\/mail/g) > 0) {
         ShareArticle.shareArticleByMail(req, email, articleTitle, slug);
-        return successResponse(res, 200, 'article', { message: 'Article has been successfully shared ' });
+        return successResponse(res, 200, 'article', { message: 'Article has been successfully shared' });
       }
       if (req.url.search(/\/twitter/g) > 0) {
         const shareLink = ShareArticle.shareArticleByTwitter(req, slug);

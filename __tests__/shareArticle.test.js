@@ -69,6 +69,7 @@ describe('Share an article', () => {
       .request(app)
       .get(`${url}/mail`)
       .set('Authorization', `Bearer ${validUserToken}`)
+      .send(recipientEmail)
       .end((err, res) => {
         expect(res.status).to.eql(500);
         stub.restore();

@@ -224,7 +224,7 @@ const validate = {
       return next();
     }
   ],
-  resetemail: [
+  validateEmail: [
     check('email')
       .not()
       .isEmpty({ ignore_whitespace: true })
