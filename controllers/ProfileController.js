@@ -104,7 +104,7 @@ export default class ProfileController {
     const userId = req.user.id;
     try {
       const getStatistics = await Reading.findAll({ raw: true, where: { userId } });
-      return successResponse(res, 200, 'articlesRead', getStatistics.length);
+      return successResponse(res, 200, 'statistics', { articlesRead: getStatistics.length });
     } catch (error) {
       return next(error);
     }
@@ -125,7 +125,7 @@ export default class ProfileController {
         where: { userId },
         attributes: ['title', 'id', 'readCount', 'slug', 'userId']
       });
-      successResponse(res, 200, 'allArticlesStatistics', authorArticlesDetails);
+      successResponse(res, 200, 'statistics', { articles: authorArticlesDetails });
     } catch (error) {
       return next(error);
     }
