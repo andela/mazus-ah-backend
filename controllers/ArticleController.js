@@ -113,12 +113,12 @@ export default class ArticleController {
                 }]
               },
               { // Comment Thread
-                model: models.Comment,
+                model: Comment,
                 as: 'childComments',
                 attributes: ['id', 'body', 'likes', 'createdAt', 'updatedAt'],
                 include: [
                   { // user
-                    model: models.User,
+                    model: User,
                     as: 'user',
                     attributes: ['firstName', 'lastName', 'email', 'id'],
                     include: [{

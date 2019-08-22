@@ -148,23 +148,21 @@ export default class AuthController {
           password: 'NULL',
         }
       });
+
+      const {
+        id, isVerified, type
+      } = createdUser[0];
+
       const token = Helper.createToken({
-        id: createdUser.id,
-        email: userData.email
+        id,
+        firstName,
+        lastName,
+        email,
+        isVerified,
+        type,
       });
 
-      const { id, isVerified } = createdUser[0];
-
-      return res.status(201).json({
-        user: {
-          token,
-          id,
-          firstName,
-          lastName,
-          email,
-          isVerified,
-        },
-      });
+      return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
     } catch (error) {
       /* istanbul ignore next-line */
       return next(error);
