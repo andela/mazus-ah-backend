@@ -72,6 +72,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: '0',
       },
+      thumbnail: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'https://res.cloudinary.com/mazus/image/upload/v1566988928/default-article-image-large_eeu8ov.gif',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

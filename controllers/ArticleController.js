@@ -42,9 +42,9 @@ export default class ArticleController {
     try {
       const { id } = req.user;
       const {
-        title, description, body, tags, status
+        title, description, body, tags, status, thumbnail,
       } = req.body;
-
+      
       const slug = generateSlug(title);
       const readTime = getReadTime(body);
       const article = await Article.create({
@@ -53,6 +53,7 @@ export default class ArticleController {
         body,
         description,
         status,
+        thumbnail,
         tagsList: tags ? [...tags] : [],
         userId: id,
         readTime
