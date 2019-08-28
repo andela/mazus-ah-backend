@@ -162,9 +162,11 @@ export default class AuthController {
         type,
       });
 
-      return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
-    } catch (error) {
       /* istanbul ignore next-line */
+      if (createdUser[0].isVerified === true) {
+        res.redirect(`${process.env.FRONTEND_URL}/signup?token=${token}`);
+      }
+    } catch (error) {
       return next(error);
     }
   }
