@@ -1,5 +1,7 @@
+import dotenv from 'dotenv';
 import Postals from './Postals';
 
+dotenv.config();
 /**
  *
  *
@@ -19,16 +21,16 @@ export default class EmailVerification {
   */
   static sendVerificationEmail(requestInfo, recipient, name, token) {
     const email = recipient;
-    const content = `<img src = 'https://res.cloudinary.com/dsqyhgfws/image/upload/v1564047885/assets/logo_hjqgbb.png'>
+    const content = `<img src = ${process.env.APP_LOGO}>
                     <br><h1>Welcome ${name}</h1><br>
                     <h2>Please click the link below to confirm your email</h2><br>
-                    <h2><a href = '${requestInfo.protocol}://${requestInfo.get('host')}/api/v1/auth/verify?email=${email}&token=${token}'>Confirm Email</a></h2>
+                    <h2><a href = '${process.env.FRONTEND_URL_EMAIL_VERIFICATION}?email=${email}&token=${token}'>Confirm Email</a></h2>
                     `;
 
     Postals.sendEmail(
       recipient,
       'mazus.ah@gmail.com',
-      'Welcome to Authors Haven',
+      'Welcome to Authors\' Haven',
       content
     );
   }
