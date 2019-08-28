@@ -44,7 +44,7 @@ export default class ArticleController {
       const {
         title, description, body, tags, status, thumbnail,
       } = req.body;
-      
+
       const slug = generateSlug(title);
       const readTime = getReadTime(body);
       const article = await Article.create({
