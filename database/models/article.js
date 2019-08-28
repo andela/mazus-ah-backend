@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('draft', 'published', 'trash'),
         defaultValue: 'draft',
       },
+      thumbnail: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 'https://res.cloudinary.com/mazus/image/upload/v1566988928/default-article-image-large_eeu8ov.gif',
+      },
       reports: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
