@@ -162,7 +162,8 @@ export default class AuthController {
         type,
       });
 
-      return successResponse(res, 200, 'user', { message: 'You have successfully logged in', token });
+      req.token = token;
+      res.redirect(`${process.env.FRONTEND_URL}/signup?token=${token}`);
     } catch (error) {
       /* istanbul ignore next-line */
       return next(error);
