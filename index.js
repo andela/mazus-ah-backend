@@ -31,6 +31,14 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use(passport.initialize());
 
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
 app.use(API_PREFIX, routes);
 
 app.get('/', (req, res) => {

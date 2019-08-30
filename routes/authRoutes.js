@@ -27,10 +27,18 @@ router.post('/logout', verifyToken, logout);
 
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-router.get('/facebook/callback', passport.authenticate('facebook', { session: false }), socialLogin);
+router.get(
+  '/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  socialLogin
+);
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback', passport.authenticate('google', { session: false }), socialLogin);
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  socialLogin
+);
 
 router.post('/forgotpassword', validateEmail, forgotPassword);
 router.patch('/resetpassword/:token', resetforgotPassword, resetPassword);
