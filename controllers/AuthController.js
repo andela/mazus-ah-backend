@@ -162,10 +162,12 @@ export default class AuthController {
         type,
       });
 
+      /* istanbul ignore next-line */
       req.token = token;
+
+      /* istanbul ignore next-line */
       res.redirect(`${process.env.FRONTEND_URL}/signup?token=${token}`);
     } catch (error) {
-      /* istanbul ignore next-line */
       return next(error);
     }
   }
