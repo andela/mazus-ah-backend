@@ -77,12 +77,11 @@ export default class SignUserUp {
         verificationToken
       );
     }
-    let avatar = gravatar.url(email, {
+    const avatar = gravatar.url(email, {
       s: '200',
       r: 'pg',
       d: 'mm'
     });
-    avatar = avatar.substring(2);
     await Profile.create({
       userId: id,
       avatar,
