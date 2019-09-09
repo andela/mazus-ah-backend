@@ -59,7 +59,11 @@ class SearchController {
           {
             model: User,
             as: 'author',
-            attributes: ['firstName', 'lastName'],
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
           }
         ],
         order: [
