@@ -35,6 +35,7 @@ class SearchController {
         return errorResponse(res, 400, { message: 'Please input a search parameter' });
       }
       const articleAttributes = [
+        'id',
         'title',
         'slug',
         'body',
@@ -42,7 +43,8 @@ class SearchController {
         'status',
         'tagsList',
         'readTime',
-        'createdAt'
+        'createdAt',
+        'thumbnail',
       ];
       const userAttributes = ['firstName', 'lastName'];
 
@@ -59,7 +61,11 @@ class SearchController {
           {
             model: User,
             as: 'author',
-            attributes: ['firstName', 'lastName'],
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
           }
         ],
         order: [
@@ -73,7 +79,11 @@ class SearchController {
           {
             model: User,
             as: 'author',
-            attributes: ['firstName', 'lastName'],
+            attributes: ['id', 'firstName', 'lastName', 'email'],
+            include: [{
+              model: Profile,
+              as: 'profile',
+            }]
           }
         ],
         order: [
