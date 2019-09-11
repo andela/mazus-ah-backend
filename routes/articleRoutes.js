@@ -20,12 +20,13 @@ const {
   bookmarkArticle,
   shareArticle,
   reportArticle,
+  getCurrentArticleStat,
 } = ArticleController;
 
 const { postComment } = CommentController;
 const { getTags } = TagsController;
 const { likeArticle, dislikeArticle } = LikesController;
-const { articleValidation, validateId } = articleValidationSchema;
+const { articleValidation, validateId, validateGetCurrentArticlState } = articleValidationSchema;
 const { validateEmail } = Validate;
 const { validateReport } = commentValidate;
 const {
@@ -38,7 +39,7 @@ const {
 const router = Router();
 
 router.post('/:id/bookmark', verifyToken, Validate.validateParamsId, verifiedUserOnly, bookmarkArticle);
-
+router.post('/getcurrentarticlestat', validateGetCurrentArticlState, getCurrentArticleStat);
 router.get('/trends', trend);
 router.get('/tags', getTags);
 router.post('/', verifyToken, verifiedUserOnly, articleValidation, createArticle);
