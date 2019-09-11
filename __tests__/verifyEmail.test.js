@@ -24,8 +24,10 @@ describe('verifying a user email', () => {
   it('should return a success response object when a user successfully verifies an email', (done) => {
     chai.request(app)
       .get(`${url}/auth/verify?email=${userToVerify.email}&token=${userToVerify.verificationToken}`)
+      .redirects(0)
+      .send()
       .end((err, res) => {
-        expect(res.text).to.eql(verified);
+        expect(res.status).to.eql(302);
         done();
       });
   });

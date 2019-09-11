@@ -161,7 +161,7 @@ export default class AuthController {
         isVerified,
         type,
       });
-
+      /* istanbul ignore next-line */
       req.token = token;
       /* istanbul ignore next-line */
       res.redirect(`${process.env.FRONTEND_URL}/signup?token=${token}`);
@@ -189,8 +189,22 @@ export default class AuthController {
         res.send(alreadyVerified);
       } else if (foundUser.verificationToken === token) {
         await User.update({ isVerified: true }, { where: { email } });
-        res.setHeader('Content-Type', 'text/html');
-        res.send(verified);
+        const {
+          id,
+          firstName,
+          lastName,
+          type
+        } = foundUser;
+
+        const signInToken = Helper.createToken({
+          id,
+          firstName,
+          lastName,
+          email: foundUser.email,
+          isVerified: true,
+          type,
+        });
+        res.redirect(`${process.env.FRONTEND_URL}/signin?token=${signInToken}`);
       } else if (foundUser.verificationToken !== token) {
         res.setHeader('Content-Type', 'text/html');
         return res.send(incorrectCredentials);
