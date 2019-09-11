@@ -4,6 +4,7 @@ import ArticleHelper from '../helpers/ArticleHelper';
 import pagination from '../helpers/Pagination';
 import Notification from '../helpers/Notification';
 import ShareArticle from '../helpers/ShareArticle';
+import GetArticleStat from '../helpers/GetArticleStat';
 
 const {
   Article,
@@ -15,6 +16,14 @@ const {
   Reading,
   Report,
 } = models;
+
+const {
+  populateData,
+  getRate,
+  getFollow,
+  getBookmark,
+  getLike
+} = GetArticleStat;
 const { generateSlug, getReadTime } = ArticleHelper;
 const { successResponse, errorResponse } = ServerResponse;
 
@@ -103,6 +112,7 @@ export default class ArticleController {
             where: { type: 'parent' },
             attributes: ['id', 'body', 'likes', 'highlightedText', 'containsHighlightedText', 'createdAt', 'updatedAt'],
             required: false,
+            order: [['createdAt', 'DESC']],
             include: [
               { // user
                 model: User,
@@ -613,6 +623,47 @@ export default class ArticleController {
       });
 
       return successResponse(res, 200, 'reportedArticles', reportedArticles);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  /**
+   * Get stat of article related to a user
+   * @param {object} req express request object
+   * @param {Object} res express respond object
+   * @param {function} next
+   * @returns {string} string saying the rate
+   *
+   * @memberof ArticleController
+   */
+  static async getCurrentArticleStat(req, res, next) {
+    try {
+      const {
+        userId,
+        articleId,
+        authorId
+      } = req.body;
+
+      populateData(userId, articleId, authorId);
+      const bookmarkResponse = await getBookmark();
+      const followResponse = await getFollow();
+      const likeResponse = await getLike();
+      const rateResponse = await getRate();
+      const bookmarkedArticle = bookmarkResponse != null;
+      const followingAuthor = followResponse !== null;
+      const like = likeResponse && likeResponse.like;
+      const rate = rateResponse && rateResponse.rate;
+
+      successResponse(res, 200, 'articleStat', {
+        message: 'Article Statistics fetched successfully',
+        articleStat: {
+          rate,
+          like,
+          followingAuthor,
+          bookmarkedArticle,
+        }
+      });
     } catch (error) {
       return next(error);
     }

@@ -397,4 +397,40 @@ describe('Article Routes Test', () => {
         done();
       });
   });
+  it('should get article stat', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/getcurrentarticlestat`)
+      .send({
+        userId: '8c9589fb-5b25-4df9-92ee-2b20ba4f9407',
+        articleId: '72bafad5-b0b5-4e42-8401-55ef20034ac1',
+        authorId: 'fdfe8617-208d-4b87-a000-5d6840786ab8'
+      })
+      .end((err, res) => {
+        expect(res.status).to.be.eql(200);
+        expect(res.body).to.have.property('articleStat');
+        expect(res.body.articleStat).to.be.to.a('object');
+        expect(res.body.articleStat.articleStat).to.have.property('rate');
+        expect(res.body.articleStat.articleStat).to.have.property('like');
+        expect(res.body.articleStat.articleStat).to.have.property('followingAuthor');
+        expect(res.body.articleStat.articleStat).to.have.property('bookmarkedArticle');
+        done();
+      });
+  });
+  it('should throw error if the no input are specified', (done) => {
+    chai.request(app)
+      .post(`${API_PREFIX}/getcurrentarticlestat`)
+      .send({})
+      .end((err, res) => {
+        expect(res.status).to.be.eql(400);
+        expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.be.to.a('object');
+        expect(res.body.errors).to.have.property('userId');
+        expect(res.body.errors).to.have.property('articleId');
+        expect(res.body.errors).to.have.property('authorId');
+        expect(res.body.errors.userId).to.eql('userId cannot be empty');
+        expect(res.body.errors.articleId).to.eql('articleId cannot be empty');
+        expect(res.body.errors.authorId).to.eql('authorId cannot be empty');
+        done();
+      });
+  });
 });
