@@ -22,10 +22,10 @@ const { verifyToken } = AuthMiddlewware;
 const router = Router();
 
 router.patch('/:id', verifyToken, editProfileValidate, editProfile);
-router.get('/:id', verifyToken, validateId, viewProfile);
+router.get('/:id', validateId, viewProfile);
 router.post('/follow/:id', verifyToken, validateParamsId, follow);
 router.delete('/follow/:id', verifyToken, validateParamsId, unfollow);
-router.get('/followers/:id', verifyToken, validateParamsId, getUserFollowers);
-router.get('/followings/:id', verifyToken, validateParamsId, getUserFollowings);
+router.get('/followers/:id', validateParamsId, getUserFollowers);
+router.get('/followings/:id', validateParamsId, getUserFollowings);
 
 export default router;
