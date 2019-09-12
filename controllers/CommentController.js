@@ -6,6 +6,8 @@ const { successResponse, errorResponse } = ServerResponse;
 const {
   Comment,
   Like,
+  User,
+  Profile,
   Article,
   CommentHistory
 } = models;
@@ -45,8 +47,21 @@ export default class CommentController {
           highlightedText,
           containsHighlightedText: true,
         });
+        const userWithProfile = await User.findOne({
+          where: { id: userId },
+          include: [
+            {
+              model: Profile,
+              as: 'profile',
+            },
+          ]
+        });
+        const response = {
+          ...articleComment.dataValues,
+          user: userWithProfile,
+        };
         Notification.newComment(slug, id, title, firstName, lastName);
-        return successResponse(res, 201, 'comment', articleComment.dataValues);
+        return successResponse(res, 201, 'comment', response);
       }
 
       // Threaded comments
@@ -67,8 +82,21 @@ export default class CommentController {
 
         // Create relationship
         await parentComment.addChildComments(newChildComment);
+        const userWithProfile = await User.findOne({
+          where: { id: userId },
+          include: [
+            {
+              model: Profile,
+              as: 'profile',
+            },
+          ]
+        });
+        const response = {
+          ...newChildComment.dataValues,
+          user: userWithProfile,
+        };
 
-        return successResponse(res, 201, 'comment', newChildComment.dataValues);
+        return successResponse(res, 201, 'comment', response);
       }
 
       const articleComment = await Comment.create({
@@ -78,8 +106,20 @@ export default class CommentController {
         articleSlug: slug,
       });
       Notification.newComment(slug, id, title, firstName, lastName);
-
-      return successResponse(res, 201, 'comment', articleComment.dataValues);
+      const userWithProfile = await User.findOne({
+        where: { id: userId },
+        include: [
+          {
+            model: Profile,
+            as: 'profile',
+          },
+        ]
+      });
+      const response = {
+        ...articleComment.dataValues,
+        user: userWithProfile,
+      };
+      return successResponse(res, 201, 'comment', response);
     } catch (error) {
       return next(error);
     }
