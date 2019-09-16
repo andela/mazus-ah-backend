@@ -11,9 +11,10 @@ const { successResponse, errorResponse } = ServerResponse;
 const {
   BlacklistedToken,
   User,
+  Profile,
 } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
-const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
+const { alreadyVerified, incorrectCredentials } = MarkUps;
 const { signUpUser } = SignUserUp;
 
 /**
@@ -136,7 +137,7 @@ export default class AuthController {
 
       const firstName = userData.name.split(' ')[0];
       const lastName = userData.name.split(' ')[1];
-      const { email } = userData;
+      const { email, picture } = userData;
 
       const createdUser = await User.findOrCreate({
         where: { email },
@@ -152,6 +153,15 @@ export default class AuthController {
       const {
         id, isVerified, type
       } = createdUser[0];
+
+      // eslint-disable-next-line no-underscore-dangle
+      if (createdUser[0]._options.isNewRecord) {
+        const avatar = typeof picture === 'string' ? picture : picture.data.url;
+        await Profile.create({
+          userId: id,
+          avatar,
+        });
+      }
 
       const token = Helper.createToken({
         id,
