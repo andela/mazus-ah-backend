@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import gravatar from 'gravatar';
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
@@ -138,7 +137,7 @@ export default class AuthController {
 
       const firstName = userData.name.split(' ')[0];
       const lastName = userData.name.split(' ')[1];
-      const { email } = userData;
+      const { email, picture } = userData;
 
       const createdUser = await User.findOrCreate({
         where: { email },
@@ -157,11 +156,7 @@ export default class AuthController {
 
       // eslint-disable-next-line no-underscore-dangle
       if (createdUser[0]._options.isNewRecord) {
-        const avatar = gravatar.url(email, {
-          s: '200',
-          r: 'pg',
-          d: 'mm'
-        });
+        const avatar = typeof picture === 'string' ? picture : picture.data.url;
         await Profile.create({
           userId: id,
           avatar,
