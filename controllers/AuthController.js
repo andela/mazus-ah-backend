@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import gravatar from 'gravatar';
 import models from '../database/models';
 import Helper from '../helpers/Auth';
 import ServerResponse from '../modules';
@@ -11,9 +12,10 @@ const { successResponse, errorResponse } = ServerResponse;
 const {
   BlacklistedToken,
   User,
+  Profile,
 } = models;
 const { sendResetEmail } = ForgotPasswordEmail;
-const { verified, alreadyVerified, incorrectCredentials } = MarkUps;
+const { alreadyVerified, incorrectCredentials } = MarkUps;
 const { signUpUser } = SignUserUp;
 
 /**
@@ -152,6 +154,19 @@ export default class AuthController {
       const {
         id, isVerified, type
       } = createdUser[0];
+
+      // eslint-disable-next-line no-underscore-dangle
+      if (createdUser[0]._options.isNewRecord) {
+        const avatar = gravatar.url(email, {
+          s: '200',
+          r: 'pg',
+          d: 'mm'
+        });
+        await Profile.create({
+          userId: id,
+          avatar,
+        });
+      }
 
       const token = Helper.createToken({
         id,
