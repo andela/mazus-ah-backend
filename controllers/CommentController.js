@@ -150,7 +150,7 @@ export default class CommentController {
       if (!foundComment) {
         return errorResponse(res, 404, { comment: 'That comment does not exist' });
       }
-
+      const { articleId } = foundComment.dataValues;
       const alreadyLiked = await Like.findOne({
         where: {
           commentId,
@@ -182,6 +182,7 @@ export default class CommentController {
       const like = await Like.create({
         commentId,
         userId: id,
+        articleId,
         like: true,
       });
 
@@ -265,6 +266,26 @@ export default class CommentController {
       return successResponse(res, 200, 'commentHistory', commentHistory);
     } catch (error) {
       return next(error);
+    }
+  }
+
+  /**
+   * Method to get  an article comments and their likes
+   *
+   * @static
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {object} details of the edited comment
+   * @memberof CommentController
+   */
+  static async getArticleComments(req, res, next) {
+    const { articleId } = req.params;
+    try {
+      const commentsLike = await Like.findAll({ where: { articleId }, attributes: ['userId', 'articleId', 'like', 'commentId'] });
+      return successResponse(res, 200, 'commentsLike', commentsLike);
+    } catch (error) {
+      return next(error)
     }
   }
 }
