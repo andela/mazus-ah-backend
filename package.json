@@ -44,7 +44,7 @@
     "express-validator": "^6.1.1",
     "faker": "^4.1.0",
     "gravatar": "^1.8.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^2.2.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
